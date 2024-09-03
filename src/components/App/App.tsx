@@ -1,9 +1,11 @@
 import './App.css';
-import Footer from '../footer/footer.tsx';
+import HomePage from './HomePage/HomePage';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
     <div className="app">
+      <HomePage />
       <Footer />
     </div>
   );
