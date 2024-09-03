@@ -1,10 +1,14 @@
 import './App.css';
-import Footer from '../footer/footer.tsx';
+import Footer from '../footer/footer';
+import NavBar from './NavBar/NavBar';
+import Banner from './Banner/Banner';
 
 function App() {
   return (
     <div className="app">
-    <Footer/>
+      <NavBar />
+      <Banner />
+      <Footer />
     </div>
   );
 }
