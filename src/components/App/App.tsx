@@ -1,9 +1,10 @@
-import './App.scss';
+import './App.css';
+import Footer from '../footer/footer.tsx';
 
 function App() {
   return (
     <div className="app">
-      <h1>Commencer votre code ici</h1>
+    <Footer/>
     </div>
   );
 }
