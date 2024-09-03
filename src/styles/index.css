@@ -1,3 +1,6 @@
+/* Variable */
+@import './variables.css';
+/* Tailwind */
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
