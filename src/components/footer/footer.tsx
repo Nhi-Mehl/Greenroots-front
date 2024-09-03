@@ -14,7 +14,7 @@ function Footer() {
     <p className='text-center'><FontAwesomeIcon icon={faLinkedin} /> Linkedin</p> 
     </div>
     )
-
+// push test 
     return (
         <div className='p-20 bg-green-950 text-slate-50 text-sm flex flex-row justify-between leading-10'>
            <div>
