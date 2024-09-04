@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import HomePage from '../HomePage/HomePage';
 import Register from '../Register/Register';
 import ProjectDetails from '../ProjectDetailsPage/ProjectDetails';
+import LegalNotices from '../LegalNotices/LegalNotices';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<ProjectPage />} />
-        <Route path="/projectDetails" element={<ProjectDetails/>}/>
+        <Route path="/project-details" element={<ProjectDetails/>}/>
+        <Route path="/mentions-légales" element={<LegalNotices/>}/>
       </Routes>
 
       <Footer />
