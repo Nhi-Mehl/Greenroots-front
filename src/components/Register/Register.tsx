@@ -2,8 +2,8 @@ function Register() {
   return (
     <div className="p-20">
       <div className="flex flex-col mb-32 items-center border-2 border-solid border-green-950 bg-emerald-50">
-        <h1 className="text-3xl p-16">Inscrivez-vous</h1>
-        <p className="w-1/2 p-12">
+        <h1 className="text-3xl p-6">Inscrivez-vous</h1>
+        <p className="w-1/2 p-6">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
           laboriosam sunt quibusdam quo nostrum voluptas excepturi eos culpa,
           quos est repellendus consectetur odit soluta saepe iusto labore modi
@@ -126,7 +126,7 @@ function Register() {
           <div className="mt-8">
             <button
               type="submit"
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-100 ring-1 ring-inset bg-green-900"
+              className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-green-900"
             >
               Valider
             </button>

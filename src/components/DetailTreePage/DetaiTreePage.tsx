@@ -3,10 +3,7 @@ function DetailTreePage() {
     <main>
       <section>
         <h2>Tire du projet</h2>
-        <img
-          src="../../../../../public/images/project-3-home.jpg"
-          alt="nom arbre"
-        />
+        <img src="/images/project-3-home.jpg" alt="nom arbre" />
       </section>
       <section>
         <p>Nom de l’arbre: Groot</p>

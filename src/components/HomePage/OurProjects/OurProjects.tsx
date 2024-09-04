@@ -1,5 +1,3 @@
-// import bgOurProjects from '../../../../../public/images/bg-our-projetcs-home.jpg';
-import Projects from './Projects';
 import './OurProjects.css';
 
 function OurProjects() {
@@ -19,7 +17,6 @@ function OurProjects() {
         </p>
         {/* <img src={bgOurProjects} alt="background nos projects section" /> */}
       </div>
-      <Projects />
     </section>
   );
 }

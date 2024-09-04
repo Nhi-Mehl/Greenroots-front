@@ -1,38 +1,39 @@
 import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   return (
     <nav className="bg-green-950 h-32 text-white flex flex-row items-center justify-between z-10 w-full">
-      <div className="ml-16 w-14">
+      <Link to="/" className="ml-16 w-14">
         <img src="/images/logo-blanc-png.png" alt="Tree logo" />
-      </div>
+      </Link>
       <div>
         <ul className="flex flex-row gap-8">
           <li>
-            <a className="p-4" href="/">
+            <Link to="/projects" className="p-4">
               Nos projets
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="p-4" href="/">
+            <Link to="/qui-sommes-nous" className="p-4">
               Qui sommes nous
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="p-4" href="/">
+            <Link to="/contact" className="p-4">
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
       <div className="flex gap-8 mr-16">
-        <a className="p-4" href="/">
+        <Link to="/login" className="p-4">
           <FontAwesomeIcon icon={faUser} />
-        </a>
-        <a className="p-4" href="/">
+        </Link>
+        <Link to="/register" className="p-4">
           <FontAwesomeIcon icon={faCartShopping} />
-        </a>
+        </Link>
       </div>
     </nav>
   );
