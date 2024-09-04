@@ -1,17 +1,16 @@
 import './App.css';
-import Footer from '../footer/footer';
+import Footer from '../Footer/Footer';
 import ProjectPage from '../ProjectPage/ProjectPage';
-
-
-
+import Header from '../Header/Header';
+import HomePage from '../HomePage/HomePage';
 
 function App() {
-
-
   return (
     <div className="app">
-    <ProjectPage/>
-    <Footer/>
+      <Header />
+      <HomePage />
+      <ProjectPage />
+      <Footer />
     </div>
   );
 }
