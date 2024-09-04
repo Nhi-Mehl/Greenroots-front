@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import ProjectPage from '../ProjectPage/ProjectPage';
 import Header from '../Header/Header';
 import HomePage from '../HomePage/HomePage';
+import Register from '../Register/Register';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       </Routes>
 
       <Footer />
+      <Register />
     </div>
   );
 }
