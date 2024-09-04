@@ -1,4 +1,4 @@
-import ProjectList from "../Projects/Project"
+import ProjectList from "./Projects/Project"
 
 
 function ProjectPage () {
