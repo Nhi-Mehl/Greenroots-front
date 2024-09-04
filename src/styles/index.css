@@ -9,7 +9,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Prédéfinir Style les titres  */
+/* -------------- Prédéfinir style les titres --------------  */
 
 /* Titre Principal */
 .h1-title {
@@ -29,11 +29,16 @@
 
 /* Text Section */
 .sectionText {
-    @apply font-hind text-sectionText;
+    @apply font-hind text-sectionText font-medium;
 }
 
 
 /* Text Paraphrase */
 .regularText {
     @apply font-hind text-regularText;
+}
+
+/* -------------- Prédéfinir style les boutons --------------  */
+.btn {
+    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3;
 }

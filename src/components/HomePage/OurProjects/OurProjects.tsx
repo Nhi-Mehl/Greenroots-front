@@ -7,7 +7,7 @@ function OurProjects() {
     <section>
       <div className="bg-image p-20">
         <h2 className="h2-title text-white text-center">NOS PROJETS</h2>
-        <p className="sectionText text-white text-center leading-8 mt-8">
+        <p className="sectionText text-white text-center leading-8 mt-8 px-38">
           Chez GreenRoots, nous croyons que la reforestation est un enjeu
           mondial qui necessite des actions locales à travers le monde. C’est
           pourquoi nous avons lancé des projets internationaux dans plusieurs

@@ -12,11 +12,12 @@ export default {
         h1: '4rem', // 64px
         h2: '3rem', // 48 px
         h3: '1.5rem', // 24px
-        sectionText: '1.25rem', // 18px
+        sectionText: '1.5rem', // 18px
         regularText: '1rem', // 16px
       },
       fontWeight: {
         bold: '700',
+        medium: '500',
       },
       colors: {
         white: 'var(--white-color)',
@@ -26,6 +27,9 @@ export default {
         greenDark: 'var(--green-dark-color)',
         greenExtraDark: 'var(--green-extra-dark-color)',
         dark: 'var(--dark-color)',
+      },
+      height: {
+        128: '32rem',
       },
     },
   },
