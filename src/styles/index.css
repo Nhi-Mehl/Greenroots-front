@@ -1,3 +1,44 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;700&family=Montserrat:wght@400;500;700&display=swap');
+
+/* Variable */
+@import './variables.css';
+
+/* Tailwind */
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
+
+/* -------------- Prédéfinir style les titres --------------  */
+
+/* Titre Principal */
+.h1-title {
+    @apply font-montserrat text-h1 font-bold;
+}
+
+/* Titre Section */
+.h2-title {
+    @apply font-montserrat text-h2 font-bold;
+}
+
+
+/* Titre Article */
+.h3-title {
+    @apply font-montserrat text-h3 font-bold;
+}
+
+/* Text Section */
+.sectionText {
+    @apply font-hind text-sectionText font-medium;
+}
+
+
+/* Text Paraphrase */
+.regularText {
+    @apply font-hind text-regularText;
+}
+
+/* -------------- Prédéfinir style les boutons --------------  */
+.btn {
+    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3;
+}
