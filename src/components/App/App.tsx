@@ -8,6 +8,7 @@ import HomePage from '../HomePage/HomePage';
 import Register from '../Register/Register';
 import ProjectDetails from '../ProjectDetailsPage/ProjectDetails';
 import LegalNotices from '../LegalNotices/LegalNotices';
+import IntroducGr from '../IntroducieGr/IntroduceGr';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/projects" element={<ProjectPage />} />
         <Route path="/project-details" element={<ProjectDetails/>}/>
         <Route path="/mentions-légales" element={<LegalNotices/>}/>
+        <Route path="/à-propos-de-nous" element={<IntroducGr/>}/>
+
       </Routes>
 
       <Footer />
