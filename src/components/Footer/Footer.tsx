@@ -28,7 +28,7 @@ function Footer() {
   );
   // push test
   return (
-    <div className="p-20 bg-green-950 text-slate-50 text-sm flex flex-row justify-between leading-10">
+    <footer className="p-20 bg-green-950 text-slate-50 text-sm flex flex-row justify-between leading-10">
       <div>
         <h3 className="text-xl">GreenRoots</h3>
         <p>Adresse :</p>
@@ -46,7 +46,7 @@ function Footer() {
         <p>Mentions légales</p>
         <p>Nous contacter</p>
       </div>
-    </div>
+    </footer>
   );
 }
 

@@ -6,6 +6,7 @@ import ProjectPage from '../ProjectPage/ProjectPage';
 import Header from '../Header/Header';
 import HomePage from '../HomePage/HomePage';
 import Register from '../Register/Register';
+import ProjectDetails from '../ProjectDetailsPage/ProjectDetails';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<ProjectPage />} />
+        <Route path="/projectDetails" element={<ProjectDetails/>}/>
       </Routes>
 
       <Footer />
