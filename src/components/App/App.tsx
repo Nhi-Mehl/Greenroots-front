@@ -1,4 +1,6 @@
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+
 import Footer from '../Footer/Footer';
 import ProjectPage from '../ProjectPage/ProjectPage';
 import Header from '../Header/Header';
@@ -8,8 +10,12 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <HomePage />
-      <ProjectPage />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects" element={<ProjectPage />} />
+      </Routes>
+
       <Footer />
     </div>
   );
