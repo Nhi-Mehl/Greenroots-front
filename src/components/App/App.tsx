@@ -1,11 +1,8 @@
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-
+import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-import ProjectPage from '../ProjectPage/ProjectPage';
 import Header from '../Header/Header';
-import HomePage from '../HomePage/HomePage';
-import DetailTreePage from '../DetailTreePage/DetaiTreePage';
+import './App.css';
+import NavBar from '../Header/NavBar/NavBar';
 
 function App() {
   // const getProjects = async () => {
@@ -19,14 +16,8 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/projects" element={<ProjectPage />} />
-        <Route path="/projects/:id/trees/:id" element={<DetailTreePage />} />
-      </Routes>
-
+      <NavBar />
+      <Outlet />
       <Footer />
     </div>
   );

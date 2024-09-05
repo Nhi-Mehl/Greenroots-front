@@ -4,7 +4,7 @@ function Project() {
       <div className="w-1/3">
         <img
           className="w-full h-full object-cover"
-          src="../../../../../public/images/project-3-home.jpg"
+          src="/images/project-3-home.jpg"
           alt="projet:nom de projet"
         />
       </div>
