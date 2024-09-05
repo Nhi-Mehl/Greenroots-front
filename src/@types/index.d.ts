@@ -1,14 +1,15 @@
-export interface Project {
+export interface IProject {
     id: number;
     name: string;
     description: string;
     status: string;
+    picture: string;
     city: string;
     country: string;
     continent: string;
   }
   
-  export interface TreeProject {
+  export interface ITreeProject {
     id: number;
     basic_quantity: number;
     current_quantity: number;
@@ -16,7 +17,7 @@ export interface Project {
     tree_id: number;
   }
   
-  export interface Species {
+  export interface ISpecies {
     id: number;
     name: string;
     scientific_name: string;
@@ -26,7 +27,7 @@ export interface Project {
     co2_compensation: number;
   }
   
-  export interface User {
+  export interface IUser {
     id: number;
     first_name: string;
     last_name: string;
@@ -40,14 +41,14 @@ export interface Project {
     password: string;
   }
   
-  export interface Order {
+  export interface IOrder {
     id: number;
     amount: number;
     date: string;
     user_id: number;
   }
   
-  export interface OrderLine {
+  export interface IOrderLine {
     id: number;
     quantity: number;
     amount: number;
