@@ -1,9 +1,16 @@
 function DetailTreePage() {
   return (
-    <main>
-      <section>
-        <h2>Tire du projet</h2>
-        <img src="/images/project-3-home.jpg" alt="nom arbre" />
+    <main className="p-20">
+      <section className="w-full relative inline-block">
+        <img
+          className="w-4/5 h-200 object-cover mx-auto"
+          src="/images/id9-HêtreCommun.jpg"
+          alt="nom arbre"
+        />
+
+        <h2 className="absolute inset-0 flex items-center justify-center h1-title text-white">
+          Tire du projet
+        </h2>
       </section>
       <section className="w-4/5 my-20 mx-auto sectionText">
         <p>Nom de l’arbre: Groot</p>
