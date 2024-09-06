@@ -8,8 +8,11 @@ export interface IProject {
     country: string;
     continent: string;
   }
+  export interface IProjectWithTree extends IProject {
+    projectTreeData: IProjectTree;  // On étend IProject en ajoutant la propriété projectTreeData
+  }
   
-  export interface ITreeProject {
+  export interface IProjectTree {
     id: number;
     basic_quantity: number;
     current_quantity: number;
