@@ -7,11 +7,11 @@ import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    //errorElement: <ErrorPage />
+    // errorElement: <ErrorPage />
     children: [
       {
         path: '/',
@@ -40,3 +40,5 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+export default router;
