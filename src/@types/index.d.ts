@@ -3,6 +3,7 @@ export interface IProject {
   name: string;
   description: string;
   status: string;
+  picture: string;
   city: string;
   country: string;
   continent: string;

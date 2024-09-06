@@ -10,12 +10,12 @@ import Contact from './components/Contact/Contact';
 import IntroduceGr from './components/IntroducieGr/IntroduceGr';
 import LegalNotices from './components/LegalNotices/LegalNotices';
 import Panier from './components/Panier/Panier';
+import OrdersPage from './components/OrdersPage/OdersPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-
     children: [
       {
         path: '/',
@@ -56,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: '/panier',
         element: <Panier />,
+      },
+      {
+        path: '/orders',
+        element: <OrdersPage />,
       },
     ],
   },
