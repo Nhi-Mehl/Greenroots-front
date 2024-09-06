@@ -6,7 +6,7 @@ import Login from './components/Login/Login';
 import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
-import OrdersPage from './components/OrdersPage/OdersPage';
+import OrdersPage from './components/OrdersPage/OrdersPage';
 
 const router = createBrowserRouter([
   {
