@@ -6,6 +6,10 @@ import Login from './components/Login/Login';
 import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
+import Contact from './components/Contact/Contact';
+import IntroduceGr from './components/IntroducieGr/IntroduceGr';
+import LegalNotices from './components/LegalNotices/LegalNotices';
+import Panier from './components/Panier/Panier';
 import OrdersPage from './components/OrdersPage/OrdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 
@@ -13,7 +17,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    // errorElement: <ErrorPage />
     children: [
       {
         path: '/',
@@ -32,12 +35,28 @@ const router = createBrowserRouter([
         element: <DetailTreePage />,
       },
       {
-        path: '/project-detail',
+        path: '/projects',
+        element: <ProjectPage />,
+      },
+      {
+        path: '/projects/:id/:slug',
         element: <ProjectDetails />,
       },
       {
-        path: '/projects',
-        element: <ProjectPage />,
+        path: '/contact',
+        element: <Contact />,
+      },
+      {
+        path: '/qui-sommes-nous',
+        element: <IntroduceGr />,
+      },
+      {
+        path: '/mentions-legales',
+        element: <LegalNotices />,
+      },
+      {
+        path: '/panier',
+        element: <Panier />,
       },
       {
         path: '/orders',

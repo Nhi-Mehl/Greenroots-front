@@ -31,7 +31,7 @@ function NavBar() {
         <Link to="/login" className="p-4">
           <FontAwesomeIcon icon={faUser} />
         </Link>
-        <Link to="/register" className="p-4">
+        <Link to="/panier" className="p-4">
           <FontAwesomeIcon icon={faCartShopping} />
         </Link>
       </div>
