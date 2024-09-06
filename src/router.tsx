@@ -7,6 +7,7 @@ import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
 import OrdersPage from './components/OrdersPage/OrdersPage';
+import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: '/orders',
         element: <OrdersPage />,
+      },
+      {
+        path: '/orders/:id',
+        element: <OrderDetailPage />,
       },
     ],
   },
