@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
+import OrdersPage from './components/OrdersPage/OdersPage';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/projects',
         element: <ProjectPage />,
+      },
+      {
+        path: '/orders',
+        element: <OrdersPage />,
       },
     ],
   },
