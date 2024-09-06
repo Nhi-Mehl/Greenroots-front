@@ -6,13 +6,14 @@ import Login from './components/Login/Login';
 import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
+import OrdersPage from './components/OrdersPage/OdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    //errorElement: <ErrorPage />
+    // errorElement: <ErrorPage />
     children: [
       {
         path: '/',
@@ -39,9 +40,15 @@ export const router = createBrowserRouter([
         element: <ProjectPage />,
       },
       {
+        path: '/orders',
+        element: <OrdersPage />,
+      },
+      {
         path: '/orders/:id',
         element: <OrderDetailPage />,
       },
     ],
   },
 ]);
+
+export default router;
