@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <DetailTreePage />,
       },
       {
-        path: '/project-detail',
+        path: '/project-detail/:id',
         element: <ProjectDetails />,
       },
       {

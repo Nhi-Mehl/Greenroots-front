@@ -1,4 +1,29 @@
+import { useEffect, useState } from 'react';
+import { ITreeProject } from '../../@types';
+
 function DetailTreePage() {
+  // -------------------------- Stockage détail un arbre dans le State
+  // const [treeProject, setTreeProject] = useState<ITreeProject[]>([]);
+
+  // // Récupération un détail arbre d'un d'API
+  // const getTreeProject = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:3000/api/project_trees');
+  //     const data = await response.json();
+  //     setTreeProject(data);
+  //   } catch (error) {
+  //     console.error('Error fetching matière:', error);
+  //   }
+  // };
+
+  // Affiché les détails un arbre au premier rendu
+  // useEffect(() => {
+  //   console.log("application de l'effet rendu détaile un arbre");
+  //   getTreeProject();
+  // }, []);
+
+  // console.log(treeProject);
+
   return (
     <main className="p-20">
       <section className="w-full relative inline-block">
