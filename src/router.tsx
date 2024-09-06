@@ -10,7 +10,7 @@ import Contact from './components/Contact/Contact';
 import IntroduceGr from './components/IntroducieGr/IntroduceGr';
 import LegalNotices from './components/LegalNotices/LegalNotices';
 import Panier from './components/Panier/Panier';
-import OrdersPage from './components/OrdersPage/OdersPage';
+import OrdersPage from './components/OrdersPage/OrdersPage';
 
 const router = createBrowserRouter([
   {
