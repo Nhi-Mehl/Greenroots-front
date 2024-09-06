@@ -1,26 +1,29 @@
 function OrderDetailPage() {
   return (
-    <main className="w-max-7xl">
-      <h3 className="h3-title">Commande numéro 0010</h3>
-      <time>Date de la commande : 29/08/2024</time>
-      <ul>
-        <li>
-          <p>
-            Nom du projet <span>Reforestation Amazonie</span>
+    <main className="max-w-7xl mx-auto p-10">
+      <h2 className="h2-title text-center">Commande numéro 0010</h2>
+      <time className="block text-center sectionText ">
+        Date de la commande : 29/08/2024
+      </time>
+      <ul className="my-10">
+        <li className="p-6 bg-beige">
+          <p className="mb-2">
+            Nom du projet : <span>Reforestation Amazonie</span>
           </p>
-          <p>
-            Nom de l’arbre <span>Eucalyptus</span>
+          <p className="mb-2">
+            Nom de l’arbre : <span>Eucalyptus</span>
           </p>
-
-          <p>
-            <strong>Prix unitaire :</strong> <data value="15">15 €</data> X
-            <strong>Quantité :</strong> <span>3</span> =<strong>Total :</strong>
-            <data value="45">45 €</data>
-          </p>
-
-          <p>
-            Montant Unitaire X Quantité = <data value="45">45 €</data>
-          </p>
+          <div className="flex justify-between">
+            <p>
+              Prix unitaire : <data value="15">15 €</data>
+            </p>
+            <p>
+              Quantité : <data value="3">3</data>
+            </p>
+            <p>
+              Total : <data value="45">45 €</data>
+            </p>
+          </div>
         </li>
       </ul>
     </main>
