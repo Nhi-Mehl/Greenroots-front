@@ -9,15 +9,18 @@ function DetailTreePage() {
   const treePlanted = baseQuantity - currentQuantity;
 
   return (
-    <main>
-      <section>
-        <h2>{tree?.species.name}</h2>
+    <main className="p-20">
+      <section className="w-full relative inline-block">
         <img
+          className="w-4/5 h-200 object-cover mx-auto"
           src={`/images/species/${tree.species.picture}.webp`}
           alt={tree.species.name}
         />
+        <h2 className="absolute inset-0 flex items-center justify-center h1-title text-white">
+          {tree?.species.name}
+        </h2>
       </section>
-      <section>
+      <section className="w-4/5 my-20 mx-auto sectionText">
         <p>Nom de l’arbre: {tree?.species.name}</p>
         <p>Nom scientifique :{tree?.species.scientific_name}</p>
         <p>{tree.species.description}</p>
@@ -26,12 +29,14 @@ function DetailTreePage() {
         </p>
         <p>{}</p>
       </section>
-      <section>
+      <section className="flex justify-center gap-x-40 sectionText">
         <div>
           <p>Quantité disponible</p>
           <p>{tree.current_quantity}</p>
         </div>
-        <button type="button">Ajouter au panier</button>
+        <button className="btn" type="button">
+          Ajouter au panier
+        </button>
         <div>
           <p>Quantité planté</p>
           <p>{treePlanted}</p>
