@@ -1,31 +1,40 @@
+import { useLocation } from 'react-router-dom';
+
 function DetailTreePage() {
+  const location = useLocation();
+
+  const tree = location.state?.tree;
+  const baseQuantity = tree.basic_quantity;
+  const currentQuantity = tree.current_quantity;
+  const treePlanted = baseQuantity - currentQuantity;
+
   return (
     <main>
       <section>
-        <h2>Tire du projet</h2>
-        <img src="/images/project-3-home.jpg" alt="nom arbre" />
+        <h2>{tree?.species.name}</h2>
+        <img
+          src={`/images/species/${tree.species.picture}.webp`}
+          alt={tree.species.name}
+        />
       </section>
       <section>
-        <p>Nom de l’arbre: Groot</p>
-        <p>Nom scientifique : Grout Arborius Titanicus</p>
+        <p>Nom de l’arbre: {tree?.species.name}</p>
+        <p>Nom scientifique :{tree?.species.scientific_name}</p>
+        <p>{tree.species.description}</p>
         <p>
-          Grout Arborius Titanicus est le plus grand des végétaux à la fois sage
-          et boisé. Avec ses branches comme bras et son tronc majestueux, il
-          passe ses journées à rooter pour la nature tout en faisant des blagues
-          à ses amis forestiers.
+          Co2 : Absobre {tree.species.co2_compensation} tonnes de co2 par an
         </p>
-        <p>Co2 : Absobre 100 tonnes de co2 par an</p>
-        <p>Prix : 8€</p>
+        <p>{}</p>
       </section>
       <section>
         <div>
           <p>Quantité disponible</p>
-          <p>12</p>
+          <p>{tree.current_quantity}</p>
         </div>
         <button type="button">Ajouter au panier</button>
         <div>
           <p>Quantité planté</p>
-          <p>500</p>
+          <p>{treePlanted}</p>
         </div>
       </section>
     </main>

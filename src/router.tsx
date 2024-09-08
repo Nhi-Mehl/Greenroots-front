@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: '/project-tree',
+        path: '/tree/:id/:slug',
         element: <DetailTreePage />,
       },
       {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 interface ITreeSpecies {
   id: number;
@@ -30,12 +31,19 @@ interface IProject {
   continent: string;
   project_trees: IProjectTree[];
 }
+const createSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+}; // Renommé en IProject
 
 function ProjectDetails() {
   const { id } = useParams();
   const [project, SetProject] = useState<IProject | null>(null);
   const [projectTrees, setProjectTrees] = useState<IProjectTree[]>([]);
   const [totalBasicQuantity, setTotalBasicQuantity] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjetDetails = async () => {
@@ -46,7 +54,6 @@ function ProjectDetails() {
         );
 
         const data: IProject = await treesResponse.json();
-        console.log(data);
         SetProject(data);
 
         const treesData = data.project_trees || [];
@@ -71,6 +78,37 @@ function ProjectDetails() {
         supplie attend regarde ce que j&apos;ai fais ...
       </p>
     );
+  const handleAddToCart = (tree: IProjectTree) => {
+    const cart = localStorage.getItem('cart');
+    let cartItems: {
+      tree: IProjectTree;
+      quantity: number;
+      projectName: string;
+    }[] = cart ? JSON.parse(cart) : [];
+    const existingItem = cartItems.find(
+      (item) =>
+        item.tree.id === tree.id && item.tree.species.id === tree.species.id
+    );
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cartItems.push({ tree, quantity: 1, projectName: project.name });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Ajouter au panier',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
+  const handleDetailTree = (tree: object) => {
+    const slug = createSlug(tree.species.name);
+    navigate(`/tree/${tree.id}/${slug}`, { state: { tree } });
+  };
   return (
     <div>
       <div className="p-4 m-16 bg-greenLight text-white h-76 max-w-max ">
@@ -94,12 +132,14 @@ function ProjectDetails() {
                 <button
                   className="p-2 bg-transparent border-solid border-2 border-greenRegular"
                   type="button"
+                  onClick={() => handleAddToCart(tree)}
                 >
                   Ajouter au panier
                 </button>
                 <button
                   className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
                   type="button"
+                  onClick={() => handleDetailTree(tree)}
                 >
                   Détails
                 </button>
