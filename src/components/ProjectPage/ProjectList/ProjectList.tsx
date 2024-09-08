@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
-import { IProject } from '../../../@types/index.d'; // Renommé en IProject
+import { useNavigate } from 'react-router-dom';
+import { IProject } from '../../../@types/index.d';
+
+const createSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+}; // Renommé en IProject
 
 function ProjectList() {
   const [projects, setProjects] = useState<IProject[]>([]);
-
+  const navigate = useNavigate();
   // Limite de caractères pour la description
   const DESCRIPTION_LIMIT = 80;
 
@@ -52,6 +60,10 @@ function ProjectList() {
             <button
               className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
               type="button"
+              onClick={() => {
+                const slug = createSlug(project.name);
+                navigate(`/projects/${project.id}/${slug}}`);
+              }}
             >
               Suivre ce projet
             </button>
