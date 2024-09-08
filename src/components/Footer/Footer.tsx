@@ -5,6 +5,7 @@ import {
   faInstagram,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons'; // Importation des icônes spécifiques
+import { Link } from 'react-router-dom';
 
 function Footer() {
   const elements = (
@@ -39,12 +40,12 @@ function Footer() {
 
       {elements}
 
-      <div>
+      <div className="flex flex-col">
         <h4 className="text-xl">A propos</h4>
-        <p>Nos projets</p>
-        <p>A propos de nous</p>
-        <p>Mentions légales</p>
-        <p>Nous contacter</p>
+        <Link to="/projects">Nos projets</Link>
+        <Link to="/qui-sommes-nous">A propos de nous</Link>
+        <Link to="/mentions-legales">Mentions légales</Link>
+        <Link to="/contact">Nous contacter</Link>
       </div>
     </footer>
   );

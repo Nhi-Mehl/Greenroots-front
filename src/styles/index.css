@@ -4,6 +4,11 @@
 /* Variable */
 @import './variables.css';
 
+/* Définir font family sur tout le site */
+html {
+    font-family: 'hind', sans-serif;
+}
+
 /* Tailwind */
 @tailwind base;
 @tailwind components;
@@ -40,5 +45,5 @@
 
 /* -------------- Prédéfinir style les boutons --------------  */
 .btn {
-    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3;
+    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3 hover:bg-greenLight;
 }
