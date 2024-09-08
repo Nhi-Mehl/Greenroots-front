@@ -1,65 +1,40 @@
-import { useEffect, useState } from 'react';
-import { ITreeProject } from '../../@types';
+import { useLocation } from 'react-router-dom';
 
 function DetailTreePage() {
-  // -------------------------- Stockage détail un arbre dans le State
-  // const [treeProject, setTreeProject] = useState<ITreeProject[]>([]);
+  const location = useLocation();
 
-  // // Récupération un détail arbre d'un d'API
-  // const getTreeProject = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:3000/api/project_trees');
-  //     const data = await response.json();
-  //     setTreeProject(data);
-  //   } catch (error) {
-  //     console.error('Error fetching matière:', error);
-  //   }
-  // };
-
-  // Affiché les détails un arbre au premier rendu
-  // useEffect(() => {
-  //   console.log("application de l'effet rendu détaile un arbre");
-  //   getTreeProject();
-  // }, []);
-
-  // console.log(treeProject);
+  const tree = location.state?.tree;
+  const baseQuantity = tree.basic_quantity;
+  const currentQuantity = tree.current_quantity;
+  const treePlanted = baseQuantity - currentQuantity;
 
   return (
-    <main className="p-20">
-      <section className="w-full relative inline-block">
+    <main>
+      <section>
+        <h2>{tree?.species.name}</h2>
         <img
-          className="w-4/5 h-200 object-cover mx-auto"
-          src="/images/id9-HêtreCommun.jpg"
-          alt="nom arbre"
+          src={`/images/species/${tree.species.picture}.webp`}
+          alt={tree.species.name}
         />
-
-        <h2 className="absolute inset-0 flex items-center justify-center h1-title text-white">
-          Tire du projet
-        </h2>
       </section>
-      <section className="w-4/5 my-20 mx-auto sectionText">
-        <p>Nom de l’arbre: Groot</p>
-        <p>Nom scientifique : Grout Arborius Titanicus</p>
+      <section>
+        <p>Nom de l’arbre: {tree?.species.name}</p>
+        <p>Nom scientifique :{tree?.species.scientific_name}</p>
+        <p>{tree.species.description}</p>
         <p>
-          Grout Arborius Titanicus est le plus grand des végétaux à la fois sage
-          et boisé. Avec ses branches comme bras et son tronc majestueux, il
-          passe ses journées à rooter pour la nature tout en faisant des blagues
-          à ses amis forestiers.
+          Co2 : Absobre {tree.species.co2_compensation} tonnes de co2 par an
         </p>
-        <p>Co2 : Absobre 100 tonnes de co2 par an</p>
-        <p>Prix : 8€</p>
+        <p>{}</p>
       </section>
-      <section className="flex justify-center gap-x-40 sectionText">
-        <div className="">
+      <section>
+        <div>
           <p>Quantité disponible</p>
-          <p>12</p>
+          <p>{tree.current_quantity}</p>
         </div>
-        <button className="btn" type="button">
-          Ajouter au panier
-        </button>
+        <button type="button">Ajouter au panier</button>
         <div>
           <p>Quantité planté</p>
-          <p>500</p>
+          <p>{treePlanted}</p>
         </div>
       </section>
     </main>
