@@ -10,9 +10,10 @@ const createSlug = (name: string) => {
 
 interface ProjectProps {
   project: IProject;
+  index: number;
 }
 
-function Project({ project }: ProjectProps) {
+function Project({ project, index }: ProjectProps) {
   const navigate = useNavigate();
 
   const handleClickProjet = () => {
@@ -20,8 +21,12 @@ function Project({ project }: ProjectProps) {
     navigate(`/projects/${project.id}/${slug}`);
   };
 
+  const isEven = index % 2 === 0;
+
   return (
-    <article className="w-5/6 h-128 flex my-20 mx-auto border-greenRegular border-4">
+    <article
+      className={`w-5/6 h-128 flex ${isEven ? 'flex-row' : 'flex-row-reverse'} my-20 mx-auto border-greenRegular border-4`}
+    >
       <div className="w-1/3">
         <img
           className="w-full h-full object-cover"
