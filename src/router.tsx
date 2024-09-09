@@ -12,6 +12,7 @@ import LegalNotices from './components/LegalNotices/LegalNotices';
 import Panier from './components/Panier/Panier';
 import OrdersPage from './components/OrdersPage/OrdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
+import ProfilDetails from './components/ProfilDetails/ProfilDetails';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: '/contact',
         element: <Contact />,
+      },
+      {
+        path: '/userdetails',
+        element: <ProfilDetails/>
       },
       {
         path: '/qui-sommes-nous',

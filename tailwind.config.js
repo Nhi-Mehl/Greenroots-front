@@ -29,7 +29,8 @@ export default {
         dark: 'var(--dark-color)',
       },
       height: {
-        128: '32rem',
+        128: '32rem', // 512 px
+        200: '50rem', // 800 px
       },
     },
   },
