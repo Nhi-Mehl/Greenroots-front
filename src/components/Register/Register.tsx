@@ -1,4 +1,56 @@
+import { useState } from "react"
+
 function Register() {
+
+  // gestion des états des valeurs du formulaire
+  const [formData, setFormData] = useState({
+      
+      first_name: "",
+      last_name: "",
+      address: "",
+      zip_code: "",
+      city:"",      
+      country:"",      
+      phone_number:"",
+      email:"",
+      password:"",
+  })
+
+  // gestion des changements dans les inputs
+
+  const handleChange = async (event) => {
+    const { name, value } = event.target
+    setFormData({...formData,
+      [name]: value}
+    )
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch("http://localhost:5173/register", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+          body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        console.error("Erreur lors de l'inscription");
+      }
+      const result = await response.json();
+      
+    } catch (error) {
+      console.error("erreur pendant la requête")
+    }
+
+  }
+
+  console.log(setFormData);
+  
+
   return (
     <div className="p-20">
       <div className="flex flex-col mb-32 items-center border-2 border-solid border-green-950 bg-emerald-50">
@@ -14,6 +66,7 @@ function Register() {
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-14 border-2 border-solid border-green-950 bg-emerald-50"
           action="/register"
+          onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
             <label className="mb-2" htmlFor="first_name">
@@ -24,6 +77,8 @@ function Register() {
               id="first_name"
               name="first_name"
               placeholder="Votre prénom"
+              value={formData.first_name}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -36,6 +91,8 @@ function Register() {
               id="last_name"
               name="last_name"
               placeholder="Votre nom"
+              value={formData.last_name}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -48,6 +105,8 @@ function Register() {
               id="address"
               name="address"
               placeholder="Votre adresse"
+              value={formData.address}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -60,6 +119,8 @@ function Register() {
               id="zip_code"
               name="zip_code"
               placeholder="Votre code postal"
+              value={formData.zip_code}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -72,6 +133,8 @@ function Register() {
               id="city"
               name="city"
               placeholder="Votre ville"
+              value={formData.city}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -84,6 +147,8 @@ function Register() {
               id="country"
               name="country"
               placeholder="Votre pays"
+              value={formData.country}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -96,6 +161,8 @@ function Register() {
               id="phone_number"
               name="phone_number"
               placeholder="Votre téléphone"
+              value={formData.phone_number}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -108,6 +175,8 @@ function Register() {
               id="email"
               name="email"
               placeholder="Votre email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -120,6 +189,8 @@ function Register() {
               id="password"
               name="password"
               placeholder="Votre mot de passe"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
