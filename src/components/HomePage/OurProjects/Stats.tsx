@@ -40,7 +40,7 @@ function Stats() {
   }, []);
 
   return (
-    <div className="p-10 bg-gradient-to-r from-emerald-400 to-blue-500">
+    <div className="p-10 bg-gradient-to-r">
       <h1 className="w-full text-center text-6xl font-bold">
         QUELQUES CHIFFRES
       </h1>
