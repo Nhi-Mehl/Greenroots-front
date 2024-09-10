@@ -18,7 +18,6 @@ function Stats() {
         const projectFinish = projectData.filter(
           (project: IProject[]) => project.status === 'Terminé'
         );
-        console.log(projectFinish);
         setFinishProject(projectFinish.length);
 
         const totalBasicQuantity = data.reduce(
@@ -40,24 +39,24 @@ function Stats() {
   }, []);
 
   return (
-    <div className="p-10 bg-gradient-to-r">
-      <h1 className="w-full text-center text-6xl font-bold">
+    <div className="p-10">
+      <h1 className="w-full text-center text-lg font-bold ">
         QUELQUES CHIFFRES
       </h1>
-      <div className="flex flex-row justify-around w-full h-56">
+      <div className="flex flex-row justify-around w-full h-48">
         <div className="p-10">
-          <h2 className="text-center text-2xl font-bold">
-            NOMBRE DE PROJETS DÉJÀ REALISÉ
+          <h2 className="text-center text-sm font-bold lg:text-2xl">
+            PROJETS DÉJÀ REALISÉ
           </h2>
-          <h3 className="p-10 text-center text-5xl font-bold">
+          <h3 className="p-10 text-center text-sm font-bold lg:text-5xl">
             {finishProject}
           </h3>
         </div>
         <div className="p-10">
-          <h2 className="text-center text-2xl font-bold">
-            NOMBRE D&apos;ARBRES DÉJÀ PLANTÉS
-          </h2>
-          <h3 className=" p-10 text-center text-5xl font-bold">{finishTree}</h3>
+          <h2 className="text-center text-sm font-bold">ARBRES DÉJÀ PLANTÉS</h2>
+          <h3 className=" p-10 text-center text-sm font-bold lg:text-5xl">
+            {finishTree}
+          </h3>
         </div>
       </div>
     </div>

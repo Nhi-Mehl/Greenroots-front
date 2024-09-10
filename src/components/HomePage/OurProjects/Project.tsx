@@ -34,7 +34,7 @@ function Project({ project, index }: ProjectProps) {
           alt={project.name}
         />
       </div>
-      <div className=" w-2/3 flex flex-col gap-y-20 items-center justify-center p-20">
+      <div className="w-2/3 flex flex-col gap-y-20 items-center justify-center p-20">
         <h2 className="h2-title text-center">
           {project.country}, {project.city}
         </h2>

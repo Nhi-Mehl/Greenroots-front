@@ -1,8 +1,17 @@
 import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../Cart/CartContext/CartContext';
 
 function NavBar() {
+  const { cartItems } = useContext(CartContext);
+
+  const cartItemCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <nav className="bg-green-950 h-32 text-white flex flex-row items-center justify-between z-10 w-full">
       <Link to="/" className="ml-16 w-14">
@@ -31,8 +40,13 @@ function NavBar() {
         <Link to="/login" className="p-4">
           <FontAwesomeIcon icon={faUser} />
         </Link>
-        <Link to="/panier" className="p-4">
+        <Link to="/cart" className="p-4 relative">
           <FontAwesomeIcon icon={faCartShopping} />
+          {cartItemCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">
+              {cartItemCount}
+            </span>
+          )}
         </Link>
       </div>
     </nav>

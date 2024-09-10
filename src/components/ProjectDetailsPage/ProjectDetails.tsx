@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { CartContext } from '../Cart/CartContext/CartContext';
 
 interface ITreeSpecies {
   id: number;
   name: string;
   scientific_name: string;
   description: string;
-  price: string;
+  price: number;
   picture: string;
-  co2_compensation: string;
+  co2_compensation: number;
 }
 
 interface IProjectTree {
@@ -45,7 +46,11 @@ function ProjectDetails() {
   const [totalBasicQuantity, setTotalBasicQuantity] = useState<number>(0);
   const navigate = useNavigate();
 
+  const { addToCart } = useContext(CartContext);
+  console.log('addToCart:', addToCart);
+
   useEffect(() => {
+    console.log('useEffect triggered');
     const fetchProjetDetails = async () => {
       try {
         // Fetch projet details and project_trees in parallel
@@ -79,23 +84,14 @@ function ProjectDetails() {
       </p>
     );
   const handleAddToCart = (tree: IProjectTree) => {
-    const cart = localStorage.getItem('cart');
-    let cartItems: {
-      tree: IProjectTree;
-      quantity: number;
-      projectName: string;
-    }[] = cart ? JSON.parse(cart) : [];
-    const existingItem = cartItems.find(
-      (item) =>
-        item.tree.id === tree.id && item.tree.species.id === tree.species.id
-    );
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cartItems.push({ tree, quantity: 1, projectName: project.name });
+    console.log('handleAddToCart called');
+    if (!addToCart) {
+      console.error('addtoCart is not defined');
+      return;
     }
-
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    const projectName = project.name;
+    console.log('ProjectName:', projectName);
+    addToCart(tree, projectName);
 
     Swal.fire({
       position: 'center',
@@ -111,6 +107,13 @@ function ProjectDetails() {
   };
   return (
     <div>
+      <figure>
+        <img
+          className="w-full h-200 object-cover"
+          src={`/images/projets/${project.id}.jpg`}
+          alt="banner"
+        />
+      </figure>
       <div className="p-4 m-16 bg-greenLight text-white h-76 max-w-max ">
         <h1 className="text-5xl m-auto">{project.name}</h1>
         <h2 className="h3-title p-4 text-m text-center">

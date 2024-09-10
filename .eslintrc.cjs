@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react', 'react-refresh', 'prettier'],
   rules: {
+    'react/function-component-definition': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
