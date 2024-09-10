@@ -3,12 +3,11 @@ import './OurProjects.css';
 function OurProjects() {
   return (
     <section>
-      <div className="w-full bg-image p-10">
-        <h2 className="text-3xl text-white text-center">NOS PROJETS</h2>
-        <p
-          className="text-sm text-white text-center leading-5
-         mt-8 px-38"
-        >
+      <div className="h-128">
+        <img className='absolute h-128 object-cover w-screen bg-opacity-100' src="../../../../../public/images/bg-our-projetcs-home.jpg" alt="" />
+        <div className='absolute flex flex-col justify-center text-white text-center'>
+        <h2 className=" h2-title mt-2">NOS PROJETS</h2>
+        <p className="text-3xl font-semibold text leading-relaxed mt-8 mx-2">
           Chez GreenRoots, nous croyons que la reforestation est un enjeu
           mondial qui necessite des actions locales à travers le monde. C’est
           pourquoi nous avons lancé des projets internationaux dans plusieurs
@@ -19,6 +18,7 @@ function OurProjects() {
           générations à venir.
         </p>
         {/* <img src={bgOurProjects} alt="background nos projects section" /> */}
+        </div>
       </div>
     </section>
   );

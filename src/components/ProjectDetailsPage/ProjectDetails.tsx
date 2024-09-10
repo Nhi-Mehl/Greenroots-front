@@ -102,7 +102,7 @@ function ProjectDetails() {
   };
   const handleDetailTree = (tree: IProjectTreesWithSpecies) => {
     const slug = createSlug(tree.species.name);
-    navigate(`/tree/${tree.id}/${slug}`, { state: { tree } });
+    navigate(`/tree/${tree.id}/${slug}`, { state: { tree, projectName } });
   };
   return (
     <div>
@@ -143,7 +143,7 @@ function ProjectDetails() {
                 <button
                   className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
                   type="button"
-                  onClick={() => handleDetailTree(tree)}
+                  onClick={() => handleDetailTree(tree, project.name)}
                 >
                   Détails
                 </button>

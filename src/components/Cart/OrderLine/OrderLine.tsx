@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-interface OrderLine {
+interface OrderLineProps {
   item: {
     projectName: string;
     tree: {

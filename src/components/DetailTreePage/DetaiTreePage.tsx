@@ -1,12 +1,39 @@
+import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { IProjectTree } from '../../@types';
+import Swal from 'sweetalert2';
+import { CartContext } from '../Cart/CartContext/CartContext';
 
 function DetailTreePage() {
   const location = useLocation();
-
+  const { addToCart } = useContext(CartContext);
+  console.log('Location state:', location.state);
   const tree = location.state?.tree;
+  const projectName = location.state?.projectName;
+  console.log('Tree:', tree);
+  console.log('ProjectName:', projectName);
+
   const baseQuantity = tree.basic_quantity;
   const currentQuantity = tree.current_quantity;
   const treePlanted = baseQuantity - currentQuantity;
+
+  const handleAddToCart = (tree: IProjectTree) => {
+    if (!projectName) {
+      console.error('Project name is not defined');
+      return;
+    }
+    console.log('Adding to cart:', { tree, projectName });
+
+    addToCart(tree, projectName);
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Ajouter au panier',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
 
   return (
     <main className="p-20">
@@ -34,7 +61,11 @@ function DetailTreePage() {
           <p>Quantité disponible</p>
           <p>{tree.current_quantity}</p>
         </div>
-        <button className="btn" type="button">
+        <button
+          className="btn"
+          type="button"
+          onClick={() => handleAddToCart(tree)}
+        >
           Ajouter au panier
         </button>
         <div>
