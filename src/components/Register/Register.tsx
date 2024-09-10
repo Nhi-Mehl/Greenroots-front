@@ -43,7 +43,7 @@ function Register() {
       const result = await response.json();
       
     } catch (error) {
-      console.error("erreur pendant la requête")
+      console.error("erreur pendant la requête", result)
     }
 
   }

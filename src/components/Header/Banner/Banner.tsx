@@ -3,7 +3,7 @@ function Banner() {
     <div>
       <figure>
         <img
-          className="w-full h-auto"
+          className="w-screen h-200 object-cover"
           src="/images/header-photo.webp"
           alt="river forest"
         />

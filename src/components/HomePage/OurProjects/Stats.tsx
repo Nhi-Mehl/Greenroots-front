@@ -40,26 +40,25 @@ function Stats() {
   }, []);
 
   return (
-    <div className="p-10 bg-gradient-to-r">
-      <h1 className="w-full text-center text-6xl font-bold">
-        QUELQUES CHIFFRES
-      </h1>
-      <div className="flex flex-row justify-around w-full h-56">
-        <div className="p-10">
-          <h2 className="text-center text-2xl font-bold">
-            NOMBRE DE PROJETS DÉJÀ REALISÉ
+  <div className='w-screen font-semibold bg-beige'>
+    <h2 className='pt-12 bg-beige uppercase text-3xl text-center '>Quelques chiffres</h2>
+    <div className=" text-center flex flex-row justify-evenly h-60 ">
+      
+        <div className="m-auto flex flex-col justify-items-center gap-6">
+          <h2 className="uppercase text-2xl ">
+            Projets réalisés
           </h2>
-          <h3 className="p-10 text-center text-5xl font-bold">
+          <h3 className="text-center text-5xl ">
             {finishProject}
           </h3>
         </div>
-        <div className="p-10">
-          <h2 className="text-center text-2xl font-bold">
-            NOMBRE D&apos;ARBRES DÉJÀ PLANTÉS
+        <div className="m-auto flex flex-col justify-items-center gap-6">
+          <h2 className=" uppercase text-2xl ">
+            Arbres plantés
           </h2>
-          <h3 className=" p-10 text-center text-5xl font-bold">{finishTree}</h3>
+          <h3 className=" text-center text-5xl ">{finishTree}</h3>
         </div>
-      </div>
+    </div>
     </div>
   );
 }
