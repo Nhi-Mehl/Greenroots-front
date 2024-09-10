@@ -9,7 +9,7 @@ import ProjectPage from './components/ProjectPage/ProjectPage';
 import Contact from './components/Contact/Contact';
 import IntroduceGr from './components/IntroducieGr/IntroduceGr';
 import LegalNotices from './components/LegalNotices/LegalNotices';
-import Panier from './components/Panier/Panier';
+import Cart from './components/Cart/Cart';
 import OrdersPage from './components/OrdersPage/OrdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 import ProfilDetails from './components/ProfilDetails/ProfilDetails';
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/userdetails',
-        element: <ProfilDetails/>
+        element: <ProfilDetails />,
       },
       {
         path: '/qui-sommes-nous',
@@ -60,8 +60,8 @@ const router = createBrowserRouter([
         element: <LegalNotices />,
       },
       {
-        path: '/panier',
-        element: <Panier />,
+        path: '/cart',
+        element: <Cart />,
       },
       {
         path: '/orders',

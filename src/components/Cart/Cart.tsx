@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { CartContext } from '../Cart/CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
 
 interface ITreeSpecies {
@@ -6,9 +7,9 @@ interface ITreeSpecies {
   name: string;
   scientific_name: string;
   description: string;
-  price: string;
+  price: number;
   picture: string;
-  co2_compensation: string;
+  co2_compensation: number;
 }
 
 interface IProjectTree {
@@ -19,18 +20,13 @@ interface IProjectTree {
   species: ITreeSpecies[];
 }
 
-function Panier() {
-  const [cartItems, setCartItems] = useState<{ tree: IProjectTree }[]>([]);
+function Cart() {
+  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  useEffect(() => {
-    const cart = localStorage.getItem('cart');
-    if (cart) {
-      setCartItems(JSON.parse(cart));
-    }
-  }, []);
-  const totalAmount = cartItems.reduce((acc, item) => {
-    return acc + parseFloat(item.tree.species.price) * item.quantity;
-  }, 0);
+  const totalAmount = cartItems.reduce(
+    (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
+    0
+  );
 
   return (
     <div>
@@ -44,8 +40,20 @@ function Panier() {
           </p>
         ) : (
           <div>
-            {cartItems.map((item) => (
-              <OrderLine key={item.tree.id} item={item} />
+            {cartItems.map((item, index) => (
+              <OrderLine
+                key={item.tree.id}
+                item={item}
+                onIncrement={() =>
+                  updateQuantity(item.tree.id, item.quantity + 1)
+                }
+                onDecrement={() =>
+                  item.quantity > 1
+                    ? updateQuantity(item.tree.id, item.quantity - 1)
+                    : removeFromCart(item.tree.id)
+                }
+                onRemove={() => removeFromCart(item.tree.id)}
+              />
             ))}
           </div>
         )}
@@ -68,4 +76,4 @@ function Panier() {
   );
 }
 
-export default Panier;
+export default Cart;

@@ -36,7 +36,7 @@ function ProjectList() {
   }, []);
 
   return (
-    <div className="flex flex-row flex-wrap justify-center ">
+    <div className="flex flex-row flex-wrap justify-center mt-10 mb-10">
       {projects.map((project) => (
         <div
           key={project.id}

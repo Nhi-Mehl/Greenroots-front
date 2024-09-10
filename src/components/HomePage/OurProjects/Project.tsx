@@ -34,7 +34,11 @@ function Project({ project, index }: ProjectProps) {
           alt={project.name}
         />
       </div>
+<<<<<<< HEAD
       <div className=" flex flex-col gap-y-20 items-center justify-center p-12 text-justify">
+=======
+      <div className="w-2/3 flex flex-col gap-y-20 items-center justify-center p-20">
+>>>>>>> 2f4ddc5a44753ddaf5ee1fe48b20676d39faf15f
         <h2 className="h2-title text-center">
           {project.country}, {project.city}
         </h2>

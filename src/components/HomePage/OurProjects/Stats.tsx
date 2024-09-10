@@ -18,7 +18,6 @@ function Stats() {
         const projectFinish = projectData.filter(
           (project: IProject[]) => project.status === 'Terminé'
         );
-        console.log(projectFinish);
         setFinishProject(projectFinish.length);
 
         const totalBasicQuantity = data.reduce(
