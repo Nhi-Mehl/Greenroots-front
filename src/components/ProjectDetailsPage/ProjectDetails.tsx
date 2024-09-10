@@ -2,36 +2,12 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { CartContext } from '../Cart/CartContext/CartContext';
+import { ISpecies, IProject, IProjectTree } from '../../@types';
 
-interface ITreeSpecies {
-  id: number;
-  name: string;
-  scientific_name: string;
-  description: string;
-  price: number;
-  picture: string;
-  co2_compensation: number;
+interface IProjectTreesWithSpecies extends IProjectTree {
+  species: ISpecies; // L'arbre contient également une espèce
 }
 
-interface IProjectTree {
-  id: number;
-  basic_quantity: number;
-  current_quantity: number;
-  species_id: number;
-  species: ITreeSpecies[];
-}
-
-interface IProject {
-  id: number;
-  name: string;
-  description: string;
-  picture: string;
-  status: string;
-  city: string;
-  country: string;
-  continent: string;
-  project_trees: IProjectTree[];
-}
 const createSlug = (name: string) => {
   return name
     .toLowerCase()
@@ -41,41 +17,63 @@ const createSlug = (name: string) => {
 
 function ProjectDetails() {
   const { id } = useParams();
-  const [project, SetProject] = useState<IProject | null>(null);
-  const [projectTrees, setProjectTrees] = useState<IProjectTree[]>([]);
+
+  // Stockage détail un projet selon son ID dans le State
+  const [project, setProject] = useState<IProject | null>(null);
+  // Stockage les arbres un projet dans le State
+  const [projectTrees, setProjectTrees] = useState<IProjectTreesWithSpecies[]>(
+    []
+  );
+  // Stockage les quantités arbres total un projet dans le State
   const [totalBasicQuantity, setTotalBasicQuantity] = useState<number>(0);
   const navigate = useNavigate();
 
   const { addToCart } = useContext(CartContext);
   console.log('addToCart:', addToCart);
 
+  // Récupération un projet selon son id d'API
+  const getOneProject = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/projects/${id}`);
+      const data = await response.json();
+      setProject(data);
+    } catch (error) {
+      console.error('Error fetching matière:', error);
+    }
+  };
+
+  // Affiché les détails un projet au premier rendu
   useEffect(() => {
-    console.log('useEffect triggered');
-    const fetchProjetDetails = async () => {
+    console.log("application de l'effet rendu détaile un projet");
+    getOneProject();
+  }, []);
+
+  useEffect(() => {
+    console.log("application de l'effet rendu les arbres un projet");
+    // Récupération des arbres d'un projet d'API
+    const getTreesProject = async () => {
       try {
-        // Fetch projet details and project_trees in parallel
         const treesResponse = await fetch(
-          `http://localhost:3000/api/projects/${id}/project_trees`
+          `http://localhost:3000/api/project_trees/${id}`
         );
 
-        const data: IProject = await treesResponse.json();
-        SetProject(data);
+        const data = await treesResponse.json();
+        setProjectTrees(data);
 
-        const treesData = data.project_trees || [];
-
-        const totalQuantity = treesData.reduce(
-          (total: number, tree) => total + tree.basic_quantity,
+        const totalQuantity = data.reduce(
+          (total: number, tree: IProjectTreesWithSpecies) =>
+            total + tree.basic_quantity,
           0
         );
         setTotalBasicQuantity(totalQuantity);
-        setProjectTrees(treesData);
       } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
       }
     };
 
-    fetchProjetDetails();
+    getTreesProject();
   }, [id]); // Utilisez `id` comme dépendance unique
+
   if (!project)
     return (
       <p className="text-4xl text-center w-full ">
@@ -83,6 +81,7 @@ function ProjectDetails() {
         supplie attend regarde ce que j&apos;ai fais ...
       </p>
     );
+
   const handleAddToCart = (tree: IProjectTree) => {
     console.log('handleAddToCart called');
     if (!addToCart) {
@@ -101,8 +100,7 @@ function ProjectDetails() {
       timer: 2000,
     });
   };
-  const handleDetailTree = (tree: object, projectName: string) => {
-    console.log('Navigating to tree details with:', { tree, projectName });
+  const handleDetailTree = (tree: IProjectTreesWithSpecies) => {
     const slug = createSlug(tree.species.name);
     navigate(`/tree/${tree.id}/${slug}`, { state: { tree, projectName } });
   };
@@ -111,16 +109,18 @@ function ProjectDetails() {
       <figure>
         <img
           className="w-full h-200 object-cover"
-          src={`/images/projets/${project.id}.jpg`}
+          src={`/images/projets/${project !== null && project.id}.jpg`}
           alt="banner"
         />
       </figure>
       <div className="p-4 m-16 bg-greenLight text-white h-76 max-w-max ">
-        <h1 className="text-5xl m-auto">{project.name}</h1>
+        <h1 className="text-5xl m-auto">{project !== null && project.name}</h1>
         <h2 className="h3-title p-4 text-m text-center">
           Objectif : {totalBasicQuantity} arbres
         </h2>
-        <p className="p-4 text-s text-justify ">{project.description}</p>
+        <p className="p-4 text-s text-justify ">
+          {project !== null && project.description}
+        </p>
       </div>
       <div className="m-9 flex flex-row justify-around flex-wrap">
         {projectTrees.map((tree) => (
