@@ -25,7 +25,9 @@ function Projects() {
   return (
     <div className="bg-beige overflow-hidden">
       {projects.map((project, index) =>
-        index < 3 ? <Project key={project.id} project={project} /> : null
+         index < 3 ? (
+          <Project key={project.id} project={project} index={index} />
+        ) : null
       )}
     </div>
   );
