@@ -101,9 +101,10 @@ function ProjectDetails() {
       timer: 2000,
     });
   };
-  const handleDetailTree = (tree: object) => {
+  const handleDetailTree = (tree: object, projectName: string) => {
+    console.log('Navigating to tree details with:', { tree, projectName });
     const slug = createSlug(tree.species.name);
-    navigate(`/tree/${tree.id}/${slug}`, { state: { tree } });
+    navigate(`/tree/${tree.id}/${slug}`, { state: { tree, projectName } });
   };
   return (
     <div>
@@ -142,7 +143,7 @@ function ProjectDetails() {
                 <button
                   className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
                   type="button"
-                  onClick={() => handleDetailTree(tree)}
+                  onClick={() => handleDetailTree(tree, project.name)}
                 >
                   Détails
                 </button>
