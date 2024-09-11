@@ -29,7 +29,7 @@ function Project({ project, index }: ProjectProps) {
     >
       <div className="w-1/3">
         <img
-          className="w-full h-full object-cover"
+          className=" h-full w-full object-cover"
           src={`/images/projets/${project.picture}.jpg`}
           alt={project.name}
         />
