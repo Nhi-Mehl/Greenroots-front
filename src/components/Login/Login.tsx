@@ -13,13 +13,6 @@ function Login() {
   const { setUser, user } = useUser();
   const navigate = useNavigate();
 
-  // This useEffect will redirect the user to the profile page if they are already authenticated
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
   // s'authentifier en fournissant les identifiants
   const authenticate = async (formData: FormDataProps) => {
     try {
@@ -42,7 +35,7 @@ function Login() {
       localStorage.setItem('token', data.accessToken);
 
       const userResponse = await fetch(
-        `http://localhost:3000/api/user/${data.id}`,
+        `http://localhost:3000/api/users/users/${data.id}`,
         {
           method: 'GET',
           headers: {
@@ -64,6 +57,16 @@ function Login() {
     }
   };
 
+  console.log('user avant userEffect', user);
+
+  // This useEffect will redirect the user to the profile page if they are already authenticated
+  useEffect(() => {
+    if (user) {
+      console.log('User dans useEffect', user);
+      navigate('/projects');
+    }
+  }, [user, navigate]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -78,6 +81,7 @@ function Login() {
     console.log('Form submitted:', data); // Log pour vérifier les données soumises
     authenticate(data);
   };
+
   return (
     <main className="p-20">
       <section className="text-center mb-32 items-center border-2 border-solid border-greenRegular bg-emerald-50">
