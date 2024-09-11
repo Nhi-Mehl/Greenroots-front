@@ -26,16 +26,14 @@ function Register() {
   // Changements dans les inputs
 
   const handleChange = async (event) => {
-    const { name, value } = event.target
-    setFormData({...formData,
-      [name]: value}
-    )
-  }
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
 
 // Soumission du formulaire
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Vérification du mot de passe
     if (formData.password !== formData.confirmation) {
@@ -46,9 +44,9 @@ function Register() {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-          body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {

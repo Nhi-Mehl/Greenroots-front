@@ -25,16 +25,16 @@ function Project({ project, index }: ProjectProps) {
 
   return (
     <article
-    className={`w-5/6 h-96 flex flex ${isEven ? 'flex-row' : 'flex-row-reverse'} my-14 mx-auto border-greenRegular border-4`}
-  >
-      <div className="w-screen ">
+      className={`w-5/6 h-128 flex ${isEven ? 'flex-row' : 'flex-row-reverse'} my-20 mx-auto border-greenRegular border-4`}
+    >
+      <div className="w-1/3">
         <img
           className=" h-full w-full object-cover"
           src={`/images/projets/${project.picture}.jpg`}
           alt={project.name}
         />
       </div>
-      <div className="flex flex-col gap-y-6 items-center justify-center px-12 text-justify">
+      <div className="w-2/3 flex flex-col gap-y-20 items-center justify-center p-20">
         <h2 className="h2-title text-center">
           {project.country}, {project.city}
         </h2>
