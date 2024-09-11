@@ -39,6 +39,7 @@ export interface IUser {
   phone_number: string;
   email: string;
   password: string;
+  confirmation: string;
 }
 
 export interface IOrder {
