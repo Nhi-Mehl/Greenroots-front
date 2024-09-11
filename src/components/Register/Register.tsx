@@ -1,55 +1,48 @@
-import { useState } from "react"
+import { useState } from 'react';
 
 function Register() {
-
   // gestion des états des valeurs du formulaire
   const [formData, setFormData] = useState({
-      
-      first_name: "",
-      last_name: "",
-      address: "",
-      zip_code: "",
-      city:"",      
-      country:"",      
-      phone_number:"",
-      email:"",
-      password:"",
-  })
+    first_name: '',
+    last_name: '',
+    address: '',
+    zip_code: '',
+    city: '',
+    country: '',
+    phone_number: '',
+    email: '',
+    password: '',
+  });
 
   // gestion des changements dans les inputs
 
   const handleChange = async (event) => {
-    const { name, value } = event.target
-    setFormData({...formData,
-      [name]: value}
-    )
-  }
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5173/register", {
+      const response = await fetch('http://localhost:5173/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-          body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         console.error("Erreur lors de l'inscription");
       }
       const result = await response.json();
-      
     } catch (error) {
-      console.error("erreur pendant la requête", result)
+      console.error('erreur pendant la requête', result);
     }
-
-  }
+  };
 
   console.log(setFormData);
-  
 
   return (
     <div className="p-20">
