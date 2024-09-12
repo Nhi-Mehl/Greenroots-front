@@ -13,6 +13,7 @@ import Cart from './components/Cart/Cart';
 import OrdersPage from './components/OrdersPage/OrdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 import ProfilDetails from './components/ProfilDetails/ProfilDetails';
+import MyAccountPage from './components/MyAccountPage/MyAccountPage';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />,
+      },
+      {
+        path: '/my-account',
+        element: <MyAccountPage />,
       },
       {
         path: '/orders',

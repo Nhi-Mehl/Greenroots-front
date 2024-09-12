@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import NavBar from '../Header/NavBar/NavBar';
 import { CartProvider } from '../Cart/CartContext/CartContext';
 import { useUser } from '../../context/UserContext';
+import api from '../../api';
 
 function App() {
   const { setUser } = useUser();
@@ -15,8 +16,18 @@ function App() {
   // they will be redirected to the profile page, it's very convenient
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      //  Todo: fetch route /api/user/:id
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const fetchUserData = async () => {
+        try {
+          const response = await api.get('/users/:id');
+          setUser(response.data);
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      };
+      fetchUserData();
     }
   }, [setUser]);
 
