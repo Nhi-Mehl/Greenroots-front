@@ -35,7 +35,7 @@ function Login() {
       localStorage.setItem('token', data.accessToken);
 
       const userResponse = await fetch(
-        `http://localhost:3000/api/users/users/${data.id}`,
+        `http://localhost:3000/api/users/${data.id}`,
         {
           method: 'GET',
           headers: {

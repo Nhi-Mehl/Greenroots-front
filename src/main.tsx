@@ -6,7 +6,7 @@ import './styles/index.css';
 import { UserProvider } from './components/Context/UserContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  //<React.StrictMode>
+  // <React.StrictMode>
   <UserProvider>
     <RouterProvider router={router} />
   </UserProvider>
