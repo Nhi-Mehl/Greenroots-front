@@ -23,9 +23,9 @@ function Projects() {
   }, []);
 
   return (
-    <div className="bg-beige overflow-hidden">
+    <div className="bg-beige flex flex-col items-center justify-center">
       {projects.map((project, index) =>
-         index < 3 ? (
+        index < 3 ? (
           <Project key={project.id} project={project} index={index} />
         ) : null
       )}
