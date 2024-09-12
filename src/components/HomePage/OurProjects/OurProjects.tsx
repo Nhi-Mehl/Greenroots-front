@@ -3,7 +3,7 @@ import './OurProjects.css';
 function OurProjects() {
   return (
     <section>
-      <figure className="relative h-[300px] md:h-[360px] lg:h-[600px]">
+      <figure className=" relative h-[300px] md:h-[360px] lg:h-[600px]">
         <img
           className="h-full w-full object-cover"
           src="/images/bg-our-projetcs-home.jpg"
