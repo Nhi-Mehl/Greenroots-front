@@ -4,7 +4,7 @@ import './App.css';
 import Footer from '../Footer/Footer';
 import NavBar from '../Header/NavBar/NavBar';
 import { CartProvider } from '../Cart/CartContext/CartContext';
-import { useUser } from '../Context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 function App() {
   const { setUser } = useUser();
