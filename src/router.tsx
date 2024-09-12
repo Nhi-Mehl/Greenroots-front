@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import Register from './components/Register/Register';
 import HomePage from './components/HomePage/HomePage';
-import Login from './components/Login/Login';
+import Login from './components/LoginPage/LoginPage';
 import DetailTreePage from './components/DetailTreePage/DetaiTreePage';
 import ProjectDetails from './components/ProjectDetailsPage/ProjectDetails';
 import ProjectPage from './components/ProjectPage/ProjectPage';
