@@ -24,7 +24,7 @@ function Project({ project, index }: ProjectProps) {
   const isEven = index % 2 === 0;
 
   return (
-    <article className="w-5/6 my-14 lg:max-v-[1200px]">
+    <article className="w-5/6 bg-beige my-14 lg:max-v-[1200px]">
       <div
         className={`relative h-[500px] w-full border-greenRegular border-4 lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
       >

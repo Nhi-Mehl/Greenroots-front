@@ -21,6 +21,10 @@ function NavBar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="bg-green-900 flex h-28 w-full items-center justify-between px-8 text-white md:px-8">
       <Link to="/">
@@ -56,23 +60,50 @@ function NavBar() {
         </button>
       </div>
       {isMenuOpen && (
-        <div className="fixed inset-0 flex flex-col items-center space-y-12 bg-green-900 bg-opacity-100 py-20 md:hidden">
-          <Link to="/projects" className="text-lg text-white">
+        <div className="fixed z-50 inset-0 flex flex-col items-center space-y-12 bg-green-900 bg-opacity-100 py-20 md:hidden">
+          <Link to="/" className="text-lg text-white" onClick={handleLinkClick}>
+            Accueil
+          </Link>
+          <Link
+            to="/projects"
+            className="text-lg text-white"
+            onClick={handleLinkClick}
+          >
             Nos projets
           </Link>
-          <Link to="/qui-sommes-nous" className="text-lg text-white">
+          <Link
+            to="/qui-sommes-nous"
+            className="text-lg text-white "
+            onClick={handleLinkClick}
+          >
             Qui sommes nous
           </Link>
-          <Link to="/contact" className="text-lg text-white">
+          <Link
+            to="/contact"
+            className="text-lg text-white"
+            onClick={handleLinkClick}
+          >
             Contact
           </Link>
-          <Link to="/register" className="text-lg text-white">
+          <Link
+            to="/register"
+            className="text-lg text-white"
+            onClick={handleLinkClick}
+          >
             S&apos;incrire
           </Link>
-          <Link to="/login" className="text-lg text-white">
+          <Link
+            to="/login"
+            className="text-lg text-white"
+            onClick={handleLinkClick}
+          >
             Se connecter
           </Link>
-          <Link to="/cart" className="text-lg text-white">
+          <Link
+            to="/cart"
+            className="text-lg text-white"
+            onClick={handleLinkClick}
+          >
             Panier
           </Link>
           <button

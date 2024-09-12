@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <main>
       <Banner />
-
+      <Stats />
       <OurProjects />
       <Projects />
     </main>
