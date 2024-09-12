@@ -32,18 +32,21 @@ function ProjectDetails() {
   console.log('addToCart:', addToCart);
 
   // Récupération un projet selon son id d'API
-  const getOneProject = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/projects/${id}`);
-      const data = await response.json();
-      setProject(data);
-    } catch (error) {
-      console.error('Error fetching matière:', error);
-    }
-  };
 
   // Affiché les détails un projet au premier rendu
   useEffect(() => {
+    const getOneProject = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/projects/${id}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setProject(data);
+      } catch (error) {
+        console.error('Error fetching matière:', error);
+      }
+    };
     console.log("application de l'effet rendu détaile un projet");
     getOneProject();
   }, []);
@@ -101,6 +104,7 @@ function ProjectDetails() {
     });
   };
   const handleDetailTree = (tree: IProjectTreesWithSpecies) => {
+    const projectName = project.name;
     const slug = createSlug(tree.species.name);
     navigate(`/tree/${tree.id}/${slug}`, { state: { tree, projectName } });
   };
