@@ -1,20 +1,50 @@
+import { useEffect, useState } from "react";
+import { IUser } from "../../@types";
+import { useUser } from "../../context/UserContext";
+import api from "../../api/index";
+import { Navigate } from "react-router-dom";
+
 function ProfilDetails() {
+  const { user } = useUser()
+  // const [userDetails, setUserDetails] = useState<IUser | null>(null)
+
+  // useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       const response = await api.get(`/users/users/${user?.id}`); 
+  //       setUserDetails(response.data); 
+  //     } catch (error) {
+  //       console.error('Erreur lors de la récupération des détails de l\'utilisateur', error); 
+  //     }
+  //   };
+
+  //   if (user?.id) {
+  //     fetchUserDetails(); 
+  //   }
+  // }, [user?.id]); 
+
+  // if (!userDetails) {
+  //   return <p>Chargement des détails...</p>; 
+  // }
+if (!user) {
+  return <Navigate to="/login" replace />;
+}
   return (
     <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Details de mon profil</h1>
       <div className="mr-16 ml-16 flex flex-row  justify-evenly border-2 border-solid border-greenRegular w ">
         <div className="p-6">
-          <p className="text-center">Nom :</p>
-          <p className="text-center">Prénom :</p>
-          <p className="text-center">Email :</p>
-          <p className="text-center">Téléphone :</p>
+          <p className="text-center">Nom : {user.last_name}</p>
+          <p className="text-center">Prénom : {user.first_name}</p>
+          <p className="text-center">Email : {user.email}</p>
+          <p className="text-center">Téléphone : {user.phone_number}</p>
         </div>
 
         <div className="p-6">
-          <p className="text-center">Adresse :</p>
-          <p className="text-center">Code postal :</p>
-          <p className="text-center">Ville</p>
-          <p className="text-center">Pays :</p>
+          <p className="text-center">Adresse : {user.address}</p>
+          <p className="text-center">Code postal : {user.zip_code}</p>
+          <p className="text-center">Ville : {user.city}</p>
+          <p className="text-center">Pays : {user.country}</p>
         </div>
       </div>
 
