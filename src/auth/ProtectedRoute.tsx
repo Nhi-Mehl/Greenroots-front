@@ -3,7 +3,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 
 // This hook is a custom hook that we created in the previous step.
-import { useUser } from '../Context/UserContext';
+import { useUser } from '../context/UserContext';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   // The location might be useful to redirect the user back to the page they were trying to access before they were redirected to the login page.

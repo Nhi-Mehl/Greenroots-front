@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../Context/UserContext';
+import axios from 'axios';
+import { useUser } from '../../context/UserContext';
+import api from '../../api';
 
 interface FormDataProps {
   email: string;
@@ -16,54 +18,32 @@ function Login() {
   // s'authentifier en fournissant les identifiants
   const authenticate = async (formData: FormDataProps) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await api.post('/auth/login', formData);
+      console.log('reponse', response);
 
-      const data = await response.json();
-      console.log('Login response:', data); // Log pour voir la réponse
+      if (response.status === 200) {
+        localStorage.setItem('token', response.data.accessToken);
 
-      if (!response.ok) {
-        console.error(data.message);
-        return;
-      }
+        const userResponse = await api.get(`/users/${response.data.id}`);
+        console.log('userReponse', userResponse);
 
-      localStorage.setItem('token', data.accessToken);
-
-      const userResponse = await fetch(
-        `http://localhost:3000/api/users/${data.id}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${data.accessToken}`,
-          },
+        if (userResponse.status === 200) {
+          setUser(userResponse.data);
         }
-      );
-
-      if (!userResponse.ok) {
-        console.error('Failed to fetch user data');
-        return;
       }
-
-      const userData = await userResponse.json();
-      console.log('User data:', userData); // Log pour vérifier les données utilisateur
-      setUser(userData);
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (error: import('axios').AxiosError | unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error?.response?.data.message);
+      }
     }
   };
-
   console.log('user avant userEffect', user);
 
   // This useEffect will redirect the user to the profile page if they are already authenticated
   useEffect(() => {
     if (user) {
       console.log('User dans useEffect', user);
-      navigate('/projects');
+      navigate('/my-account');
     }
   }, [user, navigate]);
 

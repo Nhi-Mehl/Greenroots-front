@@ -3,7 +3,7 @@
 // et une fonction pour définir user object sur le reste de l'application.
 // Le hook useUser personnalisé est utilisé pour accéder à user object et à la fonction setUser à partir de UserContext.
 import { createContext, useContext, useState } from 'react';
-import { IUser } from '../../@types';
+import { IUser } from '../@types';
 
 interface UserContextType {
   user: IUser | null;
