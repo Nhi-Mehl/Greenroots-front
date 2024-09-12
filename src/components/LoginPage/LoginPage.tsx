@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext';
 import api from '../../api';
@@ -10,10 +10,11 @@ interface FormDataProps {
 }
 
 function Login() {
+  const navigate = useNavigate();
+  // const location = useLocation(); // Obtenir l'URL actuelle
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { setUser, user } = useUser();
-  const navigate = useNavigate();
 
   // s'authentifier en fournissant les identifiants
   const authenticate = async (formData: FormDataProps) => {
