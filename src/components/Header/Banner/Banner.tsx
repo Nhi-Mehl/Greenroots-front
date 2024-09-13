@@ -1,6 +1,7 @@
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Banner() {
+  const navigate = useNavigate();
   const location = useLocation();
   const getImageForRoute = () => {
     switch (location.pathname) {
@@ -13,15 +14,34 @@ function Banner() {
         return '/images/banner/default-banner.webp';
     }
   };
+
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <div>
-      <figure>
-        <img
-          className="w-full max-h-200 lg:max-h-[1000px]"
-          src={getImageForRoute()}
-          alt="banner"
-        />
-      </figure>
+      <img
+        className="w-full lg:max-h-[800px] object-cover object-top"
+        src={getImageForRoute()}
+        alt="banner"
+      />
+      <div className="absolute inset-0 flex flex-col gap-10 items-center justify-center text-white">
+        <h1 className="h1-title text-center mt-8">
+          Plantez aujourd’hui,
+          <span className="block"> protégez demain</span>
+        </h1>
+        <p className="text-2xl text-center mt-6">
+          Rejoignez notre communauté pour un avenir durable où chaque arbre
+          planté{' '}
+          <span className="block">
+            fait germer l'espoir d'une planète plus verte
+          </span>
+        </p>
+        <button className="btn mt-6" type="button" onClick={handleRegister}>
+          S’inscrire
+        </button>
+      </div>
     </div>
   );
 }

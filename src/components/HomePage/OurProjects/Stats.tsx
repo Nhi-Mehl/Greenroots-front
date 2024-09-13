@@ -27,8 +27,8 @@ function Stats() {
   }, []);
 
   return (
-    <div className="w-screen font-semibold bg-beige 2xl:h-96">
-      <h2 className="pt-6 bg-beige uppercase text-xl text-center md:text-xl 2xl:text-5xl ">
+    <div className="w-screen font-semibold 2xl:h-96">
+      <h2 className="pt-6 uppercase text-xl text-center md:text-xl 2xl:text-5xl ">
         Quelques chiffres
       </h2>
       <div className=" text-center flex flex-row justify-evenly ">

@@ -45,5 +45,5 @@ html {
 
 /* -------------- Prédéfinir style les boutons --------------  */
 .btn {
-    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3 hover:bg-greenLight;
+    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg py-3 px-5 hover:bg-greenLight;
 }
