@@ -10,6 +10,7 @@ import { CartContext } from '../../Cart/CartContext/CartContext';
 import { useUser } from '../../../context/UserContext';
 
 function NavBar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
 
   const cartItemCount = cartItems.reduce(
@@ -39,8 +40,8 @@ function NavBar() {
         <Link to="/qui-sommes-nous">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
-      <div className="flex gap-8 mr-16">
-        <Link to="/login" className="p-4">
+      <div className="flex items-center space-x-4  lg:text-2xl lg:mr-10">
+        <Link to="/register" className="hidden p-4 md:inline">
           <FontAwesomeIcon icon={faUser} />
         </Link>
         <Link to="/cart" className="hidden p-4 md:inline">
