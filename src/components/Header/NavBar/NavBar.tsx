@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { CartContext } from '../../Cart/CartContext/CartContext';
+import { useUser } from '../../../context/UserContext';
 
 function NavBar() {
+  const { user } = useUser();
   const { cartItems } = useContext(CartContext);
 
   const cartItemCount = cartItems.reduce(
@@ -37,7 +39,7 @@ function NavBar() {
         </ul>
       </div>
       <div className="flex gap-8 mr-16">
-        <Link to="/login" className="p-4">
+        <Link to={user ? '/my-account' : '/login'} className="p-4">
           <FontAwesomeIcon icon={faUser} />
         </Link>
         <Link to="/cart" className="p-4 relative">

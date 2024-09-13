@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext';
 import api from '../../api';
@@ -44,7 +44,7 @@ function Login() {
   useEffect(() => {
     if (user) {
       console.log('User dans useEffect', user);
-      navigate('/my-account');
+      navigate(-1);
     }
   }, [user, navigate]);
 
