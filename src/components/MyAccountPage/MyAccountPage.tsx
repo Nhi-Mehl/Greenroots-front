@@ -16,7 +16,7 @@ function MyAccountPage() {
           className="btn"
           type="button"
           onClick={() => {
-            navigate(`/my-account/orders/${user.id}`);
+            navigate(`/userdetails`);
           }}
         >
           Mon profil
@@ -25,7 +25,7 @@ function MyAccountPage() {
           className="btn"
           type="button"
           onClick={() => {
-            navigate(`/my-account/profile/${user.id}`);
+            navigate(`/orders`);
           }}
         >
           Mes commandes
