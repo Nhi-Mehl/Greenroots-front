@@ -32,7 +32,7 @@ function App() {
   }, [setUser]);
 
   return (
-    <div className="app">
+    <div className="bg-zinc-300">
       <CartProvider>
         <NavBar />
         <Outlet />

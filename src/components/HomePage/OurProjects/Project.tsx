@@ -24,24 +24,34 @@ function Project({ project, index }: ProjectProps) {
   const isEven = index % 2 === 0;
 
   return (
-    <article
-      className={`w-5/6 h-128 flex ${isEven ? 'flex-row' : 'flex-row-reverse'} my-20 mx-auto border-greenRegular border-4`}
-    >
-      <div className="w-1/3">
-        <img
-          className=" h-full w-full object-cover"
-          src={`/images/projets/${project.picture}.jpg`}
-          alt={project.name}
-        />
-      </div>
-      <div className="w-2/3 flex flex-col gap-y-20 items-center justify-center p-20">
-        <h2 className="h2-title text-center">
-          {project.country}, {project.city}
-        </h2>
-        <p className="sectionText ">{project.description}</p>
-        <button className="btn" type="button" onClick={handleClickProjet}>
-          En savoir plus
-        </button>
+    <article className="w-5/6 bg-beige my-14 lg:max-v-[1200px]">
+      <div
+        className={`relative h-[500px] w-full border-greenRegular border-4 lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+      >
+        <div className="h-full lg:w-1/2">
+          <img
+            className=" h-[200px] w-full object-cover lg:h-full"
+            src={`/images/projets/${project.picture}.jpg`}
+            alt={project.name}
+          />
+        </div>
+        <div
+          className={`absolute top-56 flex flex-col lg:top-10 lg:w-1/2 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
+        >
+          <h2 className="mb-8 text-center font-semibold lg:text-4xl">
+            {project.country}, {project.city}
+          </h2>
+          <p className="text-center text-xs lg:p-4 lg:text-lg ">
+            {project.description}
+          </p>
+          <button
+            className="m-8 rounded bg-green-600 px-1 py-2 text-center"
+            type="button"
+            onClick={handleClickProjet}
+          >
+            En savoir plus
+          </button>
+        </div>
       </div>
     </article>
   );
