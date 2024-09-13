@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../Cart/CartContext/CartContext';
+import { useUser } from '../../../context/UserContext';
 
 function NavBar() {
+  const { user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
 
@@ -39,8 +41,8 @@ function NavBar() {
         <Link to="/qui-sommes-nous">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
-      <div className="flex items-center space-x-4  lg:text-2xl lg:mr-10">
-        <Link to="/register" className="hidden p-4 md:inline">
+      <div className="flex gap-8 mr-16">
+        <Link to={user ? '/my-account' : '/login'} className="p-4">
           <FontAwesomeIcon icon={faUser} />
         </Link>
         <Link to="/cart" className="hidden p-4 md:inline">
