@@ -1,27 +1,26 @@
-import { useState } from "react"
-import { IUser } from "../../@types"
-import Swal from "sweetalert2";
+import { useState } from 'react';
+import { IUser } from '../../@types';
+import Swal from 'sweetalert2';
 
 function Register() {
-
   // Etats des valeurs du formulaire
   const [formData, setFormData] = useState<IUser>({
-      id: "",
-      first_name: "",
-      last_name: "",
-      address: "",
-      zip_code: "",
-      city:"",      
-      country:"",      
-      phone_number:"",
-      email:"",
-      password:"",
-      confirmation: "",
-  })
+    id: '',
+    first_name: '',
+    last_name: '',
+    address: '',
+    zip_code: '',
+    city: '',
+    country: '',
+    phone_number: '',
+    email: '',
+    password: '',
+    confirmation: '',
+  });
 
-    // Etat de succès ou d'erreur
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+  // Etat de succès ou d'erreur
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Changements dans les inputs
 
@@ -30,18 +29,17 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
-
-// Soumission du formulaire
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Vérification du mot de passe
     if (formData.password !== formData.confirmation) {
-      setErrorMessage("Les mots de passe ne correspondent pas")
+      setErrorMessage('Les mots de passe ne correspondent pas');
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,12 +52,12 @@ function Register() {
         return;
       }
       const result = await response.json();
-      
-      setIsRegistered(true)
+
+      setIsRegistered(true);
     } catch (error) {
-      console.error("erreur pendant la requête", error)
+      console.error('erreur pendant la requête', error);
     }
-  }
+  };
 
   if (isRegistered) {
     return (
@@ -67,15 +65,13 @@ function Register() {
         <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
           <h1 className="text-3xl mb-4">Inscription réussie</h1>
           <p className="text-lg">
-            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit sur notre plateforme.
+            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit
+            sur notre plateforme.
           </p>
         </div>
       </div>
     );
   }
-
-  
-  
 
   return (
     <div className="p-20">
@@ -94,12 +90,9 @@ function Register() {
           action="/register"
           onSubmit={handleSubmit}
         >
-          
           {/* Message d'erreur si les mots de passe ne correspondent pas */}
           {errorMessage && (
-            <div className="col-span-2 text-red-600 mb-4">
-              {errorMessage}
-            </div>
+            <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
           )}
 
           <div className="flex flex-col">
@@ -227,15 +220,14 @@ function Register() {
               onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            
           </div>
-          
+
           <div className="flex flex-col">
             <label className="mb-2" htmlFor="confirmation">
               Confirmation de mot de passe
             </label>
             <input
-              type="text"
+              type="password"
               id="confirmation"
               name="confirmation"
               placeholder="Confirmez votre mot de passe"
@@ -243,7 +235,6 @@ function Register() {
               onChange={handleChange}
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            
           </div>
 
           <div className="mt-8">

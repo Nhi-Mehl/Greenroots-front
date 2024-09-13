@@ -16,7 +16,11 @@ function Banner() {
   return (
     <div>
       <figure>
-        <img className="w-full h-128" src={getImageForRoute()} alt="banner" />
+        <img
+          className="w-full max-h-200 lg:max-h-[1000px]"
+          src={getImageForRoute()}
+          alt="banner"
+        />
       </figure>
     </div>
   );

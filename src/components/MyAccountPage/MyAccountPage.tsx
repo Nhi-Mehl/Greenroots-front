@@ -18,7 +18,7 @@ function MyAccountPage() {
 
   return (
     <div>
-      <h2 className="h2-title text-center mt-10">Mom Compte</h2>
+      <h2 className="h2-title text-center mt-10">Mon Compte</h2>
       <p className="text-center sectionText">Bonjour {user.first_name}</p>
       <div className="flex gap-10 justify-center my-20">
         <button
