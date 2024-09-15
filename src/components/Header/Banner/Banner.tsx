@@ -1,66 +1,64 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import BannerContent from './BannerContent';
 
 function Banner() {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const location = useLocation();
-  const getImageForRoute = () => {
-    switch (location.pathname) {
-      case '/':
-        return '/images/banner/header-photo.webp';
-      case '/projects':
-        return '/images/banner/bg-projects-page.jpg';
-      // Par défaut, tu peux définir une image pour les routes non spécifiées
-      default:
-        return '/images/banner/default-banner.webp';
-    }
-  };
 
-  const handleRegister = () => {
-    navigate('/register');
-  };
-
-  const getTitleForRoute = () => {
-    switch (location.pathname) {
-      case '/projects':
-        return (
-          <div className="absolute inset-0 flex flex-col gap-10 items-center justify-center text-white">
-            <h1 className="h1-title text-center mt-8">Notre Projets</h1>
-          </div>
-        );
-
-      case '/':
-        return (
-          <div className="absolute inset-0 flex flex-col gap-10 items-center justify-center text-white">
-            <h1 className="h1-title text-center mt-8">
-              Plantez aujourd’hui,
-              <span className="block"> protégez demain</span>
-            </h1>
-            <p className="text-2xl text-center mt-6">
+  // Tableau des routes avec leurs valeurs associées
+  const routesWithContent: {
+    [key: string]: { image: string; content: JSX.Element } | null;
+  } = {
+    '/': {
+      image: '/images/banner/header-photo.webp',
+      content: (
+        <BannerContent
+          title="Plantez aujourd’hui,"
+          subtitle=" protégez demain"
+          description={
+            <>
               Rejoignez notre communauté pour un avenir durable où chaque arbre
               planté
               <span className="block">
-                fait germer l'espoir d'une planète plus verte
+                fait germer l'espoir d'une planète plus verte.
               </span>
-            </p>
-            <button className="btn mt-6" type="button" onClick={handleRegister}>
-              S’inscrire
-            </button>{' '}
-          </div>
-        );
-
-      default:
-        return null;
-    }
+            </>
+          }
+          buttonText="S’inscrire"
+          onButtonClick={() => navigate('/register')}
+        />
+      ),
+    },
+    '/projects': {
+      image: '/images/banner/bg-projects-page.jpg',
+      content: <BannerContent title="Nos Projets" />,
+    },
   };
+
+  // Récupérer l'image en fonction de la route actuelle
+  const routeData = routesWithContent[pathname];
+
+  // Debugging pour vérifier ce qui est renvoyé
+  console.log('Current pathname:', pathname);
+  console.log('Route data:', routeData);
 
   return (
     <div className="relative">
-      <img
-        className="w-full lg:max-h-[800px] object-cover object-top"
-        src={getImageForRoute()}
-        alt="banner"
-      />
-      {getTitleForRoute()}
+      {routeData && (
+        <>
+          {/* Afficher l'image */}
+          <img
+            className="w-full max-h-200 lg:max-h-[1000px] object-cover object-top"
+            src={routeData.image}
+            alt="banner"
+          />
+
+          {/* Afficher le contenu */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {routeData.content}
+          </div>
+        </>
+      )}
     </div>
   );
 }
