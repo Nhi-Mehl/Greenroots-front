@@ -64,19 +64,18 @@ function Login() {
   };
 
   return (
-    <main className="p-20">
-      <section className="text-center mb-32 items-center border-2 border-solid border-greenRegular bg-emerald-50">
-        <h1 className="text-3xl p-6">Connectez-vous</h1>
-        <p className="w-1/2 p-6 mx-auto">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad eveniet
-          at totam perferendis, blanditiis minus maxime id architecto sapiente
-          ut omnis aliquam nemo autem explicabo sequi libero adipisci aliquid
-          maiores.
+    <main className="p-4 my-8">
+      <section className="flex flex-col my-10 items-center border-2 border-solid border-green-950 bg-emerald-50 lg:max-w-[1024px] lg:m-auto lg:my-20">
+        <h1 className="text-3xl p-4 lg:text-5xl">Connectez-vous</h1>
+        <p className="w-5/6 p-2 text-sm text-center lg:text-lg">
+          Connectez-vous pour accéder à votre compte, suivre vos achats d'arbres
+          et voir l&apos;impact de vos contributions. Rejoignez la communauté et
+          continuez à agir pour la reforestation.
         </p>
       </section>
-      <section className="flex justify-center">
+      <section className="flex justify-center lg:max-w-[1024px] lg:m-auto">
         <form
-          className="w-2/5 p-14 border-2 border-solid border-greenRegular bg-emerald-50 "
+          className="p-6 border-2 border-solid my-10 border-green-950 bg-emerald-50 "
           action="/login"
           onSubmit={handleSubmit}
         >
@@ -87,8 +86,9 @@ function Login() {
               type="email"
               id="email"
               name="email"
+              placeholder="Votre email"
               onChange={(e) => setEmail(e.target.value)}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </label>
 
@@ -101,7 +101,7 @@ function Login() {
               id="password"
               name="password"
               placeholder="Votre mot de passe"
-              className=" w-full rounded-md border-0 py-2 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </label>
 
