@@ -2,7 +2,8 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { CartContext } from '../Cart/CartContext/CartContext';
-import { ISpecies, IProject, IProjectTree } from '../../@types';
+import { useProject } from '../../context/ProjectContext';
+import { ISpecies, IProjectTree } from '../../@types';
 
 interface IProjectTreesWithSpecies extends IProjectTree {
   species: ISpecies; // L'arbre contient également une espèce
@@ -19,7 +20,7 @@ function ProjectDetails() {
   const { id } = useParams();
 
   // Stockage détail un projet selon son ID dans le State
-  const [project, setProject] = useState<IProject | null>(null);
+  const { project, setProject } = useProject();
   // Stockage les arbres un projet dans le State
   const [projectTrees, setProjectTrees] = useState<IProjectTreesWithSpecies[]>(
     []
@@ -49,7 +50,7 @@ function ProjectDetails() {
     };
     console.log("application de l'effet rendu détaile un projet");
     getOneProject();
-  }, []);
+  }, [id, setProject]);
 
   useEffect(() => {
     console.log("application de l'effet rendu les arbres un projet");

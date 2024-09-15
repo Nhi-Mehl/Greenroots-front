@@ -30,6 +30,10 @@ function Banner() {
       image: '/images/banner/bg-projects-page.jpg',
       content: <BannerContent title="Nos Projets" />,
     },
+    '/project': {
+      image: '/images/banner/bg-projects-page.jpg',
+      content: <BannerContent title="Nos Projets" />,
+    },
   };
 
   // Récupérer l'image en fonction de la route actuelle
