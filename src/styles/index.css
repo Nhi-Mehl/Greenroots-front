@@ -18,7 +18,7 @@ html {
 
 /* Titre Principal */
 .h1-title {
-    @apply font-montserrat text-h1 font-bold;
+    @apply font-montserrat text-3xl font-bold;
 }
 
 /* Titre Section */
@@ -33,9 +33,9 @@ html {
 }
 
 /* Text Section */
-.sectionText {
+/* .sectionText {
     @apply font-hind text-sectionText font-medium;
-}
+} */
 
 
 /* Text Paraphrase */

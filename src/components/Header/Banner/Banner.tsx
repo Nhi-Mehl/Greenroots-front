@@ -18,10 +18,7 @@ function Banner() {
           description={
             <>
               Rejoignez notre communauté pour un avenir durable où chaque arbre
-              planté
-              <span className="block">
-                fait germer l'espoir d'une planète plus verte.
-              </span>
+              planté fait germer l'espoir d'une planète plus verte.
             </>
           }
           buttonText="S’inscrire"
@@ -48,7 +45,7 @@ function Banner() {
         <>
           {/* Afficher l'image */}
           <img
-            className="w-full max-h-200 lg:max-h-[1000px] object-cover object-top"
+            className="w-full max-h-96 lg:max-h-[800px] object-cover object-top"
             src={routeData.image}
             alt="banner"
           />

@@ -15,16 +15,18 @@ function BannerContent({
   onButtonClick,
 }: BannerContentProps) {
   return (
-    <section className="absolute inset-0 flex flex-col gap-10 items-center justify-center text-white">
-      <h1 className="h1-title text-center mt-8">
+    <section className="absolute inset-0 flex flex-col gap-12 items-center justify-center text-white px-10 lg:px-80 lg:gap-20">
+      <h1 className="h1-title text-center lg:text-h1 lg:mt-8">
         {title}
-        {subtitle && <span className="block">{subtitle}</span>}
+        {subtitle && <span className="block lg:mt-8">{subtitle}</span>}
       </h1>
       {description && (
-        <p className="text-lg text-center mt-6 max-w-2xl">{description}</p>
+        <p className="text-base text-center lg:text-3xl lg:mt-6">
+          {description}
+        </p>
       )}
       {buttonText && (
-        <button className="btn mt-6" type="button" onClick={onButtonClick}>
+        <button className="btn" type="button" onClick={onButtonClick}>
           {buttonText}
         </button>
       )}
