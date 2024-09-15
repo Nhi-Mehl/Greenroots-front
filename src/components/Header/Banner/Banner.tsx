@@ -1,9 +1,14 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useProject } from '../../../context/ProjectContext';
 import BannerContent from './BannerContent';
 
 function Banner() {
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { project } = useProject();
+  const { pathname } = useLocation();
+  const { id, slug } = useParams<{ id: string; slug: string }>();
+  console.log('ID:', id);
+  console.log('Slug:', slug);
 
   // Tableau des routes avec leurs valeurs associées
   const routesWithContent: {
@@ -30,18 +35,24 @@ function Banner() {
       image: '/images/banner/bg-projects-page.jpg',
       content: <BannerContent title="Nos Projets" />,
     },
-    '/project': {
-      image: '/images/banner/bg-projects-page.jpg',
-      content: <BannerContent title="Nos Projets" />,
-    },
   };
 
-  // Récupérer l'image en fonction de la route actuelle
+  // Gestion dynamique de la route pour /projects/:id/:slug
+  // if (id && slug && project && pathname === `/projects/${id}/${slug}`) {
+  //   // Ajouter la route dynamique dans routesWithContent
+  //   routesWithContent[`/projects/${id}/${slug}`] = {
+  //     image: `/images/projets/${project.picture}.jpg`, // Utiliser l'image du projet
+  //     content: <BannerContent title={project.name} />, // Utiliser le nom du projet
+  //   };
+  // }
+
+  // Récupérer les données de la route actuelle
   const routeData = routesWithContent[pathname];
 
   // Debugging pour vérifier ce qui est renvoyé
   console.log('Current pathname:', pathname);
   console.log('Route data:', routeData);
+  console.log('Project:', project);
 
   return (
     <div className="relative">
