@@ -33,7 +33,7 @@ function NavBar() {
         <img
           src="/images/logo-blanc-png.png"
           alt="Logo GreenRoots"
-          className="h-12 md:h-16"
+          className="h-12 md:h-16 lg:h-20"
         />
       </Link>
       <div className="text-shadow l hidden space-x-20 text-xl md:flex md:text-xl  lg:text-2xl">

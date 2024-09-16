@@ -9,11 +9,11 @@ function OurProjects() {
           src="/images/bg-our-projetcs-home.jpg"
           alt="backgroud plantation"
         />
-        <div className="absolute top-0 flex flex-col justify-center text-white text-center">
-          <h2 className="mb-4 p-4 text-center text-2xl font-semibold text-white md:text-4xl lg:m-auto lg:mb-10 lg:w-4/5 lg:p-10 lg:text-4xl">
+        <div className="absolute top-0 flex flex-col justify-center text-white text-center py-16">
+          <h2 className="mb-8 text-center h2-title font-semibold text-white md:text-4xl lg:m-auto lg:mb-10 lg:w-4/5 lg:p-10 lg:text-6xl">
             NOS PROJETS
           </h2>
-          <p className="m-auto w-4/5 text-center text-xs text-white shadow-sm md:text-xl lg:text-2xl">
+          <p className="m-auto w-4/5 text-xs text-white shadow-sm md:text-xl lg:text-2xl">
             Chez GreenRoots, nous croyons que la reforestation est un enjeu
             mondial qui necessite des actions locales à travers le monde. C’est
             pourquoi nous avons lancé des projets internationaux dans plusieurs

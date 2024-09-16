@@ -16,6 +16,7 @@ import ProfilDetails from './components/ProfilDetails/ProfilDetails';
 import MyAccountPage from './components/MyAccountPage/MyAccountPage';
 import Stripe from './components/Stripe/Stripe';
 import ConfirmPay from './components/Stripe/ConfirmPay';
+import EditProfil from './components/EditProfil/EditProfil';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,12 @@ const router = createBrowserRouter([
         path: '/userdetails',
         element: <ProfilDetails />,
       },
+
+      {
+        path: '/modifier-mon-profil',
+        element: <EditProfil />,
+      },
+
       {
         path: '/qui-sommes-nous',
         element: <IntroduceGr />,

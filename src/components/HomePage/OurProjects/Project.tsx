@@ -24,7 +24,7 @@ function Project({ project, index }: ProjectProps) {
   const isEven = index % 2 === 0;
 
   return (
-    <article className="w-5/6 bg-beige my-14 lg:max-v-[1200px]">
+    <article className="w-5/6 my-14 lg:max-v-[1200px]">
       <div
         className={`relative h-[500px] w-full border-greenRegular border-4 lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
       >
@@ -36,16 +36,14 @@ function Project({ project, index }: ProjectProps) {
           />
         </div>
         <div
-          className={`absolute top-56 flex flex-col lg:top-10 lg:w-1/2 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
+          className={`absolute top-56 flex flex-col justify-center gap-6 p-6 lg:top-10 lg:w-1/2 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
         >
-          <h2 className="mb-8 text-center font-semibold lg:text-4xl">
+          <h2 className="text-center h2-title lg:text-4xl">
             {project.country}, {project.city}
           </h2>
-          <p className="text-center text-xs lg:p-4 lg:text-lg ">
-            {project.description}
-          </p>
+          <p className="text-sm lg:p-4 lg:text-xl ">{project.description}</p>
           <button
-            className="m-8 rounded bg-green-600 px-1 py-2 text-center"
+            className="m-auto btn lg:text-lg"
             type="button"
             onClick={handleClickProjet}
           >

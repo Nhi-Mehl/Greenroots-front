@@ -33,7 +33,7 @@ export const useUser = () => {
 // Ce UserProvider est nécessaire pour que main.tsx puisse encapsuler l'intégralité de l'application.
 // Il permet à user object d'être disponible dans toute l'application.
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -62,7 +62,7 @@ function ProjectList() {
               type="button"
               onClick={() => {
                 const slug = createSlug(project.name);
-                navigate(`/projects/${project.id}/${slug}}`);
+                navigate(`/projects/${project.id}/${slug}`);
               }}
             >
               Suivre ce projet
