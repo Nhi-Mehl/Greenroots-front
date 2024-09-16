@@ -1,27 +1,25 @@
-import { useState } from "react"
-import { IUser } from "../../@types"
-import Swal from "sweetalert2";
+import { useState } from 'react';
+import { IUser } from '../../@types';
 
 function Register() {
-
   // Etats des valeurs du formulaire
   const [formData, setFormData] = useState<IUser>({
-      id: "",
-      first_name: "",
-      last_name: "",
-      address: "",
-      zip_code: "",
-      city:"",      
-      country:"",      
-      phone_number:"",
-      email:"",
-      password:"",
-      confirmation: "",
-  })
+    id: '',
+    first_name: '',
+    last_name: '',
+    address: '',
+    zip_code: '',
+    city: '',
+    country: '',
+    phone_number: '',
+    email: '',
+    password: '',
+    confirmation: '',
+  });
 
-    // Etat de succès ou d'erreur
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+  // Etat de succès ou d'erreur
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Changements dans les inputs
 
@@ -30,18 +28,17 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
-
-// Soumission du formulaire
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Vérification du mot de passe
     if (formData.password !== formData.confirmation) {
-      setErrorMessage("Les mots de passe ne correspondent pas")
+      setErrorMessage('Les mots de passe ne correspondent pas');
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,12 +51,12 @@ function Register() {
         return;
       }
       const result = await response.json();
-      
-      setIsRegistered(true)
+
+      setIsRegistered(true);
     } catch (error) {
-      console.error("erreur pendant la requête", error)
+      console.error('erreur pendant la requête', error);
     }
-  }
+  };
 
   if (isRegistered) {
     return (
@@ -67,43 +64,38 @@ function Register() {
         <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
           <h1 className="text-3xl mb-4">Inscription réussie</h1>
           <p className="text-lg">
-            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit sur notre plateforme.
+            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit
+            sur notre plateforme.
           </p>
         </div>
       </div>
     );
   }
 
-  
-  
-
   return (
-    <div className="p-20">
-      <div className="flex flex-col mb-32 items-center border-2 border-solid border-green-950 bg-emerald-50">
-        <h1 className="text-3xl p-6">Inscrivez-vous</h1>
-        <p className="w-1/2 p-6">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
-          laboriosam sunt quibusdam quo nostrum voluptas excepturi eos culpa,
-          quos est repellendus consectetur odit soluta saepe iusto labore modi
-          perspiciatis neque?
+    <div className="p-4 my-8">
+      <div className="flex flex-col my-10 items-center border-2 border-solid border-green-950 bg-emerald-50 lg:max-w-[1024px] lg:m-auto lg:my-20">
+        <h1 className="text-3xl p-4 lg:text-5xl">Inscrivez-vous</h1>
+        <p className="w-5/6 p-2 text-sm text-center lg:text-lg">
+          Inscrivez-vous pour acheter des arbres et suivre vos contributions.
+          Créez un compte pour accéder à votre historique d&apos;achats et
+          recevoir des mises à jour sur l&apos;impact de vos actions. Rejoignez
+          notre communauté engagée dans la reforestation.
         </p>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center lg:max-w-[1024px] lg:m-auto">
         <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-14 border-2 border-solid border-green-950 bg-emerald-50"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-6 border-2 border-solid border-green-950 bg-emerald-50"
           action="/register"
           onSubmit={handleSubmit}
         >
-          
           {/* Message d'erreur si les mots de passe ne correspondent pas */}
           {errorMessage && (
-            <div className="col-span-2 text-red-600 mb-4">
-              {errorMessage}
-            </div>
+            <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
           )}
 
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="first_name">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="first_name">
               Prénom
             </label>
             <input
@@ -113,11 +105,11 @@ function Register() {
               placeholder="Votre prénom"
               value={formData.first_name}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="last_name">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="last_name">
               Nom
             </label>
             <input
@@ -127,11 +119,11 @@ function Register() {
               placeholder="Votre nom"
               value={formData.last_name}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="address">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="address">
               Adresse
             </label>
             <input
@@ -141,11 +133,11 @@ function Register() {
               placeholder="Votre adresse"
               value={formData.address}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="zip_code">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="zip_code">
               Code postal
             </label>
             <input
@@ -155,11 +147,11 @@ function Register() {
               placeholder="Votre code postal"
               value={formData.zip_code}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="city">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="city">
               Ville
             </label>
             <input
@@ -169,11 +161,11 @@ function Register() {
               placeholder="Votre ville"
               value={formData.city}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="country">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="country">
               Pays
             </label>
             <input
@@ -183,11 +175,11 @@ function Register() {
               placeholder="Votre pays"
               value={formData.country}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="phone_number">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="phone_number">
               Téléphone
             </label>
             <input
@@ -197,11 +189,11 @@ function Register() {
               placeholder="Votre téléphone"
               value={formData.phone_number}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="email">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="email">
               Email
             </label>
             <input
@@ -211,11 +203,11 @@ function Register() {
               placeholder="Votre email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="password">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="password">
               Mot de passe
             </label>
             <input
@@ -225,25 +217,23 @@ function Register() {
               placeholder="Votre mot de passe"
               value={formData.password}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
-            
           </div>
-          
+
           <div className="flex flex-col">
-            <label className="mb-2" htmlFor="confirmation">
+            <label className="mb-2 text-sm lg:text-base" htmlFor="confirmation">
               Confirmation de mot de passe
             </label>
             <input
-              type="text"
+              type="password"
               id="confirmation"
               name="confirmation"
               placeholder="Confirmez votre mot de passe"
               value={formData.confirmation}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className=" w-full rounded-md mb-2 border-0 py-2 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             />
-            
           </div>
 
           <div className="mt-8">

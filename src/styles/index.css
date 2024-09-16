@@ -18,12 +18,12 @@ html {
 
 /* Titre Principal */
 .h1-title {
-    @apply font-montserrat text-h1 font-bold;
+    @apply font-montserrat text-3xl font-bold;
 }
 
 /* Titre Section */
 .h2-title {
-    @apply font-montserrat text-h2 font-bold;
+    @apply font-montserrat text-2xl font-bold;
 }
 
 
@@ -33,9 +33,9 @@ html {
 }
 
 /* Text Section */
-.sectionText {
+/* .sectionText {
     @apply font-hind text-sectionText font-medium;
-}
+} */
 
 
 /* Text Paraphrase */
@@ -45,5 +45,5 @@ html {
 
 /* -------------- Prédéfinir style les boutons --------------  */
 .btn {
-    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-lg p-3 hover:bg-greenLight;
+    @apply bg-greenRegular rounded-lg font-montserrat text-white font-semibold w-fit text-xs py-3 px-5 hover:bg-greenLight;
 }

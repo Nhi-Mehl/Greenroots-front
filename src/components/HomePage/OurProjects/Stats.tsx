@@ -27,18 +27,26 @@ function Stats() {
   }, []);
 
   return (
-    <div className="w-screen font-semibold bg-beige">
-      <h2 className="pt-12 bg-beige uppercase text-3xl text-center ">
+    <div className="w-screen h-40 font-semibold md:h-48 md:p-4 lg:h-72 lg:p-8 2xl:h-80">
+      <h2 className="pt-8 uppercase h2-title text-center md:text-2xl lg:text-6xl 2xl:text-5xl ">
         Quelques chiffres
       </h2>
-      <div className=" text-center flex flex-row justify-evenly h-60 ">
-        <div className="m-auto flex flex-col justify-items-center gap-6">
-          <h2 className="uppercase text-2xl ">Projets réalisés</h2>
-          <h3 className="text-center text-5xl ">{finishProject}</h3>
+      <div className=" text-center flex flex-row justify-evenly ">
+        <div className="m-auto p-3 flex flex-col justify-items-center gap-4">
+          <h2 className="uppercase text-sm md:text-base lg:text-2xl 2xl:text-4xl">
+            Projets réalisés
+          </h2>
+          <h3 className="text-center text-sm md:text-base lg:text-2xl 2xl:text-4xl ">
+            {finishProject}
+          </h3>
         </div>
-        <div className="m-auto flex flex-col justify-items-center gap-6">
-          <h2 className=" uppercase text-2xl ">Arbres plantés</h2>
-          <h3 className=" text-center text-5xl ">{finishTree}</h3>
+        <div className="m-auto p-3 flex flex-col justify-items-center gap-4 2xl:py-12">
+          <h2 className=" uppercase text-sm md:text-base lg:text-2xl 2xl:text-4xl">
+            Arbres plantés
+          </h2>
+          <h3 className=" text-center text-sm md:text-base lg:text-2xl 2xl:text-4xl">
+            {finishTree}
+          </h3>
         </div>
       </div>
     </div>

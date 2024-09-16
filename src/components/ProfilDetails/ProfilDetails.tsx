@@ -1,11 +1,15 @@
 
 import { useUser } from "../../context/UserContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function ProfilDetails() {
 
   const { user } = useUser()
-  
+  const navigate = useNavigate()
+
+const handleEditClick = () => {
+  navigate("/modifier-mon-profil")
+}
 
 if (!user) {
   return <Navigate to="/login" replace />;
@@ -30,7 +34,7 @@ if (!user) {
         </div>
       </div>
 
-      <button className="btn m-auto" type="submit">
+      <button className="btn m-auto" type="button" onClick={handleEditClick}>
         Modifier
       </button>
     </div>

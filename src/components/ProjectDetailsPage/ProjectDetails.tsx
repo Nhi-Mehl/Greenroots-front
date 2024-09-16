@@ -2,7 +2,8 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { CartContext } from '../Cart/CartContext/CartContext';
-import { ISpecies, IProject, IProjectTree } from '../../@types';
+import { useProject } from '../../context/ProjectContext';
+import { ISpecies, IProjectTree } from '../../@types';
 
 interface IProjectTreesWithSpecies extends IProjectTree {
   species: ISpecies; // L'arbre contient également une espèce
@@ -19,7 +20,7 @@ function ProjectDetails() {
   const { id } = useParams();
 
   // Stockage détail un projet selon son ID dans le State
-  const [project, setProject] = useState<IProject | null>(null);
+  const { project, setProject } = useProject();
   // Stockage les arbres un projet dans le State
   const [projectTrees, setProjectTrees] = useState<IProjectTreesWithSpecies[]>(
     []
@@ -49,7 +50,7 @@ function ProjectDetails() {
     };
     console.log("application de l'effet rendu détaile un projet");
     getOneProject();
-  }, []);
+  }, [id, setProject]);
 
   useEffect(() => {
     console.log("application de l'effet rendu les arbres un projet");
@@ -62,6 +63,7 @@ function ProjectDetails() {
 
         const data = await treesResponse.json();
         setProjectTrees(data);
+        console.log(data);
 
         const totalQuantity = data.reduce(
           (total: number, tree: IProjectTreesWithSpecies) =>
@@ -110,19 +112,11 @@ function ProjectDetails() {
   };
   return (
     <div>
-      <figure>
-        <img
-          className="w-full h-200 object-cover"
-          src={`/images/projets/${project !== null && project.id}.jpg`}
-          alt="banner"
-        />
-      </figure>
-      <div className="p-4 m-16 bg-greenLight text-white h-76 max-w-max ">
-        <h1 className="text-5xl m-auto">{project !== null && project.name}</h1>
-        <h2 className="h3-title p-4 text-m text-center">
+      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max ">
+        <h2 className="h3-title p-4 text-m text-center lg:text-4xl">
           Objectif : {totalBasicQuantity} arbres
         </h2>
-        <p className="p-4 text-s text-justify ">
+        <p className="p-4 text-sm text-justify lg:px-20 lg:text-xl">
           {project !== null && project.description}
         </p>
       </div>
