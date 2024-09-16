@@ -2,39 +2,33 @@ import { useEffect, useState } from "react";
 import { IUser } from "../../@types";
 import { useUser } from "../../context/UserContext";
 import api from "../../api/index";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function ProfilDetails() {
   const { user } = useUser()
-  const navigate = useNavigate()
   // const [userDetails, setUserDetails] = useState<IUser | null>(null)
 
   // useEffect(() => {
   //   const fetchUserDetails = async () => {
   //     try {
-  //       const response = await api.get(`/users/users/${user?.id}`); 
-  //       setUserDetails(response.data); 
+  //       const response = await api.get(`/users/users/${user?.id}`);
+  //       setUserDetails(response.data);
   //     } catch (error) {
-  //       console.error('Erreur lors de la récupération des détails de l\'utilisateur', error); 
+  //       console.error('Erreur lors de la récupération des détails de l\'utilisateur', error);
   //     }
   //   };
 
   //   if (user?.id) {
-  //     fetchUserDetails(); 
+  //     fetchUserDetails();
   //   }
-  // }, [user?.id]); 
+  // }, [user?.id]);
 
   // if (!userDetails) {
-  //   return <p>Chargement des détails...</p>; 
+  //   return <p>Chargement des détails...</p>;
   // }
 if (!user) {
   return <Navigate to="/login" replace />;
 }
-
-const handleEditClick = () => {
-  navigate("/modifier-mon-profil")
-}
-
   return (
     <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Details de mon profil</h1>
