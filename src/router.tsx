@@ -14,7 +14,8 @@ import OrdersPage from './components/OrdersPage/OrdersPage';
 import OrderDetailPage from './components/OrderDetailPage/OrderDetailPage';
 import ProfilDetails from './components/ProfilDetails/ProfilDetails';
 import MyAccountPage from './components/MyAccountPage/MyAccountPage';
-import EditProfil from './components/EditProfil/EditProfil';
+import Stripe from './components/Stripe/Stripe';
+import ConfirmPay from './components/Stripe/ConfirmPay';
 
 const router = createBrowserRouter([
   {
@@ -53,17 +54,10 @@ const router = createBrowserRouter([
         path: '/userdetails',
         element: <ProfilDetails />,
       },
-
-      {
-        path: '/modifier-mon-profil',
-        element: <EditProfil/>
-      },
-
       {
         path: '/qui-sommes-nous',
         element: <IntroduceGr />,
       },
-
       {
         path: '/mentions-legales',
         element: <LegalNotices />,
@@ -83,6 +77,14 @@ const router = createBrowserRouter([
       {
         path: '/orders/:id',
         element: <OrderDetailPage />,
+      },
+      {
+        path: '/payment',
+        element: <Stripe />,
+      },
+      {
+        path: '/confirmPay',
+        element: <ConfirmPay />,
       },
     ],
   },
