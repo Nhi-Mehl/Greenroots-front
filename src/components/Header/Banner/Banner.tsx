@@ -1,13 +1,23 @@
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useProject } from '../../../context/ProjectContext';
 import BannerContent from './BannerContent';
+
+const createSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+};
 
 function Banner() {
   const navigate = useNavigate();
   const { project } = useProject();
   const { pathname } = useLocation();
-  const { id, slug } = useParams<{ id: string; slug: string }>();
-  console.log('ID:', id);
+
+  let slug = '';
+  if (project && project.name) {
+    slug = createSlug(project.name);
+  }
   console.log('Slug:', slug);
 
   // Tableau des routes avec leurs valeurs associées
@@ -38,13 +48,13 @@ function Banner() {
   };
 
   // Gestion dynamique de la route pour /projects/:id/:slug
-  // if (id && slug && project && pathname === `/projects/${id}/${slug}`) {
-  //   // Ajouter la route dynamique dans routesWithContent
-  //   routesWithContent[`/projects/${id}/${slug}`] = {
-  //     image: `/images/projets/${project.picture}.jpg`, // Utiliser l'image du projet
-  //     content: <BannerContent title={project.name} />, // Utiliser le nom du projet
-  //   };
-  // }
+  if (project && pathname === `/projects/${project.id}/${slug}`) {
+    // Ajouter la route dynamique dans routesWithContent
+    routesWithContent[`/projects/${project.id}/${slug}`] = {
+      image: `/images/projets/${project.picture}.jpg`, // Utiliser l'image du projet
+      content: <BannerContent title={project.name} />, // Utiliser le nom du projet
+    };
+  }
 
   // Récupérer les données de la route actuelle
   const routeData = routesWithContent[pathname];

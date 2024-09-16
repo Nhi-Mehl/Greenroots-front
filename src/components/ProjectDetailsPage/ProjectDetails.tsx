@@ -111,19 +111,11 @@ function ProjectDetails() {
   };
   return (
     <div>
-      <figure>
-        <img
-          className="w-full h-200 object-cover"
-          src={`/images/projets/${project !== null && project.id}.jpg`}
-          alt="banner"
-        />
-      </figure>
-      <div className="p-4 m-16 bg-greenLight text-white h-76 max-w-max ">
-        <h1 className="text-5xl m-auto">{project !== null && project.name}</h1>
-        <h2 className="h3-title p-4 text-m text-center">
+      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max ">
+        <h2 className="h3-title p-4 text-m text-center lg:text-4xl">
           Objectif : {totalBasicQuantity} arbres
         </h2>
-        <p className="p-4 text-s text-justify ">
+        <p className="p-4 text-sm text-justify lg:px-20 lg:text-xl">
           {project !== null && project.description}
         </p>
       </div>
