@@ -29,7 +29,7 @@ useEffect(() => {
   if (user?.id) {
     fetchOrders(); // Récupère les commandes seulement si l'utilisateur est connecté
   }
-}, [user?.id]); // Exécute le useEffect quand l'utilisateur change
+}, [user?.id]); // Exécute lee useEffect quand l'utilisateur change
 
 
   return (
