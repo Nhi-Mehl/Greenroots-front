@@ -15,7 +15,7 @@ function Header() {
   const { pathname } = useLocation(); // Récupération de la route actuelle
 
   let slug = '';
-  if (project && project.name) {
+  if (project) {
     slug = createSlug(project.name);
   }
   // Routes sur lesquelles le composant Banner doit être affiché
@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <header className="relative">
-      <NavBar />
+      <NavBar showBanner={showBanner} />
       {/* Affiche le Banner seulement si la route est dans routesWithBanner */}
       {showBanner && <Banner />}
     </header>

@@ -9,7 +9,11 @@ import { useContext, useState } from 'react';
 import { CartContext } from '../../Cart/CartContext/CartContext';
 import { useUser } from '../../../context/UserContext';
 
-function NavBar() {
+interface ShowBannerProps {
+  showBanner: boolean;
+}
+
+function NavBar({ showBanner }: ShowBannerProps) {
   const { user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
@@ -27,8 +31,14 @@ function NavBar() {
     setIsMenuOpen(false);
   };
 
+  // Si showBanner est vrai, on enlève la classe 'bg-green-900'
+  const navClassName = `
+    w-full z-20 flex items-center justify-between p-8 text-white
+    ${showBanner ? 'absolute top-0 left-0' : 'bg-greenDark relative'}
+  `;
+
   return (
-    <nav className="bg-green-900 flex h-28 w-full items-center justify-between px-8 text-white md:px-8">
+    <nav className={navClassName}>
       <Link to="/">
         <img
           src="/images/logo-blanc-png.png"
@@ -36,12 +46,12 @@ function NavBar() {
           className="h-12 md:h-16 lg:h-20"
         />
       </Link>
-      <div className="text-shadow l hidden space-x-20 text-xl md:flex md:text-xl  lg:text-2xl">
+      <div className="text-shadow font-semibold hidden space-x-20 text-xl md:flex md:text-xl lg:text-2xl">
         <Link to="/projects">Nos projets</Link>
         <Link to="/qui-sommes-nous">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
-      <div className="flex gap-8 mr-16">
+      <div className="flex gap-8">
         <Link to={user ? '/my-account' : '/login'} className="p-4">
           <FontAwesomeIcon icon={faUser} />
         </Link>
