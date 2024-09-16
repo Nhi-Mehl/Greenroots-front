@@ -62,6 +62,7 @@ function ProjectDetails() {
 
         const data = await treesResponse.json();
         setProjectTrees(data);
+        console.log(data);
 
         const totalQuantity = data.reduce(
           (total: number, tree: IProjectTreesWithSpecies) =>

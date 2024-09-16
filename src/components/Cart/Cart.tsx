@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { CartContext } from '../Cart/CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
+import { useUser } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ITreeSpecies {
   id: number;
@@ -22,11 +24,28 @@ interface IProjectTree {
 
 function Cart() {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
     0
   );
+  const handlePay = async () => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      const orderData = {
+        amount: totalAmount,
+        orderLine: cartItems.map((item) => ({
+          project_tree_id: item.tree.species.id,
+          quantity: item.quantity,
+          amount: Number(item.tree.species.price),
+        })),
+      };
+      navigate('/payment', { state: { orderData } });
+    }
+  };
 
   return (
     <div>
@@ -68,6 +87,7 @@ function Cart() {
         <button
           type="submit"
           className="w-1/4 p-2 rounded-3xl text-white text-2xl bg-green-600"
+          onClick={handlePay}
         >
           Payer
         </button>
