@@ -38,7 +38,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
   `;
 
   return (
-    <nav className={navClassName}>
+    <nav className={navClassName.trim()}>
       <Link to="/">
         <img
           src="/images/logo-blanc-png.png"
