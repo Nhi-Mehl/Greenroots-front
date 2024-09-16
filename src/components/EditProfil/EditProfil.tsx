@@ -1,93 +1,90 @@
-import { useState } from "react"
-import { IUser } from "../../@types"
+import { useContext, useEffect, useState } from "react";
+import { useUser } from "../../context/UserContext";
+import { Navigate, useNavigate } from "react-router-dom";
+import { IUser } from "../../@types";
+import api from "../../api";
+import axios from "axios";
 
 
-function Register() {
+function EditProfil() {
+    const { user, setUser } = useUser()
+    const [formData, setFormData] = useState<IUser>(user as IUser)
+    const navigate = useNavigate()
 
-  // Etats des valeurs du formulaire
-  const [formData, setFormData] = useState<IUser>({
-      id: "",
-      first_name: "",
-      last_name: "",
-      address: "",
-      zip_code: "",
-      city:"",      
-      country:"",      
-      phone_number:"",
-      email:"",
-      password:"",
-      confirmation: "",
-  })
-
-    // Etat de succès ou d'erreur
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-
-  // Changements dans les inputs
-
-  const handleChange = async (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-
-// Soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Vérification du mot de passe
-    if (formData.password !== formData.confirmation) {
-      setErrorMessage("Les mots de passe ne correspondent pas")
-    }
-
-    try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        console.error("Erreur lors de l'inscription");
-        return;
+    // Chargement du formulaire lié à l'utilisateur connecté
+    useEffect(() => {
+      if (user) {
+        setFormData(user)
       }
-      const result = await response.json();
-      
-      setIsRegistered(true)
-    } catch (error) {
-      console.error("erreur pendant la requête", error)
+    }, [user])
+
+    if(!user) {
+        return < Navigate to="/login" replace />
     }
-  }
 
-  if (isRegistered) {
-    return (
-      <div className="p-20">
-        <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
-          <h1 className="text-3xl mb-4">Inscription réussie</h1>
-          <p className="text-lg">
-            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit sur notre plateforme.
-          </p>
-        </div>
-      </div>
-    );
-  }
+    // Gestion des changements dans les champs du formulaire
+    const handleChange = async (e) => {
 
-  
-  
+      const {name, value } = e.target
 
-  return (
-    <div className="p-20">
-      <div className="flex flex-col mb-32 items-center border-2 border-solid border-green-950 bg-emerald-50">
-        <h1 className="text-3xl p-6">Inscrivez-vous</h1>
-        <p className="w-1/2 p-6">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
-          laboriosam sunt quibusdam quo nostrum voluptas excepturi eos culpa,
-          quos est repellendus consectetur odit soluta saepe iusto labore modi
-          perspiciatis neque?
-        </p>
-      </div>
+      setFormData((previousData) => ({
+        ...previousData!,
+        [name]: value,
+      }))    
+    }
+
+// Modification des données de l'utilisateur
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData) {
+          console.error("Les données du formulaire sont nulles");
+          return; 
+        }
+        console.log(formData);
+        
+        const token = localStorage.getItem("token")
+     try {
+    
+      const response = await axios.put(`http://localhost:3000/api/users/${user?.id}`, formData, {headers: {Authorization:`Bearer ${token}`}})
+      setUser(response.data)
+
+      navigate("/userdetails")
+     } catch (error) {
+      console.error("Erreur lors de la mise à jour du profil", error);
+     }
+     console.log(formData);
+      
+    }
+
+    // Gestion de la suppression de l'utilisateur
+      const handleDelete= async(e) => {
+        if(!user) {
+          console.error("Utilisateur non trouvé");
+          return;
+        }
+
+        if (window.confirm("Êtes-vous sûr de vouloir quitter définitivement GreenRoots?"))
+
+        try {
+
+      await api.delete(`/users/${user?.id}`)
+      setUser(null)
+      navigate("/")
+          
+        } catch (error) {
+          console.error("Erreur lors de la suppression du profil");
+          
+        }
+      }
+
+      if (!formData) {
+        return <p>Chargement des données...</p>
+      }
+
+    return(
+        <div className="flex flex-col gap-8 m-10">
+      <h1 className="text-center h3-title">Modifier mon profil</h1>
       <div className="flex justify-center">
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-14 border-2 border-solid border-green-950 bg-emerald-50"
@@ -95,12 +92,6 @@ function Register() {
           onSubmit={handleSubmit}
         >
           
-          {/* Message d'erreur si les mots de passe ne correspondent pas */}
-          {errorMessage && (
-            <div className="col-span-2 text-red-600 mb-4">
-              {errorMessage}
-            </div>
-          )}
 
           <div className="flex flex-col">
             <label className="mb-2" htmlFor="first_name">
@@ -113,6 +104,7 @@ function Register() {
               placeholder="Votre prénom"
               value={formData.first_name}
               onChange={handleChange}
+
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -214,50 +206,25 @@ function Register() {
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="password">
-              Mot de passe
-            </label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              placeholder="Votre mot de passe"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-            
-          </div>
-          
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="confirmation">
-              Confirmation de mot de passe
-            </label>
-            <input
-              type="text"
-              id="confirmation"
-              name="confirmation"
-              placeholder="Confirmez votre mot de passe"
-              value={formData.confirmation}
-              onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-            
-          </div>
 
-          <div className="mt-8">
+          <div className="flex flex-row mt-8 gap-12">
             <button
               type="submit"
               className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-green-900"
             >
               Valider
             </button>
+            <button
+            type="button"
+            onClick={handleDelete}
+            className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-red-700">
+              Supprimer mon profil</button>
           </div>
         </form>
       </div>
     </div>
-  );
+        
+    )
 }
 
-export default Register;
+export default EditProfil

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { IUser } from "../../@types";
 import { useUser } from "../../context/UserContext";
 import api from "../../api/index";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function ProfilDetails() {
   const { user } = useUser()
+  const navigate = useNavigate()
   // const [userDetails, setUserDetails] = useState<IUser | null>(null)
 
   // useEffect(() => {
@@ -29,6 +30,11 @@ function ProfilDetails() {
 if (!user) {
   return <Navigate to="/login" replace />;
 }
+
+const handleEditClick = () => {
+  navigate("/modifier-mon-profil")
+}
+
   return (
     <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Details de mon profil</h1>
@@ -48,7 +54,7 @@ if (!user) {
         </div>
       </div>
 
-      <button className="btn m-auto" type="submit">
+      <button className="btn m-auto" type="button" onClick={handleEditClick}>
         Modifier
       </button>
     </div>
