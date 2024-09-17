@@ -1,12 +1,18 @@
-import { Navigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function ProfilDetails() {
   const { user } = useUser();
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate('/modifier-mon-profil');
+  };
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+
   return (
     <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Details de mon profil</h1>
