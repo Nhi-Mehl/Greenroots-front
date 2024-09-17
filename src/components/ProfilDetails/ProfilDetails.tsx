@@ -1,19 +1,17 @@
-
-import { useUser } from "../../context/UserContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useUser } from '../../context/UserContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function ProfilDetails() {
+  const { user } = useUser();
+  const navigate = useNavigate();
 
-  const { user } = useUser()
-  const navigate = useNavigate()
+  const handleEditClick = () => {
+    navigate('/modifier-mon-profil');
+  };
 
-const handleEditClick = () => {
-  navigate("/modifier-mon-profil")
-}
-
-if (!user) {
-  return <Navigate to="/login" replace />;
-}
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="flex flex-col gap-8 m-10">
@@ -34,7 +32,7 @@ if (!user) {
         </div>
       </div>
 
-      <button className="btn m-auto" type="button" onClick={handleEditClick}>
+      <button className="btn m-auto" type="button">
         Modifier
       </button>
     </div>
