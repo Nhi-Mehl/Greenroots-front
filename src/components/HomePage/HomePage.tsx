@@ -1,3 +1,4 @@
+import Video from '../Video/Video';
 import OurProjects from './OurProjects/OurProjects';
 import Projects from './OurProjects/Projects';
 import Stats from './OurProjects/Stats';
@@ -8,6 +9,7 @@ function HomePage() {
       <Stats />
       <OurProjects />
       <Projects />
+      <Video />
     </main>
   );
 }

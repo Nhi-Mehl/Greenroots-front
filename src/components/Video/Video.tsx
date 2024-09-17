@@ -33,13 +33,21 @@ function Video() {
     observer.observe(videoElement); // Observer l'élément vidéo
 
     // Nettoyage pour désenregistrer l'observateur
-    observer.unobserve(videoElement);
+    return () => {
+      observer.unobserve(videoElement);
+    };
   }, []);
 
   return (
     <div>
-      <video ref={videoRef} controls autoPlay muted className="mx-auto mt-20">
-        <source src="/video/greenroots-mission.mp4" type="video/mp4" />
+      <video
+        ref={videoRef}
+        controls
+        autoPlay
+        muted
+        className="lg:mt-20 lg:mx-auto"
+      >
+        <source src="/videos/greenroots-mission.mp4" type="video/mp4" />
         {/* Sous-titres pour l'accessibilité */}
         Découvrez comment Greenroots transforme notre planète grâce à ses
         projets de reforestation révolutionnaires ! 🌳 Dans cette vidéo, nous
