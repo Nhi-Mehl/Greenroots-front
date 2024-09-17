@@ -32,7 +32,7 @@ function ProfilDetails() {
         </div>
       </div>
 
-      <button className="btn m-auto" type="button">
+      <button className="btn m-auto" type="button" onClick={handleEditClick}>
         Modifier
       </button>
     </div>
