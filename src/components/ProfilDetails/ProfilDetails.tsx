@@ -1,34 +1,12 @@
-import { useEffect, useState } from "react";
-import { IUser } from "../../@types";
-import { useUser } from "../../context/UserContext";
-import api from "../../api/index";
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 function ProfilDetails() {
-  const { user } = useUser()
-  // const [userDetails, setUserDetails] = useState<IUser | null>(null)
+  const { user } = useUser();
 
-  // useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //     try {
-  //       const response = await api.get(`/users/users/${user?.id}`);
-  //       setUserDetails(response.data);
-  //     } catch (error) {
-  //       console.error('Erreur lors de la récupération des détails de l\'utilisateur', error);
-  //     }
-  //   };
-
-  //   if (user?.id) {
-  //     fetchUserDetails();
-  //   }
-  // }, [user?.id]);
-
-  // if (!userDetails) {
-  //   return <p>Chargement des détails...</p>;
-  // }
-if (!user) {
-  return <Navigate to="/login" replace />;
-}
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Details de mon profil</h1>
@@ -48,7 +26,7 @@ if (!user) {
         </div>
       </div>
 
-      <button className="btn m-auto" type="button" onClick={handleEditClick}>
+      <button className="btn m-auto" type="button">
         Modifier
       </button>
     </div>
