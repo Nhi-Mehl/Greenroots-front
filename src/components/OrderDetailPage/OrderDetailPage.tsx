@@ -8,8 +8,8 @@ import { useProject } from "../../context/ProjectContext";
 
 function OrderDetailPage() {
 
-  const { orderId } = useParams<{ orderId: string }>()
-  const [ orderLine, setOrderLine ] = useState<IOrderLine[]>([])
+  const { orderId } = useParams<{ orderId: number}>()
+  const [ orderLines, setOrderLines ] = useState<IOrderLine[]>([])
   const [orderDetails, setOrderDetails] = useState<IOrder | null>(null);
   const { project } = useProject()
     const { user } = useUser()
@@ -18,16 +18,21 @@ function OrderDetailPage() {
     }
 
     useEffect(() => {
+      console.log(user);
+
       // Récupération des lignes de commande
       const fetchOrderLines = async ()=> {
         try {
           const orderLinesResponse = await api.get(`/order_line/${orderId}`)
-          setOrderLine(orderLinesResponse.data)
+          setOrderLines(orderLinesResponse.data)
+          console.log(orderLinesResponse);
+          
 
           // Récupération des détails de la commande 
           const orderResponse = await api.get(`/orders/${orderId}`); 
           setOrderDetails(orderResponse.data);
-
+          console.log(orderResponse);
+          
         } catch (error) {
           console.error(
             "Erreur lors de la récupération des détails de la commande"
@@ -41,25 +46,25 @@ function OrderDetailPage() {
   return (
     <div className="m-10">
       <h1 className="text-center text-xl font-bold mb-4">
-        Commande numéro {orderId}
+        Commande numéro {orderDetails?.id}
       </h1>
       <p className="text-center mb-8">Date de la commande : {orderDetails?.date}</p>
       
       <div className="space-y-8">
-        {orderLine.map((order) => (
-          <div key={order.id} className="bg-gray-200 p-4 rounded-md shadow-md">
+        {orderLines.map((orderLine) => (
+          <div key={orderLine.id} className="bg-gray-200 p-4 rounded-md shadow-md">
             <p className="mb-2">
               <strong>Nom du projet :</strong> {project?.name}
             </p>
             <p className="mb-2">
-              <strong>Nom de l'arbre :</strong> {order.project_tree_id}
+              <strong>Nom de l'arbre :</strong> {orderLine.project_tree_id}
             </p>
             <p className="mb-2">
-              <strong>Montant Unitaire :</strong> {order.amount} €
+              <strong>Montant Unitaire :</strong> {orderLine.amount} €
             </p>
             <div className="flex justify-between">
-              <p><strong>Quantité :</strong> {order.quantity}</p>
-              <p><strong>Montant Total :</strong> {order.amount} €</p>
+              <p><strong>Quantité :</strong> {orderLine.quantity}</p>
+              <p><strong>Montant Total :</strong> {orderLine.amount} €</p>
             </div>
           </div>
         ))}

@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import { IOrder } from "../../@types";
@@ -37,9 +37,7 @@ useEffect(() => {
   
 }, [user.id]); // Exécute le useEffect quand l'utilisateur change
 
-const handleClick = () => {
-  return <Navigate to="/orders-details" replace/>
-}
+
 
 return (
   <main className="max-w-7xl mx-auto p-10">
@@ -49,7 +47,7 @@ return (
     ) : (
       <table className="table-auto w-full mt-10">
         <thead>
-          <tr className="bg-gray-200 text-left">
+          <tr className="bg-beige text-left">
             <th className="py-4 px-6">Commande</th>
             <th className="py-4 px-6">Numéro</th>
             <th className="py-4 px-6">Date</th>
@@ -61,7 +59,7 @@ return (
           {orders.map((order) => (
             <tr
               key={order.id}
-              className="border-b border-gray-300 bg-gray-100 hover:bg-gray-200"
+              className="border-b border-gray-300 bg-beige"
             >
               <td className="py-4 px-6">Commande</td>
               <td className="py-4 px-6">{order.id}</td>
@@ -72,7 +70,9 @@ return (
                 })}</td>
               <td className="py-4 px-6">{order.amount} €</td>
               <td className="py-4 px-6">
-                <button className="btn bg-purple-500 text-white py-2 px-4 rounded" type="button" onClick={handleClick}>
+                <button className="btn text-white py-2 px-4 rounded" type="button" onClick={() => {
+            navigate(`/orders-details/:id`);
+          }}>
                   Consulter
                 </button>
               </td>

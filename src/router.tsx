@@ -78,11 +78,11 @@ const router = createBrowserRouter([
         element: <MyAccountPage />,
       },
       {
-        path: '/orders',
+        path: '/orders/:id',
         element: <OrdersPage />,
       },
       {
-        path: '/orders-details',
+        path: '/orders-details/:id',
         element: <OrderDetailPage />,
       },
       {

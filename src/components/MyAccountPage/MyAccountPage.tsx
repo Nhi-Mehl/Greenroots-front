@@ -34,7 +34,7 @@ function MyAccountPage() {
           className="btn"
           type="button"
           onClick={() => {
-            navigate(`/orders`);
+            navigate(`/orders/:id`);
           }}
         >
           Mes commandes
