@@ -13,8 +13,8 @@ function Register() {
     country: '',
     phone_number: '',
     email: '',
-    password: '',
-    confirmation: '',
+    // password: '',
+    // confirmation: '',
   });
 
   // Etat de succès ou d'erreur

@@ -22,20 +22,20 @@ function Checkout() {
       type: 'card',
       card: elements.getElement(CardElement),
     });
-
+    const token = localStorage.getItem('token');
     if (!error) {
       try {
         const { id } = paymentMethod;
         const response = await axios.post(
-          'http://localhost:3000/api/auth/stripe/charge',
+          'http://localhost:3000/api/stripe/charge',
           {
             amount: Math.round(parseFloat(orderData.amount) * 100),
             id,
-          }
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         if (response.data.success) {
-          const token = localStorage.getItem('token');
           if (!token) {
             navigate('/login');
           }
