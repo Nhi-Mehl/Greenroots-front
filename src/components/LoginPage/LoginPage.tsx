@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext';
-import api from '../../api';
+import api from '../../api/index';
 
 interface FormDataProps {
   email: string;
