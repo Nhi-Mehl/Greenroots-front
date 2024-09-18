@@ -214,6 +214,7 @@ function EditProfil() {
             >
               Valider
             </button>
+            
             <button
             type="button"
             onClick={handleDelete}
