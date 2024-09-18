@@ -1,89 +1,89 @@
-import { useContext, useEffect, useState } from "react";
-import { useUser } from "../../context/UserContext";
-import { Navigate, useNavigate } from "react-router-dom";
-import { IUser } from "../../@types";
-import api from "../../api";
-import axios from "axios";
-
+import { useContext, useEffect, useState } from 'react';
+import { useUser } from '../../context/UserContext';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { IUser } from '../../@types';
+import api from '../../api';
+import axios from 'axios';
 
 function EditProfil() {
-    const { user, setUser } = useUser()
-    const [formData, setFormData] = useState<IUser>(user as IUser)
-    const navigate = useNavigate()
+  const { user, setUser } = useUser();
+  const [formData, setFormData] = useState<IUser>(user as IUser);
+  const navigate = useNavigate();
 
-    // Chargement du formulaire lié à l'utilisateur connecté
-    useEffect(() => {
-      if (user) {
-        setFormData(user)
-      }
-    }, [user])
+  // Chargement du formulaire lié à l'utilisateur connecté
+  useEffect(() => {
+    if (user) {
+      setFormData(user);
+    }
+  }, [user]);
 
-    if(!user) {
-        return < Navigate to="/login" replace />
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Gestion des changements dans les champs du formulaire
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+
+    setFormData((previousData) => ({
+      ...previousData!,
+      [name]: value,
+    }));
+  };
+
+  // Modification des données de l'utilisateur
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData) {
+      console.error('Les données du formulaire sont nulles');
+      return;
+    }
+    console.log(formData);
+
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/users/${user?.id}`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setUser(response.data);
+
+      navigate('/userdetails');
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil', error);
+    }
+    console.log(formData);
+  };
+
+  // Gestion de la suppression de l'utilisateur
+  const handleDelete = async (e) => {
+    if (!user) {
+      console.error('Utilisateur non trouvé');
+      return;
     }
 
-    // Gestion des changements dans les champs du formulaire
-    const handleChange = async (e) => {
-
-      const {name, value } = e.target
-
-      setFormData((previousData) => ({
-        ...previousData!,
-        [name]: value,
-      }))    
-    }
-
-// Modification des données de l'utilisateur
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!formData) {
-          console.error("Les données du formulaire sont nulles");
-          return; 
-        }
-        console.log(formData);
-        
-        const token = localStorage.getItem("token")
-     try {
-    
-      const response = await axios.put(`http://localhost:3000/api/users/${user?.id}`, formData, {headers: {Authorization:`Bearer ${token}`}})
-      setUser(response.data)
-
-      navigate("/userdetails")
-     } catch (error) {
-      console.error("Erreur lors de la mise à jour du profil", error);
-     }
-     console.log(formData);
-      
-    }
-
-    // Gestion de la suppression de l'utilisateur
-      const handleDelete= async(e) => {
-        if(!user) {
-          console.error("Utilisateur non trouvé");
-          return;
-        }
-
-        if (window.confirm("Êtes-vous sûr de vouloir quitter définitivement GreenRoots?"))
-
-        try {
-
-      await api.delete(`/users/${user?.id}`)
-      setUser(null)
-      navigate("/")
-          
-        } catch (error) {
-          console.error("Erreur lors de la suppression du profil");
-          
-        }
+    if (
+      window.confirm(
+        'Êtes-vous sûr de vouloir quitter définitivement GreenRoots?'
+      )
+    )
+      try {
+        await api.delete(`/users/${user?.id}`);
+        setUser(null);
+        navigate('/');
+      } catch (error) {
+        console.error('Erreur lors de la suppression du profil');
       }
+  };
 
-      if (!formData) {
-        return <p>Chargement des données...</p>
-      }
+  if (!formData) {
+    return <p>Chargement des données...</p>;
+  }
 
-    return(
-        <div className="flex flex-col gap-8 m-10">
+  return (
+    <div className="flex flex-col gap-8 m-10">
       <h1 className="text-center h3-title">Modifier mon profil</h1>
       <div className="flex justify-center">
         <form
@@ -91,8 +91,6 @@ function EditProfil() {
           action="/register"
           onSubmit={handleSubmit}
         >
-          
-
           <div className="flex flex-col">
             <label className="mb-2" htmlFor="first_name">
               Prénom
@@ -104,7 +102,6 @@ function EditProfil() {
               placeholder="Votre prénom"
               value={formData.first_name}
               onChange={handleChange}
-
               className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -216,16 +213,17 @@ function EditProfil() {
             </button>
             
             <button
-            type="button"
-            onClick={handleDelete}
-            className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-red-700">
-              Supprimer mon profil</button>
+              type="button"
+              onClick={handleDelete}
+              className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-red-700"
+            >
+              Supprimer mon profil
+            </button>
           </div>
         </form>
       </div>
     </div>
-        
-    )
+  );
 }
 
-export default EditProfil
+export default EditProfil;

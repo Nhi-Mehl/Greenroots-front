@@ -93,6 +93,7 @@ function ProjectDetails() {
       console.error('addtoCart is not defined');
       return;
     }
+    const handleDetailTree = () => {};
     const projectName = project.name;
     console.log('ProjectName:', projectName);
     addToCart(tree, projectName);

@@ -37,6 +37,21 @@ useEffect(() => {
   
 }, [user.id]); // Exécute le useEffect quand l'utilisateur change
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await api.get(`/orders/${user?.id}`); // Requête à l'API pour récupérer les commandes de l'utilisateur
+        setOrders(response.data); // Mise à jour de l'état avec les données reçues
+      } catch (error) {
+        console.error();
+        ('Erreur lors de la récupération des commandes'); // Gère les erreurs
+      }
+    };
+
+    if (user?.id) {
+      fetchOrders(); // Récupère les commandes seulement si l'utilisateur est connecté
+    }
+  }, [user?.id]); // Exécute lee useEffect quand l'utilisateur change
 
 
 return (

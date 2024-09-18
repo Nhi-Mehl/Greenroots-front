@@ -1,6 +1,8 @@
+import Video from './Video';
 import OurProjects from './OurProjects/OurProjects';
 import Projects from './OurProjects/Projects';
-import Stats from './OurProjects/Stats';
+import Stats from './Stats';
+import TreesHighlights from './TreesHighlights';
 
 function HomePage() {
   return (
@@ -8,6 +10,8 @@ function HomePage() {
       <Stats />
       <OurProjects />
       <Projects />
+      <Video />
+      <TreesHighlights />
     </main>
   );
 }

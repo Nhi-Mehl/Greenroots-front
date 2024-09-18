@@ -38,7 +38,7 @@ function Project({ project, index }: ProjectProps) {
         <div
           className={`absolute top-56 flex flex-col justify-center gap-6 p-6 lg:top-10 lg:w-1/2 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
         >
-          <h2 className="text-center h2-title lg:text-4xl">
+          <h2 className="text-center h3-title lg:text-4xl">
             {project.country}, {project.city}
           </h2>
           <p className="text-sm lg:p-4 lg:text-xl ">{project.description}</p>

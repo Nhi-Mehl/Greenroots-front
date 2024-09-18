@@ -17,7 +17,12 @@ interface OrderLineProps {
   onRemove: () => void;
 }
 
-function OrderLine({ item, onIncrement, onDecrement, onRemove }) {
+function OrderLine({
+  item,
+  onIncrement,
+  onDecrement,
+  onRemove,
+}: OrderLineProps) {
   return (
     <div>
       <div className="flex flex-col bg-white shadow-md p-6 mb-4 rounded-lg">

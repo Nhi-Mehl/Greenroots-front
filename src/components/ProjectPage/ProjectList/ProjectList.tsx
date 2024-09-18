@@ -38,10 +38,7 @@ function ProjectList() {
   return (
     <div className="flex flex-row flex-wrap justify-center mt-10 mb-10">
       {projects.map((project) => (
-        <div
-          key={project.id}
-          className=" m-9 flex h-full max-w-max shadow-lg  "
-        >
+        <div key={project.id} className=" m-9 flex h-full max-w-max shadow-lg">
           <article className="flex flex-col w-full justify-between 4-52 bg-orange-50">
             <img
               className="h-60 object-cover"

@@ -27,10 +27,11 @@ function Cart() {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const totalAmount = cartItems.reduce(
-    (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
-    0
-  );
+  const totalAmount = cartItems.reduce((acc, item) => {
+    const speciesPrice = item.tree.species?.[0]?.price || 0; // Access the first species and ensure price exists
+    return acc + parseFloat(speciesPrice) * item.quantity;
+  }, 0);
+
   const handlePay = async () => {
     if (!user) {
       navigate('/login');
@@ -38,9 +39,9 @@ function Cart() {
       const orderData = {
         amount: totalAmount,
         orderLine: cartItems.map((item) => ({
-          project_tree_id: item.tree.species.id,
+          project_tree_id: item.tree.species[0]?.id, // Safely access species ID
           quantity: item.quantity,
-          amount: Number(item.tree.species.price),
+          amount: Number(item.tree.species[0]?.price), // Safely access species price
         })),
       };
       navigate('/payment', { state: { orderData } });

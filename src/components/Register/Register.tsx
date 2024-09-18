@@ -23,13 +23,13 @@ function Register() {
 
   // Changements dans les inputs
 
-  const handleChange = async (event) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
   // Soumission du formulaire
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Vérification du mot de passe
