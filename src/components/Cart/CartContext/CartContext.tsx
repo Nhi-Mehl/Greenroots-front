@@ -1,5 +1,5 @@
 // src/context/CartContext.js
-import { createContext, useReducer, useEffect, useMemo } from 'react';
+import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { CartReducer, initialState } from './CartReducer';
 import { addToCart, removeFromCart, updateQuantity } from './CartAction';
 

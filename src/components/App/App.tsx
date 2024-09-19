@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import './App.css';
 import Footer from '../Footer/Footer';
 
-import { CartProvider } from '../Cart/CartContext/CartContext';
+// import { CartProvider } from '../Cart/CartContext/CartContext';
 import { useUser } from '../../context/UserContext';
 import api from '../../api';
 import Header from '../Header/Header';
@@ -34,11 +34,11 @@ function App() {
 
   return (
     <div>
-      <CartProvider>
-        <Header />
-        <Outlet />
-        <Footer />
-      </CartProvider>
+      {/* <CartProvider> */}
+      <Header />
+      <Outlet />
+      <Footer />
+      {/* </CartProvider> */}
     </div>
   );
 }
