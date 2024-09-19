@@ -4,10 +4,11 @@ import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CartContext } from '../Cart/CartContext/CartContext';
 import { removeFromCart } from '../Cart/CartContext/CartAction';
+
 function Checkout() {
   const { state } = useLocation();
   const orderData = state?.orderData;
-  const { cartItems, removeFromCart } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();

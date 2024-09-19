@@ -3,7 +3,6 @@ import { CartContext } from '../Cart/CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
 import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-
 interface ITreeSpecies {
   id: number;
   name: string;
@@ -13,7 +12,6 @@ interface ITreeSpecies {
   picture: string;
   co2_compensation: number;
 }
-
 interface IProjectTree {
   id: number;
   basic_quantity: number;
@@ -21,17 +19,14 @@ interface IProjectTree {
   species_id: number;
   species: ITreeSpecies[];
 }
-
 function Cart() {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
   const { user } = useUser();
   const navigate = useNavigate();
-
-  const totalAmount = cartItems.reduce((acc, item) => {
-    const speciesPrice = item.tree.species?.[0]?.price || 0; // Access the first species and ensure price exists
-    return acc + parseFloat(speciesPrice) * item.quantity;
-  }, 0);
-
+  const totalAmount = cartItems.reduce(
+    (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
+    0
+  );
   const handlePay = async () => {
     if (!user) {
       navigate('/login');
@@ -39,15 +34,14 @@ function Cart() {
       const orderData = {
         amount: totalAmount,
         orderLine: cartItems.map((item) => ({
-          project_tree_id: item.tree.species[0]?.id, // Safely access species ID
+          project_tree_id: item.tree.species.id,
           quantity: item.quantity,
-          amount: Number(item.tree.species[0]?.price), // Safely access species price
+          amount: Number(item.tree.species.price),
         })),
       };
       navigate('/payment', { state: { orderData } });
     }
   };
-
   return (
     <div>
       <div className="w-full p-10 text-center text-4xl font-bold">
@@ -83,7 +77,6 @@ function Cart() {
           <p>Total: {totalAmount.toFixed(2)} €</p>
         </div>
       )}
-
       <div className="m-auto text-center p-10">
         <button
           type="submit"
@@ -96,5 +89,4 @@ function Cart() {
     </div>
   );
 }
-
 export default Cart;
