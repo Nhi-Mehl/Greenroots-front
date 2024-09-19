@@ -2,7 +2,7 @@
 // Il fournit un composant UserProvider qui encapsule l'application et fournit user object.
 // et une fonction pour définir user object sur le reste de l'application.
 // Le hook useUser personnalisé est utilisé pour accéder à user object et à la fonction setUser à partir de UserContext.
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { IUser } from '../@types';
 
 interface UserContextType {
@@ -35,8 +35,12 @@ export const useUser = () => {
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
 
+  // Mémorisation de la valeur du contexte pour éviter des rendus inutiles
+
+  const userContextValue = useMemo(() => ({ user, setUser }), [user]);
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={userContextValue}>
       {children}
     </UserContext.Provider>
   );
