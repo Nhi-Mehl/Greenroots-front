@@ -120,6 +120,7 @@ describe('Login component security tests', () => {
     expect(screen.queryByText(sqlInjectionPayload)).not.toBeInTheDocument();
   });
 
+  //   les deux items test pas encore test
   //   it('devrait soumettre le formulaire avec les bonnes données', async () => {
   //     // Utilisation correcte de vi.fn() pour le mock
   //     (api.post as vitest.Mock).mockResolvedValue({
