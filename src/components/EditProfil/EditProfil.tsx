@@ -43,7 +43,7 @@ function EditProfil() {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `http://localhost:3000/api/users/${user?.id}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -211,7 +211,6 @@ function EditProfil() {
             >
               Valider
             </button>
-
             <button
               type="button"
               onClick={handleDelete}
