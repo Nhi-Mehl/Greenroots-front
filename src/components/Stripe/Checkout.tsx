@@ -1,28 +1,23 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { removeFromCart } from '../Cart/CartContext/CartAction';
-import { CartContext } from '../Cart/CartContext/CartContext';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useContext } from 'react';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { CartContext } from '../Cart/CartContext/CartContext';
+import { removeFromCart } from '../Cart/CartContext/CartAction';
 function Checkout() {
   const { state } = useLocation();
   const orderData = state?.orderData;
   const { cartItems, removeFromCart } = useContext(CartContext);
-
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const token = localStorage.getItem('token');
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
     });
-    const token = localStorage.getItem('token');
     if (!error) {
       try {
         const { id } = paymentMethod;
@@ -34,10 +29,11 @@ function Checkout() {
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         if (response.data.success) {
           if (!token) {
+            console.log('Token missing, redirecting to login.');
             navigate('/login');
+            return; // Arrêtez l'exécution si le token n'est pas présent
           }
           try {
             const orderResponse = await axios.post(
@@ -47,9 +43,7 @@ function Checkout() {
             );
             console.log(orderResponse.data.success);
             const { orderId } = orderResponse.data;
-
             cartItems.map((item) => removeFromCart(item.tree.id));
-
             navigate('/confirmPay', {
               state: {
                 orderData,
@@ -68,7 +62,6 @@ function Checkout() {
       }
     }
   };
-
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold mb-6 text-center">Paiement</h2>
@@ -97,5 +90,4 @@ function Checkout() {
     </div>
   );
 }
-
 export default Checkout;

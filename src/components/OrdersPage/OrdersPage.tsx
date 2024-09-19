@@ -85,7 +85,7 @@ function OrdersPage() {
                     className="btn text-white py-2 px-4 rounded"
                     type="button"
                     onClick={() => {
-                      navigate(`/orders-details/:id`);
+                      navigate(`/orders-details/${order.id}`);
                     }}
                   >
                     Consulter

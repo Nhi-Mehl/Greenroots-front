@@ -1,19 +1,38 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { IOrder, IOrderLine } from '../../@types';
+import axios from 'axios';
+import {
+  IOrder,
+  IOrderLine,
+  IProject,
+  IProjectTree,
+  ISpecies,
+} from '../../@types';
 import { useUser } from '../../context/UserContext';
+// import { useProject } from '../../context/ProjectContext';
 import api from '../../api';
-import { useProject } from '../../context/ProjectContext';
 
 interface IOrderWithDate extends IOrder {
   createdAt: string;
 }
+interface IProjectTreesWithSpecies extends IProjectTree {
+  species: ISpecies;
+}
+
+interface MixOrderLinesProps extends IOrderLine {
+  project_tree: IProjectTreesWithSpecies;
+}
 
 function OrderDetailPage() {
   const { orderId } = useParams();
-  const [orderLines, setOrderLines] = useState<IOrderLine[]>([]);
-  const [orderDetails, setOrderDetails] = useState<IOrderWithDate | null>(null);
-  const { project } = useProject();
+  console.log('orderId', orderId);
+
+  const [orderLines, setOrderLines] = useState<MixOrderLinesProps[]>([]);
+  const [orders, setOrders] = useState<IOrderWithDate[]>([]);
+
+  // const { project } = useProject();
+
+  const [project, setProject] = useState<IProject | null>(null);
   console.log('project', project);
 
   const { user } = useUser();
@@ -22,44 +41,50 @@ function OrderDetailPage() {
   }
 
   useEffect(() => {
-    console.log(user);
-
-    // Récupération des lignes de commande
-    const fetchOrderLines = async () => {
+    const getOrderLines = async () => {
       try {
-        // Récupération des détails de la commande
-        const orderResponse = await api.get(`/orders/${user.id}`);
-        console.log(orderResponse);
-        setOrderDetails(orderResponse.data);
+        const responseOrderLines = await api.get(`/order_line/${orderId}`);
 
-        const orders = orderResponse.data;
+        console.log('responseOrderLines', responseOrderLines.data);
 
-        orders.forEach(async (order: IOrder) => {
-          const orderLinesResponse = await api.get(`/order_line/${order.id}`);
-          setOrderLines(orderLinesResponse.data);
-          console.log(orderLinesResponse);
+        if (responseOrderLines.status === 200) {
+          setOrderLines(responseOrderLines.data);
+        }
+
+        const responseOrders = await api.get(`/orders/${user.id}`);
+        console.log('responseOrders', responseOrders.data);
+
+        if (responseOrders.status === 200) {
+          setOrders(responseOrders.data);
+        }
+
+        orderLines.forEach(async (line) => {
+          const responseProject = await api.get(
+            `/projects/${line.project_tree.project_id}`
+          );
+
+          console.log('reponseProject', responseProject.data);
+
+          if (responseProject.status === 200) {
+            setProject(responseProject.data);
+          }
         });
-      } catch (error) {
-        console.error(
-          'Erreur lors de la récupération des détails de la commande'
-        );
+      } catch (error: import('axios').AxiosError | unknown) {
+        if (axios.isAxiosError(error)) {
+          alert(error?.response?.data.message);
+        }
       }
     };
-    fetchOrderLines();
+    getOrderLines();
   }, [user, orderId]);
 
-  console.log('orders', orderDetails);
-  
-  const orderLineId = orderLines.forEach((orderLine) => orderLine.order_id;
-
-  const orderWithId = orderDetails.find(
-    (order: IOrderWithDate) =>
-      order.id === orderLineId)
+  const matchingOrders = orders?.filter((order: IOrderWithDate) =>
+    orderLines.some((line) => line.order_id === order.id)
   );
 
   return (
     <div className="m-10">
-      {/* {orderDetails?.map((order: IOrderWithDate) => (
+      {matchingOrders?.map((order) => (
         <div key={order.id}>
           <h1 className="text-center text-xl font-bold mb-4">
             Commande numéro {order.id}
@@ -73,7 +98,7 @@ function OrderDetailPage() {
             })}
           </p>
         </div>
-      ))} */}
+      ))}
 
       <div className="space-y-8">
         {orderLines.map((orderLine) => (
@@ -85,13 +110,15 @@ function OrderDetailPage() {
               <strong>Nom du projet :</strong> {project?.name}
             </p>
             <p className="mb-2">
-              <strong>Nom de l'arbre :</strong> {orderLine.project_tree_id}
+              <strong>Nom de l'arbre :</strong>{' '}
+              {orderLine.project_tree.species.name}
             </p>
             <p className="mb-2">
-              <strong>Montant Unitaire :</strong> {orderLine.amount} €
+              <strong>Montant Unitaire :</strong>{' '}
+              {orderLine.project_tree.species.price} €
             </p>
             <div className="flex justify-between">
-              <p>orderLine.order_
+              <p>
                 <strong>Quantité :</strong> {orderLine.quantity}
               </p>
               <p>
@@ -102,10 +129,12 @@ function OrderDetailPage() {
         ))}
       </div>
 
-      <p className="text-right font-bold mt-8">
-        Montant Total de la commande :
-        {orderDetails?.amount || 'Montant indisponible'} €
-      </p>
+      {matchingOrders.map((order: IOrderWithDate) => (
+        <p key={order.id} className="text-right font-bold mt-8">
+          Montant Total de la commande :{' '}
+          {order.amount || 'Montant indisponible'}€
+        </p>
+      ))}
     </div>
   );
 }

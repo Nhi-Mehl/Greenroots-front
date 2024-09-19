@@ -82,7 +82,7 @@ const router = createBrowserRouter([
         element: <OrdersPage />,
       },
       {
-        path: '/orders-details/:id',
+        path: '/orders-details/:orderId',
         element: <OrderDetailPage />,
       },
       {
