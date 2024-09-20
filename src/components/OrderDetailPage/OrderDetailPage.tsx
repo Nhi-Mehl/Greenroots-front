@@ -58,7 +58,7 @@ function OrderDetailPage() {
           setOrders(responseOrders.data);
         }
 
-        orderLines.forEach(async (line) => {
+        const projectApi = orderLines.forEach(async (line) => {
           const responseProject = await api.get(
             `/projects/${line.project_tree.project_id}`
           );
@@ -69,6 +69,8 @@ function OrderDetailPage() {
             setProject(responseProject.data);
           }
         });
+
+        console.log('projectApi', projectApi);
       } catch (error: import('axios').AxiosError | unknown) {
         if (axios.isAxiosError(error)) {
           alert(error?.response?.data.message);
@@ -80,6 +82,10 @@ function OrderDetailPage() {
 
   const matchingOrders = orders?.filter((order: IOrderWithDate) =>
     orderLines.some((line) => line.order_id === order.id)
+  );
+
+  const matchingOrderLines = orderLines?.filter((line: IOrderLine) =>
+    orders.some((order) => line.order_id === order.id)
   );
 
   return (
@@ -101,14 +107,14 @@ function OrderDetailPage() {
       ))}
 
       <div className="space-y-8">
-        {orderLines.map((orderLine) => (
+        {matchingOrderLines.map((orderLine) => (
           <div
             key={orderLine.id}
             className="bg-gray-200 p-4 rounded-md shadow-md"
           >
-            <p className="mb-2">
+            {/* <p className="mb-2">
               <strong>Nom du projet :</strong> {project?.name}
-            </p>
+            </p> */}
             <p className="mb-2">
               <strong>Nom de l'arbre :</strong>{' '}
               {orderLine.project_tree.species.name}
