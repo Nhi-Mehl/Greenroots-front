@@ -1,24 +1,9 @@
 import { useContext } from 'react';
-import { CartContext } from '../Cart/CartContext/CartContext';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from './CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
 import { useUser } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-interface ITreeSpecies {
-  id: number;
-  name: string;
-  scientific_name: string;
-  description: string;
-  price: number;
-  picture: string;
-  co2_compensation: number;
-}
-interface IProjectTree {
-  id: number;
-  basic_quantity: number;
-  current_quantity: number;
-  species_id: number;
-  species: ITreeSpecies[];
-}
+
 function Cart() {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
   const { user } = useUser();
@@ -27,6 +12,10 @@ function Cart() {
     (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
     0
   );
+
+  console.log('cartItems', cartItems);
+  console.log('totalAmount', totalAmount);
+
   const handlePay = async () => {
     if (!user) {
       navigate('/login');
@@ -34,11 +23,12 @@ function Cart() {
       const orderData = {
         amount: totalAmount,
         orderLine: cartItems.map((item) => ({
-          project_tree_id: item.tree.species.id,
+          project_tree_id: item.tree.id,
           quantity: item.quantity,
-          amount: Number(item.tree.species.price),
+          amount: Number(item.tree.species.price) * item.quantity,
         })),
       };
+      console.log('orderData', orderData);
       navigate('/payment', { state: { orderData } });
     }
   };
