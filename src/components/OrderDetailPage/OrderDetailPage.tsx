@@ -29,22 +29,20 @@ function OrderDetailPage() {
 
   const [orderLines, setOrderLines] = useState<MixOrderLinesProps[]>([]);
   const [orders, setOrders] = useState<IOrderWithDate[]>([]);
-
-  // const { project } = useProject();
-
-  const [project, setProject] = useState<IProject | null>(null);
-  console.log('project', project);
+  const [projects, setProjects] = useState<IProject[]>([]);
+  console.log('projects', projects);
 
   const { user } = useUser();
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  console.log('user', user);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+
     const getOrderLines = async () => {
       try {
         const responseOrderLines = await api.get(`/order_line/${orderId}`);
-
         console.log('responseOrderLines', responseOrderLines.data);
 
         if (responseOrderLines.status === 200) {
@@ -57,36 +55,76 @@ function OrderDetailPage() {
         if (responseOrders.status === 200) {
           setOrders(responseOrders.data);
         }
-
-        const projectApi = orderLines.forEach(async (line) => {
-          const responseProject = await api.get(
-            `/projects/${line.project_tree.project_id}`
-          );
-
-          console.log('reponseProject', responseProject.data);
-
-          if (responseProject.status === 200) {
-            setProject(responseProject.data);
-          }
-        });
-
-        console.log('projectApi', projectApi);
       } catch (error: import('axios').AxiosError | unknown) {
         if (axios.isAxiosError(error)) {
           alert(error?.response?.data.message);
         }
       }
     };
+
     getOrderLines();
   }, [user, orderId]);
+
+  useEffect(() => {
+    const GetProjects = async () => {
+      try {
+        const responseProjects = await Promise.all(
+          orderLines.map((line) =>
+            api.get(`/projects/${line.project_tree.project_id}`)
+          )
+        );
+
+        console.log('responseProjects', responseProjects);
+
+        const projectsData = responseProjects
+          .filter((project) => project.status === 200)
+          .map((project) => project.data);
+        console.log('projectsData', projectsData);
+
+        setProjects(projectsData);
+      } catch (error: import('axios').AxiosError | unknown) {
+        if (axios.isAxiosError(error)) {
+          console.error(
+            'Erreur lors de la récupération des données du projet:',
+            error?.response?.data.message
+          );
+        }
+      }
+    };
+
+    console.log('projects après le premier useEffect', projects);
+
+    if (orderLines.length > 0) {
+      GetProjects();
+    }
+  }, [orderLines]);
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   const matchingOrders = orders?.filter((order: IOrderWithDate) =>
     orderLines.some((line) => line.order_id === order.id)
   );
 
-  const matchingOrderLines = orderLines?.filter((line: IOrderLine) =>
-    orders.some((order) => line.order_id === order.id)
-  );
+  console.log('matchingOrders', matchingOrders);
+
+  // const matchingProject =
+
+  // //  Une autre façon d'écrire les deux fonctions ci-dessus
+  // //  Un ensemble contenant tous les order_id des orderLines.
+  // const orderIds = new Set(orderLines.map((line) => line.order_id));
+  // //  Filtre les orders en vérifiant si leur id est présent dans l'ensemble orderIds.
+  // const matchingOrders = orders?.filter((order: IOrderWithDate) =>
+  //   orderIds.has(order.id)
+  // );
+
+  // //  Un ensemble contenant tous les id des orders.
+  // const orderLineIds = new Set(orders.map((order) => order.id));
+  // //  Filtre les orderLines en vérifiant si leur order_id est présent dans l'ensemble orderLineIds.
+  // const matchingOrderLines = orderLines?.filter((line: IOrderLine) =>
+  //   orderLineIds.has(line.order_id)
+  // );
 
   return (
     <div className="m-10">
@@ -107,14 +145,19 @@ function OrderDetailPage() {
       ))}
 
       <div className="space-y-8">
-        {matchingOrderLines.map((orderLine) => (
+        {orderLines.map((orderLine) => (
           <div
             key={orderLine.id}
             className="bg-gray-200 p-4 rounded-md shadow-md"
           >
-            {/* <p className="mb-2">
-              <strong>Nom du projet :</strong> {project?.name}
-            </p> */}
+            <p className="mb-2">
+              <strong>Nom du projet :</strong>{' '}
+              {
+                projects.filter((project) => {
+                  return project.id === orderLine.project_tree.project_id;
+                })[0]?.name
+              }
+            </p>
             <p className="mb-2">
               <strong>Nom de l'arbre :</strong>{' '}
               {orderLine.project_tree.species.name}

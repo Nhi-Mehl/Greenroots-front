@@ -42,6 +42,8 @@ function Checkout() {
               { headers: { Authorization: `Bearer ${token}` } }
             );
             console.log(orderResponse.data.success);
+            console.log('orderResponse', orderResponse.data);
+
             const { orderId } = orderResponse.data;
             cartItems.map((item) => removeFromCart(item.tree.id));
             navigate('/confirmPay', {

@@ -11,7 +11,7 @@ const defaultCartContext = {
 };
 export const CartContext = createContext(defaultCartContext);
 
-export const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(CartReducer, initialState);
 
   // Synchroniser le panier avec localStorage à chaque changement du panier
