@@ -45,25 +45,38 @@ function ProjectList() {
               src={`images/projets/${project.picture}.jpg`}
               alt=""
             />
-            <div className="p-2  flex flex-col text-center gap-2">
-              <h2 className="text-lg font-bold">
+            <div className="p-6 flex flex-col gap-6">
+              <h2 className="h3-title text-center font-bold">
                 {project.name} - {project.country}
               </h2>
-              <p className="text-xs text-justify">
+
+              <label htmlFor="file">
+                <progress
+                  className="lg:w-2/3 lg:mb-0 pr-6 mb-4"
+                  id="file"
+                  max="100"
+                  value="70"
+                >
+                  70%
+                </progress>
+                96 % arbres financés
+              </label>
+              <p>10 arbres disponibles pour planter</p>
+
+              <p>
                 {truncateDescription(project.description, DESCRIPTION_LIMIT)}
               </p>
+              <button
+                className="btn m-auto lg:text-base"
+                type="button"
+                onClick={() => {
+                  const slug = createSlug(project.name);
+                  navigate(`/projects/${project.id}/${slug}`);
+                }}
+              >
+                Suivre ce projet
+              </button>
             </div>
-
-            <button
-              className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
-              type="button"
-              onClick={() => {
-                const slug = createSlug(project.name);
-                navigate(`/projects/${project.id}/${slug}`);
-              }}
-            >
-              Suivre ce projet
-            </button>
           </article>
         </div>
       ))}
