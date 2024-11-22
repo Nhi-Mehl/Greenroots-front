@@ -50,7 +50,6 @@ function Register() {
         console.error("Erreur lors de l'inscription");
         return;
       }
-      const result = await response.json();
 
       setIsRegistered(true);
     } catch (error) {
