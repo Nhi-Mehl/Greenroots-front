@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useUser } from '../../context/UserContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 import api from '../../api';
 
 function ProfilDetails() {
@@ -8,24 +8,26 @@ function ProfilDetails() {
   const navigate = useNavigate();
 
   // Chargement du formulaire lié à l'utilisateur connecté
-useEffect(() => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await api.get(`/users/${user?.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.status === 200) {
+          setUser(response.data);
+        }
+      } catch (error) {
+        console.error('ca marche pas', error);
+      }
+    };
 
-  const fetchUserData = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await api.get(`/users/${user?.id}`, {headers: {Authorization:`Bearer ${token}`}})
-      setUser(response.data)
-    } catch (error) {
-      console.error('ca marche pas')
+    // si `user` est indéfini ou `user.id` n'est pas disponible
+    if (!user || !user.id) {
+      fetchUserData();
     }
-  }
-
-  // si `user` est indéfini ou `user.id` n'est pas disponible
-  if (!user || !user.id) {
-    fetchUserData();
-  }
-}, [user, setUser])
-
+  }, [user, setUser]);
 
   const handleEditClick = () => {
     navigate('/modifier-mon-profil');
