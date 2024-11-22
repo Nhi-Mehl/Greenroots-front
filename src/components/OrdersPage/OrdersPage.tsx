@@ -1,55 +1,40 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { IOrder } from '../../@types';
 import api from '../../api/index';
 
+interface IOrderWithDate extends IOrder {
+  createdAt: string;
+}
+
 function OrdersPage() {
-  const [orders, setOrders] = useState<IOrder[]>([]);
+  const [orders, setOrders] = useState<IOrderWithDate[]>([]);
   const navigate = useNavigate();
   const { user } = useUser();
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  console.log(user);
-
   useEffect(() => {
+    if (!user) {
+      navigate('/login', { replace: true });
+      return;
+    }
+
     const fetchOrders = async () => {
       try {
-        console.log('avant fetch');
-
         const response = await api.get(`/orders/${user.id}`); // Requête à l'API pour récupérer les commandes de l'utilisateur
-        console.log('Réponse API', response);
-        setOrders(response.data); // Mise à jour de l'état avec les données reçues
 
-        console.log(response.data);
+        if (response.status === 200) {
+          setOrders(response.data); // Mise à jour de l'état avec les données reçues
+        }
       } catch (error) {
-        console.error();
-        ('Erreur lors de la récupération des commandes'); // Gère les erreurs
+        console.error('Erreur lors de la récupération des commandes', error); // Gère les erreurs
       }
     };
 
     if (user?.id) {
       fetchOrders();
     }
-  }, [user.id]); // Exécute le useEffect quand l'utilisateur change
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await api.get(`/orders/${user?.id}`); // Requête à l'API pour récupérer les commandes de l'utilisateur
-        setOrders(response.data); // Mise à jour de l'état avec les données reçues
-      } catch (error) {
-        console.error();
-        ('Erreur lors de la récupération des commandes'); // Gère les erreurs
-      }
-    };
-
-    if (user?.id) {
-      fetchOrders(); // Récupère les commandes seulement si l'utilisateur est connecté
-    }
-  }, [user?.id]); // Exécute lee useEffect quand l'utilisateur change
+  }, [user, navigate]); // Exécute le useEffect quand l'utilisateur change
 
   return (
     <main className="max-w-7xl mx-auto p-10">
