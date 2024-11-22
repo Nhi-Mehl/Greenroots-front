@@ -7,26 +7,7 @@ import api from '../../../api/index';
 function Projects() {
   const [projects, SetProjects] = useState<IProject[]>([]);
 
-  // Récupéré les 3 projets les plus vendus avec fetch
-  // useEffect(() => {
-  //   const fetchProjects = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         'http://localhost:3000/api/projects/highlights'
-  //       );
-
-  //       const data: IProject[] = await response.json();
-  //       SetProjects(data);
-  //     } catch (error) {
-  //       console.error('erreur erreur');
-  //     }
-  //   };
-
-  //   fetchProjects();
-  // }, []);
-
   // Récupéré les 3 projets les plus vendus avec axios
-
   useEffect(() => {
     const fetchProjects = async () => {
       try {
