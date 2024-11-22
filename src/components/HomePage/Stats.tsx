@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { IProject } from '../../@types';
 import axios from 'axios';
 
 function Stats() {

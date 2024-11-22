@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IProject } from '../../../@types/index.d';
+import { IProject, IProjectTree } from '../../../@types/index.d';
+import api from '../../../api';
 
 const createSlug = (name: string) => {
   return name
@@ -11,6 +12,7 @@ const createSlug = (name: string) => {
 
 function ProjectList() {
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [projectTrees, setProjectTrees] = useState<IProjectTree[]>([]);
   const navigate = useNavigate();
   // Limite de caractères pour la description
   const DESCRIPTION_LIMIT = 80;
@@ -34,6 +36,44 @@ function ProjectList() {
 
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    const getProjecTrees = async () => {
+      try {
+        // projects.forEach(async (project) => {
+        //   const response = await api.get(`/project_trees/${project.id}`);
+
+        //   const data = await response.data;
+        //   setProjectTrees(data);
+        // });
+
+        const responseProjectTrees = await Promise.all(
+          projects.map((project) => api.get(`/project_trees/${project.id}`))
+        );
+
+        console.log('responseProjectTrees', responseProjectTrees);
+
+        const projectTreesData = responseProjectTrees
+          .filter((tree) => tree.status === 200)
+          .map((tree) => tree.data);
+        console.log('projectTreesData', projectTreesData);
+
+        setProjectTrees(projectTreesData);
+      } catch (error) {
+        console.error('Erreur lors du chargement des projets :', error);
+      }
+    };
+
+    getProjecTrees();
+  }, [projects]);
+
+  console.log('projectTrees', projectTrees);
+
+  const matchingProjectsTrees = projectTrees.filter((tree) =>
+    projects.some((project) => project.id === tree.project_id)
+  );
+
+  console.log('matchingProjectsTrees', matchingProjectsTrees);
 
   return (
     <div className="p-8 flex gap-16 flex-wrap justify-center lg:p-16 lg:flex-row md:flex-col">
@@ -63,7 +103,8 @@ function ProjectList() {
               </progress>
               96 % arbres financés
             </label>
-            <p className="font-bold">10 arbres disponibles pour planter</p>
+
+            <p className="font-bold">arbres disponibles pour planter</p>
 
             <p className="text-justify">
               {truncateDescription(project.description, DESCRIPTION_LIMIT)}

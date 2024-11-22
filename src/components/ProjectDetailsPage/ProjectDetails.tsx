@@ -93,7 +93,7 @@ function ProjectDetails() {
       console.error('addtoCart is not defined');
       return;
     }
-    const handleDetailTree = () => {};
+
     const projectName = project.name;
     console.log('ProjectName:', projectName);
     addToCart(tree, projectName);
@@ -113,7 +113,7 @@ function ProjectDetails() {
   };
   return (
     <div>
-      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max ">
+      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max">
         <h2 className="h3-title p-4 text-m text-center lg:text-4xl">
           Objectif : {totalBasicQuantity} arbres
         </h2>
