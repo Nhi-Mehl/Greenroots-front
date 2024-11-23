@@ -24,32 +24,32 @@ function Project({ project, index }: ProjectProps) {
   const isEven = index % 2 === 0;
 
   return (
-    <article className="w-5/6 my-14 lg:max-v-[1200px]">
+    <article
+      className={`flex flex-col lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-5/6 h-[565px] lg:h-[500px] border-greenRegular bg-beige border-4 `}
+    >
+      <div className="h-full lg:w-1/2">
+        <img
+          className="h-[200px] md:h-[320px] w-full object-cover lg:h-full"
+          src={`/images/projets/${project.picture}.jpg`}
+          alt={project.name}
+        />
+      </div>
       <div
-        className={`relative h-[500px] w-full border-greenRegular border-4 lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+        className={`flex flex-col justify-center gap-4 lg:top-10 lg:w-1/2 lg:pt-8 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
       >
-        <div className="h-full lg:w-1/2">
-          <img
-            className=" h-[200px] w-full object-cover lg:h-full"
-            src={`/images/projets/${project.picture}.jpg`}
-            alt={project.name}
-          />
-        </div>
-        <div
-          className={`absolute top-56 flex flex-col justify-center gap-6 p-6 lg:top-10 lg:w-1/2 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
+        <h2 className="text-center h3-title lg:text-4xl">
+          {project.country}, {project.city}
+        </h2>
+        <p className="text-sm text-justify px-3 lg:px-6 lg:pt-4 lg:text-lg ">
+          {project.description}
+        </p>
+        <button
+          className="mx-auto mb-4 lg:mt-8 btn lg:text-lg"
+          type="button"
+          onClick={handleClickProjet}
         >
-          <h2 className="text-center h3-title lg:text-4xl">
-            {project.country}, {project.city}
-          </h2>
-          <p className="text-sm lg:p-4 lg:text-xl ">{project.description}</p>
-          <button
-            className="m-auto btn lg:text-lg"
-            type="button"
-            onClick={handleClickProjet}
-          >
-            En savoir plus
-          </button>
-        </div>
+          En savoir plus
+        </button>
       </div>
     </article>
   );

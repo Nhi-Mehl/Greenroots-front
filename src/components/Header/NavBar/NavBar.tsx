@@ -33,7 +33,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
 
   // Si showBanner est vrai, on enlève la classe 'bg-green-900'
   const navClassName = `
-    w-full z-20 flex items-center justify-between p-8 text-white
+    w-full z-20 flex items-center justify-between p-3 lg:p-8 text-white
     ${showBanner ? 'absolute top-0 left-0' : 'bg-greenDark relative'}
   `;
 
@@ -46,17 +46,17 @@ function NavBar({ showBanner }: ShowBannerProps) {
           className="h-12 md:h-16 lg:h-20"
         />
       </Link>
-      <div className="text-shadow font-semibold hidden space-x-20 text-xl md:flex md:text-xl lg:text-2xl">
+      <div className="text-shadow font-semibold hidden space-x-16 text-xl md:flex md:text-xl lg:text-2xl">
         <Link to="/projects">Nos projets</Link>
         <Link to="/qui-sommes-nous">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
-      <div className="flex gap-8">
+      <div className="flex gap-4">
         <Link to={user ? '/my-account' : '/login'} className="p-4">
-          <FontAwesomeIcon icon={faUser} />
+          <FontAwesomeIcon className="text-2xl" icon={faUser} />
         </Link>
         <Link to="/cart" className="hidden p-4 md:inline">
-          <FontAwesomeIcon icon={faCartShopping} />
+          <FontAwesomeIcon className="text-2xl" icon={faCartShopping} />
           {cartItemCount > 0 && (
             <span className="absolute right-7 top-7 rounded-full bg-red-600 px-2 py-1 text-xs text-white lg:mr-10">
               {cartItemCount}
@@ -67,6 +67,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
           type="button"
           className="text-white md:hidden"
           onClick={handleMenuClick}
+          aria-label="Toggle menu"
         >
           <FontAwesomeIcon icon={faBars} />
         </button>
@@ -120,7 +121,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
           </Link>
           <button
             type="button"
-            className="absolute right-8 top-0 text-white"
+            className="absolute right-12 top-0 text-white"
             onClick={handleMenuClick}
           >
             <FontAwesomeIcon icon={faBars} />

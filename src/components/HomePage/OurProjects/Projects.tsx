@@ -27,7 +27,7 @@ function Projects() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-beige">
+    <div className="flex flex-col items-center justify-center my-10 gap-10">
       {projects.map((project, index) =>
         index < 3 ? (
           <Project key={project.id} project={project} index={index} />
