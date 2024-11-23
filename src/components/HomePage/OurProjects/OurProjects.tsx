@@ -9,7 +9,7 @@ function OurProjects() {
         alt="backgroud plantation"
       />
       <div className="absolute top-0 flex flex-col justify-center text-white pt-10 lg:pt-16">
-        <h2 className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4xl lg:text-6xl">
+        <h2 className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4xl lg:text-5xl">
           NOS PROJETS
         </h2>
         <p className="text-sm text-justify text-white shadow-sm md:px-8 px-4 md:text-xl lg:text-2xl">

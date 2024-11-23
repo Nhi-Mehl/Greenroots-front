@@ -26,8 +26,8 @@ function Stats() {
   }, []);
 
   return (
-    <div className="w-screen h-40 pt-6 lg:pt-1 uppercase md:h-48 lg:h-80">
-      <h2 className="h2-title text-center md:text-4xl lg:text-6xl 2xl:text-5xl ">
+    <div className="w-screen h-40 pt-6 lg:pt-10 uppercase md:h-48 lg:h-80">
+      <h2 className="h2-title text-center md:text-4xl lg:text-5xl">
         Quelques chiffres
       </h2>
       <div className="flex gap-10 sm:gap-24 md:gap-40 lg:gap-60 justify-center">
