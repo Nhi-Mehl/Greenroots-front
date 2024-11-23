@@ -15,7 +15,7 @@ function BannerContent({
   onButtonClick,
 }: BannerContentProps) {
   return (
-    <section className="absolute inset-0 flex flex-col gap-2 sm:gap-10 lg:gap-20 items-center justify-center text-white mt-10  px-4">
+    <section className="absolute inset-0 flex flex-col gap-2 sm:gap-10 lg:gap-16 items-center justify-center text-white mt-10  px-4">
       <h1 className="h1-title text-center lg:text-h1 lg:mt-8">
         {title}
         {subtitle && <span className="block lg:mt-8">{subtitle}</span>}

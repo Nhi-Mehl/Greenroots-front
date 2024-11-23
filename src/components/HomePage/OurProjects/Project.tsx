@@ -25,17 +25,17 @@ function Project({ project, index }: ProjectProps) {
 
   return (
     <article
-      className={`flex flex-col lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-5/6 h-[565px] lg:h-[500px] border-greenRegular bg-beige border-4 `}
+      className={`flex flex-col lg:flex ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} w-5/6 h-[565px] lg:h-[500px] border-greenRegular bg-beige border-4`}
     >
-      <div className="h-full lg:w-1/2">
+      <div className="lg:w-1/2">
         <img
-          className="h-[200px] md:h-[320px] w-full object-cover lg:h-full"
+          className="w-full h-[200px] sm:h-[320px] lg:h-full object-cover"
           src={`/images/projets/${project.picture}.jpg`}
           alt={project.name}
         />
       </div>
       <div
-        className={`flex flex-col justify-center gap-4 lg:top-10 lg:w-1/2 lg:pt-8 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
+        className={`flex flex-col justify-center gap-4 lg:top-10 lg:w-1/2 pt-6 lg:pt-8 ${isEven ? 'lg:right-0' : 'lg:left-0'}`}
       >
         <h2 className="text-center h3-title lg:text-4xl">
           {project.country}, {project.city}

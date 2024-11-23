@@ -2,14 +2,14 @@ import './OurProjects.css';
 
 function OurProjects() {
   return (
-    <section className="relative h-[350px] lg:h-[500px]">
+    <section className="relative h-[350px] sm:h-[250px] md:h-[320px] lg:h-[500px]">
       <img
         className="h-full w-full object-cover"
         src="/images/bg-our-projetcs-home.jpg"
         alt="backgroud plantation"
       />
       <div className="absolute top-0 flex flex-col justify-center text-white pt-10 lg:pt-16">
-        <h2 className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4x lg:text-6xl">
+        <h2 className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4xl lg:text-6xl">
           NOS PROJETS
         </h2>
         <p className="text-sm text-justify text-white shadow-sm md:px-8 px-4 md:text-xl lg:text-2xl">
