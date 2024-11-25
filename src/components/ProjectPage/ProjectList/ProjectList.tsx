@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IProject, IProjectTree } from '../../../@types/index.d';
@@ -12,7 +13,10 @@ const createSlug = (name: string) => {
 
 function ProjectList() {
   const [projects, setProjects] = useState<IProject[]>([]);
-  const [projectTrees, setProjectTrees] = useState<IProjectTree[]>([]);
+  // const [projectTrees, setProjectTrees] = useState<IProjectTree[]>([]);
+
+  const [progressData, setProgressData] = useState([]);
+
   const navigate = useNavigate();
   // Limite de caractères pour la description
   const DESCRIPTION_LIMIT = 80;
@@ -37,43 +41,66 @@ function ProjectList() {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    const getProjecTrees = async () => {
-      try {
-        // projects.forEach(async (project) => {
-        //   const response = await api.get(`/project_trees/${project.id}`);
+  // useEffect(() => {
+  //   const getProjecTrees = async () => {
+  //     try {
+  //       // projects.forEach(async (project) => {
+  //       //   const response = await api.get(`/project_trees/${project.id}`);
 
-        //   const data = await response.data;
-        //   setProjectTrees(data);
-        // });
+  //       //   const data = await response.data;
+  //       //   setProjectTrees(data);
+  //       // });
 
-        const responseProjectTrees = await Promise.all(
-          projects.map((project) => api.get(`/project_trees/${project.id}`))
-        );
+  //       const responseProjectTrees = await Promise.all(
+  //         projects.map((project) => api.get(`/project_trees/${project.id}`))
+  //       );
 
-        console.log('responseProjectTrees', responseProjectTrees);
+  //       console.log('responseProjectTrees', responseProjectTrees);
 
-        const projectTreesData = responseProjectTrees
-          .filter((tree) => tree.status === 200)
-          .map((tree) => tree.data);
-        console.log('projectTreesData', projectTreesData);
+  //       const projectTreesData = responseProjectTrees
+  //         .filter((tree) => tree.status === 200)
+  //         .map((tree) => tree.data);
+  //       console.log('projectTreesData', projectTreesData);
 
-        setProjectTrees(projectTreesData);
-      } catch (error) {
-        console.error('Erreur lors du chargement des projets :', error);
-      }
-    };
+  //       setProjectTrees(projectTreesData);
+  //     } catch (error) {
+  //       console.error('Erreur lors du chargement des projets :', error);
+  //     }
+  //   };
 
-    getProjecTrees();
-  }, [projects]);
+  //   getProjecTrees();
+  // }, [projects]);
 
-  console.log('projectTrees', projectTrees);
+  // console.log('projectTrees', projectTrees);
 
-  const matchingProjectsTrees = projectTrees.filter((tree) =>
-    projects.some((project) => project.id === tree.project_id)
-  );
+  // const matchingProjectsTrees = projectTrees.filter((trees) => {
+  //   console.log('trees', trees);
+  //   return trees.some((tree) => {
+  //     console.log('tree', tree);
+  //     return projects.some((project) => project.id === tree.project_id);
+  //   });
+  // });
 
-  console.log('matchingProjectsTrees', matchingProjectsTrees);
+  console.log('projects', projects);
+
+  const fetchTreeData = async () => {
+    const progressDataArray = await Promise.all(
+      projects.map(async (project) => {
+        try {
+          const response = await api.get(
+            `/project_trees/project/${project.id}`
+          );
+          return response.data;
+        } catch (error) {
+          console.error('erreur', error);
+          return null;
+        }
+      })
+    );
+
+    const validProgressData = progressDataArray.filter((data) => data !== null);
+    setProgressData(validProgressData);
+  };
 
   return (
     <div className="p-8 flex gap-16 flex-wrap justify-center lg:p-16 lg:flex-row md:flex-col">
@@ -104,7 +131,10 @@ function ProjectList() {
               96 % arbres financés
             </label>
 
-            <p className="font-bold">arbres disponibles pour planter</p>
+            <p className="font-bold">
+              {progressData[project.id] && `${progressData[project.id]}`} arbres
+              disponibles pour planter
+            </p>
 
             <p className="text-justify">
               {truncateDescription(project.description, DESCRIPTION_LIMIT)}
