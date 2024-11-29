@@ -64,22 +64,20 @@ function Login() {
   };
 
   return (
-    <main className="p-4 my-8">
-      <section className="flex flex-col my-10 items-center border-2 border-solid border-green-950 bg-emerald-50 lg:max-w-[1024px] lg:m-auto lg:my-20">
-        <h1 className="text-3xl p-4 lg:text-5xl">Connectez-vous</h1>
-        <p className="w-5/6 p-2 text-sm text-center lg:text-lg">
+    <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+      <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
+        <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
+          Connectez-vous
+        </h1>
+        <p className="text-sm text-justify sm:text-base md:text-lg lg:text-xl">
           Connectez-vous pour accéder à votre compte, suivre vos achats d'arbres
           et voir l&apos;impact de vos contributions. Rejoignez la communauté et
           continuez à agir pour la reforestation.
         </p>
       </section>
-      <section className="flex justify-center lg:max-w-[1024px] lg:m-auto">
-        <form
-          className="p-6 border-2 border-solid my-10 border-green-950 bg-emerald-50 "
-          action="/login"
-          onSubmit={handleSubmit}
-        >
-          <label className="mb-2" htmlFor="email">
+      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
+        <form action="/login" onSubmit={handleSubmit}>
+          <label htmlFor="email">
             Email
             <input
               value={email}
@@ -88,11 +86,11 @@ function Login() {
               name="email"
               placeholder="Votre email"
               onChange={(e) => setEmail(e.target.value)}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input"
             />
           </label>
 
-          <label className="mb-2" htmlFor="password">
+          <label htmlFor="password">
             Mot de passe
             <input
               value={password}
@@ -101,14 +99,11 @@ function Login() {
               id="password"
               name="password"
               placeholder="Votre mot de passe"
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input"
             />
           </label>
 
-          <button
-            className="w-full mt-8 text-slate-50 rounded-md border-0 p-2 bg-green-900"
-            type="submit"
-          >
+          <button className="btn-form mt-4" type="submit">
             Connexion
           </button>
         </form>

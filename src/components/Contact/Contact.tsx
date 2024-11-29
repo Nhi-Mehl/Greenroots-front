@@ -1,9 +1,11 @@
 function Contact() {
   return (
-    <div className="p-4">
-      <div className="flex flex-col my-10 items-center border-2 border-solid border-green-950 bg-emerald-50 lg:max-w-[1024px] lg:m-auto lg:my-20">
-        <h1 className="text-3xl p-4 lg:text-5xl">Contact</h1>
-        <p className="w-5/6 p-4 text-sm text-center lg:text-lg">
+    <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+      <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
+        <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
+          Contact
+        </h1>
+        <p className="text-sm text-justify sm:text-base md:text-lg lg:text-xl">
           Vous avez un projet environnemental que vous souhaitez développer ?
           Nous serions ravis de collaborer avec vous ! Veuillez remplir le
           formulaire ci-dessous et nous fournir des informations sur votre
@@ -11,72 +13,60 @@ function Contact() {
           contactera pour discuter des possibilités de partenariat. Merci de
           votre engagement en faveur d&apos;un avenir durable !
         </p>
-      </div>
-      <div className="flex justify-center ">
-        <form
-          className="p-6 border-2 border-solid my-10 border-green-950 bg-emerald-50"
-          action="/contact"
-        >
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-lg" htmlFor="prenom">
-              Votre prénom
-            </label>
+      </section>
+      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
+        <form action="/contact">
+          <label htmlFor="prenom">
+            Votre prénom
             <input
               type="text"
               id="prenom"
               name="prenom"
               placeholder="Votre prénom"
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-lg" htmlFor="prenom">
-              Votre nom
-            </label>
+          </label>
+
+          <label htmlFor="prenom">
+            Votre nom
             <input
               type="text"
               id="nom"
               name="nom"
               placeholder="Votre nom"
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-lg" htmlFor="email">
-              Votre email
-            </label>
+          </label>
+
+          <label htmlFor="email">
+            Votre email
             <input
               type="text"
               id="email"
               name="email"
               placeholder="Votre email"
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-lg" htmlFor="message">
-              Votre message
-            </label>
+          </label>
+
+          <label htmlFor="message">
+            Votre message
             <textarea
               rows={4}
               cols={50}
               id="message"
               name="message"
               placeholder="Votre message"
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+              className="input "
             />
-          </div>
-          <div>
-            <button
-              className="w-full text-slate-50 rounded-md border-0 p-2 mt-6 bg-green-900 hover:bg-green-700"
-              type="submit"
-            >
-              Envoyer
-            </button>
-          </div>
+          </label>
+
+          <button className="btn-form mt-4" type="submit">
+            Envoyer
+          </button>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 

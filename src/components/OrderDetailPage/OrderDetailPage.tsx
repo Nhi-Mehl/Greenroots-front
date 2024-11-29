@@ -109,23 +109,6 @@ function OrderDetailPage() {
 
   console.log('matchingOrders', matchingOrders);
 
-  // const matchingProject =
-
-  // //  Une autre façon d'écrire les deux fonctions ci-dessus
-  // //  Un ensemble contenant tous les order_id des orderLines.
-  // const orderIds = new Set(orderLines.map((line) => line.order_id));
-  // //  Filtre les orders en vérifiant si leur id est présent dans l'ensemble orderIds.
-  // const matchingOrders = orders?.filter((order: IOrderWithDate) =>
-  //   orderIds.has(order.id)
-  // );
-
-  // //  Un ensemble contenant tous les id des orders.
-  // const orderLineIds = new Set(orders.map((order) => order.id));
-  // //  Filtre les orderLines en vérifiant si leur order_id est présent dans l'ensemble orderLineIds.
-  // const matchingOrderLines = orderLines?.filter((line: IOrderLine) =>
-  //   orderLineIds.has(line.order_id)
-  // );
-
   return (
     <div className="m-10">
       {matchingOrders?.map((order) => (
@@ -180,8 +163,7 @@ function OrderDetailPage() {
 
       {matchingOrders.map((order: IOrderWithDate) => (
         <p key={order.id} className="text-right font-bold mt-8">
-          Montant Total de la commande :{' '}
-          {order.amount || 'Montant indisponible'}€
+          Montant Total de la commande : {order.amount}€
         </p>
       ))}
     </div>
