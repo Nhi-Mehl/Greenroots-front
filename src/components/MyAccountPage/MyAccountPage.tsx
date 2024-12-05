@@ -12,17 +12,16 @@ function MyAccountPage() {
   const handleLogout = async () => {
     localStorage.removeItem('token'); // On supprime le token du stockage local
     setUser(null); // On réinitialise l'utilisateur dans le contexte
-    navigate(-1); // Ou pour rediriger vers une page spécifique
-    // navigate('/my-account');
+    navigate('/login'); // On redirige l'utilisateur vers la page de connexion
   };
 
   return (
-    <div>
-      <h2 className="h2-title text-center mt-10">Mon Compte</h2>
-      <p className="text-center sectionText">Bonjour {user.first_name}</p>
-      <div className="flex gap-10 justify-center my-20">
+    <main className="flex flex-col justify-center min-h-screen">
+      <h2 className="h2-title text-center">Mon Compte</h2>
+      <h3 className="text-center text-2xl">Bonjour {user.first_name}</h3>
+      <div className="flex flex-col items-center gap-4 my-10 md:my-20 md:justify-center md:gap-10 md:flex-row">
         <button
-          className="btn"
+          className="btn w-full"
           type="button"
           onClick={() => {
             navigate('/userdetails');
@@ -31,7 +30,7 @@ function MyAccountPage() {
           Mon profil
         </button>
         <button
-          className="btn"
+          className="btn w-full"
           type="button"
           onClick={() => {
             navigate(`/orders/:id`);
@@ -39,11 +38,11 @@ function MyAccountPage() {
         >
           Mes commandes
         </button>
-        <button className="btn" type="button" onClick={handleLogout}>
+        <button className="btn w-full" type="button" onClick={handleLogout}>
           Déconnexion
         </button>
       </div>
-    </div>
+    </main>
   );
 }
 

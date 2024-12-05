@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext';
 import api from '../../api/index';
@@ -44,7 +44,7 @@ function Login() {
   useEffect(() => {
     if (user) {
       console.log('User dans useEffect', user);
-      navigate(-1);
+      navigate('/my-account');
     }
   }, [user, navigate]);
 
@@ -64,7 +64,7 @@ function Login() {
   };
 
   return (
-    <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+    <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
       <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
         <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
           Connectez-vous
@@ -107,6 +107,14 @@ function Login() {
             Connexion
           </button>
         </form>
+        <div className="flex flex-col items-center gap-2 mt-4">
+          <Link to="/register" className="text-greenRegular">
+            Cliquez ici pour vous inscrire
+          </Link>
+          {/* <Link to="/forgot-password" className=" text-red-600">
+            Mot de passe oublié
+          </Link> */}
+        </div>
       </section>
     </main>
   );

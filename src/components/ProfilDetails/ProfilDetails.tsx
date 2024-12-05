@@ -38,28 +38,56 @@ function ProfilDetails() {
   }
 
   return (
-    <div className="flex flex-col gap-8 m-10">
-      <h1 className="text-center h3-title">Details de mon profil</h1>
-      <div className="mr-16 ml-16 flex flex-row  justify-evenly border-2 border-solid border-greenRegular w ">
-        <div className="p-6 text-left">
-          <p className="">Nom : {user.last_name}</p>
-          <p className="">Prénom : {user.first_name}</p>
-          <p className="">Email : {user.email}</p>
-          <p className="">Téléphone : {user.phone_number}</p>
+    <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
+      <h1 className="text-center h2-title mb-8">Details de mon profil</h1>
+      <section className="text-lg flex flex-col justify-between gap-4 p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg md:flex-row lg:max-w-[900px] lg:mx-auto">
+        <div className="md:w-1/2 space-y-4">
+          <p>
+            <span className="font-bold text-greenRegular">Nom :</span>{' '}
+            {user.last_name}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Prénom :</span>{' '}
+            {user.first_name}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Email :</span>{' '}
+            {user.email}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Téléphone :</span>{' '}
+            {user.phone_number}
+          </p>
         </div>
 
-        <div className="p-6 text-left">
-          <p className="">Adresse : {user.address}</p>
-          <p className="">Code postal : {user.zip_code}</p>
-          <p className="">Ville : {user.city}</p>
-          <p className="uppercase">Pays : {user.country}</p>
+        <div className="md:w-1/2 space-y-4">
+          <p>
+            <span className="font-bold text-greenRegular">Adresse :</span>{' '}
+            {user.address}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Code postal :</span>{' '}
+            {user.zip_code}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Ville :</span>{' '}
+            {user.city}
+          </p>
+          <p>
+            <span className="font-bold text-greenRegular">Pays :</span>{' '}
+            {user.country}
+          </p>
         </div>
-      </div>
+      </section>
 
-      <button className="btn m-auto" type="button" onClick={handleEditClick}>
+      <button
+        className="btn block mx-auto mt-8"
+        type="button"
+        onClick={handleEditClick}
+      >
         Modifier
       </button>
-    </div>
+    </main>
   );
 }
 

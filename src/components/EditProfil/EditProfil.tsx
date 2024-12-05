@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useUser } from '../../context/UserContext';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 import { IUser } from '../../@types';
 import api from '../../api';
-import axios from 'axios';
 
 function EditProfil() {
   const { user, setUser } = useUser();
@@ -58,7 +57,7 @@ function EditProfil() {
   };
 
   // Gestion de la suppression de l'utilisateur
-  const handleDelete = async (e) => {
+  const handleDelete = async () => {
     if (!user) {
       console.error('Utilisateur non trouvé');
       return;
@@ -83,18 +82,19 @@ function EditProfil() {
   }
 
   return (
-    <div className="flex flex-col gap-8 m-10">
-      <h1 className="text-center h3-title">Modifier mon profil</h1>
-      <div className="flex justify-center">
-        <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-14 border-2 border-solid border-green-950 bg-emerald-50"
-          action="/register"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="first_name">
-              Prénom
-            </label>
+    <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
+      <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
+        Modifier mon profil
+      </h1>
+
+      <form
+        className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto"
+        action="/register"
+        onSubmit={handleSubmit}
+      >
+        <div className="md:grid md:grid-cols-2 md:gap-x-6">
+          <label htmlFor="first_name">
+            Prénom
             <input
               type="text"
               id="first_name"
@@ -102,13 +102,12 @@ function EditProfil() {
               placeholder="Votre prénom"
               value={formData.first_name}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="last_name">
-              Nom
-            </label>
+          </label>
+
+          <label>
+            Nom
             <input
               type="text"
               id="last_name"
@@ -116,13 +115,12 @@ function EditProfil() {
               placeholder="Votre nom"
               value={formData.last_name}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="address">
-              Adresse
-            </label>
+          </label>
+
+          <label className="mb-2" htmlFor="address">
+            Adresse
             <input
               type="text"
               id="address"
@@ -130,13 +128,12 @@ function EditProfil() {
               placeholder="Votre adresse"
               value={formData.address}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="zip_code">
-              Code postal
-            </label>
+          </label>
+
+          <label className="mb-2" htmlFor="zip_code">
+            Code postal
             <input
               type="text"
               id="zip_code"
@@ -144,13 +141,12 @@ function EditProfil() {
               placeholder="Votre code postal"
               value={formData.zip_code}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="city">
-              Ville
-            </label>
+          </label>
+
+          <label htmlFor="city">
+            Ville
             <input
               type="text"
               id="city"
@@ -158,13 +154,12 @@ function EditProfil() {
               placeholder="Votre ville"
               value={formData.city}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="country">
-              Pays
-            </label>
+          </label>
+
+          <label htmlFor="country">
+            Pays
             <input
               type="text"
               id="country"
@@ -172,13 +167,12 @@ function EditProfil() {
               placeholder="Votre pays"
               value={formData.country}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="phone_number">
-              Téléphone
-            </label>
+          </label>
+
+          <label htmlFor="phone_number">
+            Téléphone
             <input
               type="text"
               id="phone_number"
@@ -186,13 +180,12 @@ function EditProfil() {
               placeholder="Votre téléphone"
               value={formData.phone_number}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2" htmlFor="email">
-              Email
-            </label>
+          </label>
+
+          <label className="mb-2" htmlFor="email">
+            Email
             <input
               type="email"
               id="email"
@@ -200,28 +193,20 @@ function EditProfil() {
               placeholder="Votre email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input"
             />
-          </div>
-
-          <div className="flex flex-row mt-8 gap-12">
-            <button
-              type="submit"
-              className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-green-900"
-            >
-              Valider
-            </button>
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-red-700"
-            >
-              Supprimer mon profil
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+          </label>
+        </div>
+        <div className="flex flex-row mt-8 gap-12">
+          <button type="submit" className="btn-form">
+            Valider
+          </button>
+          <button type="button" onClick={handleDelete} className="btn-form">
+            Supprimer mon profil
+          </button>
+        </div>
+      </form>
+    </main>
   );
 }
 

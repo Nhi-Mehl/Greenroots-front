@@ -86,7 +86,7 @@ function Register() {
       </section>
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
         <form action="/register" onSubmit={handleSubmit}>
-          <div className="md:grid md:grid-cols-2 md:gap-6">
+          <div className="md:grid md:grid-cols-2 md:gap-x-6">
             {/* Message d'erreur si les mots de passe ne correspondent pas */}
             {errorMessage && (
               <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
