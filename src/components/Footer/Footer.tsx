@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="flex flex-col justify-between bg-green-950 p-20 text-sm leading-8 text-slate-50 md:flex-row md:leading-10">
+    <footer className="flex flex-col justify-between bg-greenDark p-20 text-sm leading-8 text-slate-50 md:flex-row md:leading-10">
       <div className="mb-10 text-center md:mb-0 md:mt-0 md:w-40">
         <h3 className=" mb-4 text-xl">GreenRoots</h3>
         <p>Adresse :</p>

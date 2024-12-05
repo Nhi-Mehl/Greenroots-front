@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../api/index';
 import { CartContext } from '../Cart/CartContext/CartContext';
 import { useProject } from '../../context/ProjectContext';
 import { ISpecies, IProjectTree } from '../../@types';
@@ -38,14 +40,15 @@ function ProjectDetails() {
   useEffect(() => {
     const getOneProject = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/projects/${id}`
-        );
-        const data = await response.json();
-        console.log(data);
-        setProject(data);
-      } catch (error) {
-        console.error('Error fetching matière:', error);
+        const response = await api.get(`/projects/${id}`);
+
+        if (response.status === 200) {
+          setProject(response.data);
+        }
+      } catch (error: import('axios').AxiosError | unknown) {
+        if (axios.isAxiosError(error)) {
+          alert(error?.response?.data.message);
+        }
       }
     };
     console.log("application de l'effet rendu détaile un projet");
@@ -57,22 +60,22 @@ function ProjectDetails() {
     // Récupération des arbres d'un projet d'API
     const getTreesProject = async () => {
       try {
-        const treesResponse = await fetch(
-          `http://localhost:3000/api/project_trees/${id}`
-        );
+        const treesResponse = await api.get(`/project_trees/${id}`);
 
-        const data = await treesResponse.json();
-        setProjectTrees(data);
-        console.log(data);
+        if (treesResponse.status === 200) {
+          setProjectTrees(treesResponse.data);
+        }
 
-        const totalQuantity = data.reduce(
+        const totalQuantity = treesResponse.data.reduce(
           (total: number, tree: IProjectTreesWithSpecies) =>
             total + tree.basic_quantity,
           0
         );
         setTotalBasicQuantity(totalQuantity);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
+      } catch (error: import('axios').AxiosError | unknown) {
+        if (axios.isAxiosError(error)) {
+          alert(error?.response?.data.message);
+        }
       }
     };
 
@@ -93,7 +96,7 @@ function ProjectDetails() {
       console.error('addtoCart is not defined');
       return;
     }
-    const handleDetailTree = () => {};
+
     const projectName = project.name;
     console.log('ProjectName:', projectName);
     addToCart(tree, projectName);
@@ -113,7 +116,7 @@ function ProjectDetails() {
   };
   return (
     <div>
-      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max ">
+      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max">
         <h2 className="h3-title p-4 text-m text-center lg:text-4xl">
           Objectif : {totalBasicQuantity} arbres
         </h2>

@@ -86,14 +86,14 @@ function TreesHighlights() {
       <h1 className="h1-title text-center mt-10 lg:text-5xl lg:mt-24">
         Nos arbres les plus populaires
       </h1>
-      <div className="lg:flex">
+      <div className="lg:flex md:gap-4">
         {treesHighlights.map((tree) => (
           <article
             key={tree.id}
-            className="max-w-max m-auto my-20 bg-beige shadow-lg sm:max-w-sm lg:max-w-lg lg:mt-24"
+            className="w-5/6 m-auto my-20 bg-beige shadow-lg sm:max-w-sm md:max-w-1/3 lg:mt-24"
           >
             <img
-              className="w-full object-cover lg:w-lg lg:max-h-80"
+              className="w-full h-[200px] lg:h-[250px] object-cover"
               src={`/images/species/${tree.picture}.webp`}
               alt={tree.tree_name}
             />
@@ -102,7 +102,7 @@ function TreesHighlights() {
             <div className="flex justify-between items-center p-10">
               {/* <p className="text-xl md:text-2xl lg:text-3xl">{tree.price}€</p> */}
               <button
-                className="btn lg:text-lg"
+                className="btn lg:text-lg block mx-auto"
                 type="button"
                 onClick={() => handleDetailTree(tree, tree.name)}
               >

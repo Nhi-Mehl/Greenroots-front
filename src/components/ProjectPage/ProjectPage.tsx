@@ -1,4 +1,3 @@
-import Banner from '../Header/Banner/Banner';
 import ProjectList from './ProjectList/ProjectList';
 
 function ProjectPage() {

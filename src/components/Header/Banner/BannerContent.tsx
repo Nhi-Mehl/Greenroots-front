@@ -15,13 +15,13 @@ function BannerContent({
   onButtonClick,
 }: BannerContentProps) {
   return (
-    <section className="absolute inset-0 flex flex-col gap-8 items-center justify-center text-white mt-8 p-10 lg:px-80 lg:gap-20">
+    <section className="absolute inset-0 flex flex-col gap-2 sm:gap-10 lg:gap-16 items-center justify-center text-white mt-10  px-4">
       <h1 className="h1-title text-center lg:text-h1 lg:mt-8">
         {title}
         {subtitle && <span className="block lg:mt-8">{subtitle}</span>}
       </h1>
       {description && (
-        <p className="text-base text-center lg:text-3xl lg:mt-6">
+        <p className="text-xs text-center sm:text-lg md:text-xl sm:px-6 md:px-8 lg:px-18 lg:text-3xl lg:mt-6">
           {description}
         </p>
       )}

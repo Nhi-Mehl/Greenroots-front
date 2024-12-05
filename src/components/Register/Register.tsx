@@ -50,7 +50,6 @@ function Register() {
         console.error("Erreur lors de l'inscription");
         return;
       }
-      const result = await response.json();
 
       setIsRegistered(true);
     } catch (error) {
@@ -73,180 +72,153 @@ function Register() {
   }
 
   return (
-    <div className="p-4 my-8">
-      <div className="flex flex-col my-10 items-center border-2 border-solid border-green-950 bg-emerald-50 lg:max-w-[1024px] lg:m-auto lg:my-20">
-        <h1 className="text-3xl p-4 lg:text-5xl">Inscrivez-vous</h1>
-        <p className="w-5/6 p-2 text-sm text-center lg:text-lg">
+    <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+      <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
+        <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
+          Inscrivez-vous
+        </h1>
+        <p className="text-sm text-justify sm:text-base md:text-lg lg:text-xl">
           Inscrivez-vous pour acheter des arbres et suivre vos contributions.
           Créez un compte pour accéder à votre historique d&apos;achats et
           recevoir des mises à jour sur l&apos;impact de vos actions. Rejoignez
           notre communauté engagée dans la reforestation.
         </p>
-      </div>
-      <div className="flex justify-center lg:max-w-[1024px] lg:m-auto">
-        <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-8 w-full p-6 border-2 border-solid border-green-950 bg-emerald-50"
-          action="/register"
-          onSubmit={handleSubmit}
-        >
-          {/* Message d'erreur si les mots de passe ne correspondent pas */}
-          {errorMessage && (
-            <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
-          )}
+      </section>
+      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
+        <form action="/register" onSubmit={handleSubmit}>
+          <div className="md:grid md:grid-cols-2 md:gap-x-6">
+            {/* Message d'erreur si les mots de passe ne correspondent pas */}
+            {errorMessage && (
+              <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
+            )}
 
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="first_name">
+            <label htmlFor="first_name">
               Prénom
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                placeholder="Votre prénom"
+                value={formData.first_name}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              placeholder="Votre prénom"
-              value={formData.first_name}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="last_name">
+            <label htmlFor="last_name">
               Nom
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                placeholder="Votre nom"
+                value={formData.last_name}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              placeholder="Votre nom"
-              value={formData.last_name}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="address">
+            <label htmlFor="address">
               Adresse
+              <input
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Votre adresse"
+                value={formData.address}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              placeholder="Votre adresse"
-              value={formData.address}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="zip_code">
+            <label htmlFor="zip_code">
               Code postal
+              <input
+                type="text"
+                id="zip_code"
+                name="zip_code"
+                placeholder="Votre code postal"
+                value={formData.zip_code}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="zip_code"
-              name="zip_code"
-              placeholder="Votre code postal"
-              value={formData.zip_code}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="city">
+            <label htmlFor="city">
               Ville
+              <input
+                type="text"
+                id="city"
+                name="city"
+                placeholder="Votre ville"
+                value={formData.city}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              placeholder="Votre ville"
-              value={formData.city}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="country">
+            <label htmlFor="country">
               Pays
+              <input
+                type="text"
+                id="country"
+                name="country"
+                placeholder="Votre pays"
+                value={formData.country}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="country"
-              name="country"
-              placeholder="Votre pays"
-              value={formData.country}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="phone_number">
+            <label htmlFor="phone_number">
               Téléphone
+              <input
+                type="text"
+                id="phone_number"
+                name="phone_number"
+                placeholder="Votre téléphone"
+                value={formData.phone_number}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="phone_number"
-              name="phone_number"
-              placeholder="Votre téléphone"
-              value={formData.phone_number}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="email">
+            <label htmlFor="email">
               Email
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Votre email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Votre email"
-              value={formData.email}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="password">
+            <label htmlFor="password">
               Mot de passe
+              <input
+                type="text"
+                id="password"
+                name="password"
+                placeholder="Votre mot de passe"
+                value={formData.password}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              placeholder="Votre mot de passe"
-              value={formData.password}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-3 border-0 py-2 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="mb-2 text-sm lg:text-base" htmlFor="confirmation">
+            <label htmlFor="confirmation">
               Confirmation de mot de passe
+              <input
+                type="password"
+                id="confirmation"
+                name="confirmation"
+                placeholder="Confirmez votre mot de passe"
+                value={formData.confirmation}
+                onChange={handleChange}
+                className="input"
+              />
             </label>
-            <input
-              type="password"
-              id="confirmation"
-              name="confirmation"
-              placeholder="Confirmez votre mot de passe"
-              value={formData.confirmation}
-              onChange={handleChange}
-              className=" w-full rounded-md mb-2 border-0 py-2 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-            />
           </div>
-
-          <div className="mt-8">
-            <button
-              type="submit"
-              className="w-full rounded-md border-0 p-1.5  text-gray-100 ring-1 ring-inset bg-green-900"
-            >
-              Valider
-            </button>
-          </div>
+          <button type="submit" className="btn-form mt-4">
+            Valider
+          </button>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 
