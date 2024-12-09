@@ -1,5 +1,6 @@
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import api from '../../api';
 
 function MyAccountPage() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ function MyAccountPage() {
   }
 
   const handleLogout = async () => {
+    await api.post('/auth/logout'); // On envoie une requête POST à l'API pour déconnecter l'utilisateur et invalider le token
     localStorage.removeItem('token'); // On supprime le token du stockage local
     setUser(null); // On réinitialise l'utilisateur dans le contexte
     navigate('/login'); // On redirige l'utilisateur vers la page de connexion
