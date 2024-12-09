@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import ProtectedRoute from './auth/ProtectedRoute';
 import App from './components/App/App';
 import Register from './components/Register/Register';
 import HomePage from './components/HomePage/HomePage';
@@ -53,12 +54,20 @@ const router = createBrowserRouter([
       },
       {
         path: '/userdetails',
-        element: <ProfilDetails />,
+        element: (
+          <ProtectedRoute>
+            <ProfilDetails />
+          </ProtectedRoute>
+        ),
       },
 
       {
         path: '/modifier-mon-profil',
-        element: <EditProfil />,
+        element: (
+          <ProtectedRoute>
+            <EditProfil />
+          </ProtectedRoute>
+        ),
       },
 
       {
@@ -75,23 +84,43 @@ const router = createBrowserRouter([
       },
       {
         path: '/my-account',
-        element: <MyAccountPage />,
+        element: (
+          <ProtectedRoute>
+            <MyAccountPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/orders/:id',
-        element: <OrdersPage />,
+        element: (
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/orders-details/:orderId',
-        element: <OrderDetailPage />,
+        element: (
+          <ProtectedRoute>
+            <OrderDetailPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/payment',
-        element: <Stripe />,
+        element: (
+          <ProtectedRoute>
+            <Stripe />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/confirmPay',
-        element: <ConfirmPay />,
+        element: (
+          <ProtectedRoute>
+            <ConfirmPay />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
