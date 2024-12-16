@@ -60,7 +60,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: '/modifier-mon-profil',
         element: (
@@ -69,7 +68,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: '/qui-sommes-nous',
         element: <IntroduceGr />,

@@ -115,46 +115,47 @@ function ProjectDetails() {
     navigate(`/tree/${tree.id}/${slug}`, { state: { tree, projectName } });
   };
   return (
-    <div>
-      <div className="p-8 m-12 bg-greenLight text-white h-76 max-w-max">
+    <main>
+      <section className="p-8 m-12 bg-greenLight text-white h-76 max-w-max">
         <h2 className="h3-title p-4 text-m text-center lg:text-4xl">
           Objectif : {totalBasicQuantity} arbres
         </h2>
         <p className="p-4 text-sm text-justify lg:px-20 lg:text-xl">
           {project !== null && project.description}
         </p>
-      </div>
-      <div className="m-9 flex flex-row justify-around flex-wrap">
+      </section>
+      <section className="mx-auto my-9 flex flex-col items-center gap-8 lg:gap-12 2xl:gap-24 lg:flex-row lg:justify-center lg:flex-wrap">
         {projectTrees.map((tree) => (
-          <div key={tree.id} className="m-6 flex h-full max-w-80 shadow-lg  ">
-            <article className="flex flex-col justify-between bg-orange-50">
-              <img
-                className=" w-80 h-72"
-                src={`/images/species/${tree.species.picture}.webp`}
-                alt="Illustration de l'arbre à planté"
-              />
-              <div className="p-4  flex flex-col text-center gap-6">
-                <h2 className="text-2xl m-auto">{tree.species.name}</h2>
-                <button
-                  className="p-2 bg-transparent border-solid border-2 border-greenRegular"
-                  type="button"
-                  onClick={() => handleAddToCart(tree)}
-                >
-                  Ajouter au panier
-                </button>
-                <button
-                  className="text-xs text-white w-2/5 rounded-lg bg-green-700 p-2 m-auto mb-4"
-                  type="button"
-                  onClick={() => handleDetailTree(tree, project.name)}
-                >
-                  Détails
-                </button>
-              </div>
-            </article>
-          </div>
+          <article
+            key={tree.id}
+            className="w-4/5 lg:w-1/4 h-full flex flex-col justify-between bg-orange-50 shadow-lg "
+          >
+            <img
+              className="w-full h-72 object-cover"
+              src={`/images/species/${tree.species.picture}.webp`}
+              alt="Illustration de l'arbre à planté"
+            />
+            <div className="p-4  flex flex-col text-center gap-6">
+              <h3 className="text-2xl m-auto">{tree.species.name}</h3>
+              <button
+                className="p-2 bg-transparent border-solid border-2 border-greenRegular"
+                type="button"
+                onClick={() => handleAddToCart(tree)}
+              >
+                Ajouter au panier
+              </button>
+              <button
+                className="btn m-auto mb-4"
+                type="button"
+                onClick={() => handleDetailTree(tree, project.name)}
+              >
+                Détails
+              </button>
+            </div>
+          </article>
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 export default ProjectDetails;
