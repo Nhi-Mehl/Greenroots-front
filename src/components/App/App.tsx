@@ -34,11 +34,9 @@ function App() {
 
   return (
     <div>
-      {/* <CartProvider> */}
       <Header />
       <Outlet />
       <Footer />
-      {/* </CartProvider> */}
     </div>
   );
 }
