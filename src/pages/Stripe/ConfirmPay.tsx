@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { Link } from 'react-router-dom';
 
 function ConfirmPay() {
   const { state } = useLocation();
