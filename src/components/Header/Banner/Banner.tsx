@@ -18,7 +18,6 @@ function Banner() {
   if (project && project.name) {
     slug = createSlug(project.name);
   }
-  console.log('Slug:', slug);
 
   // Tableau des routes avec leurs valeurs associées
   const routesWithContent: {
@@ -33,7 +32,7 @@ function Banner() {
           description={
             <>
               Rejoignez notre communauté pour un avenir durable où chaque arbre
-              planté fait germer l'espoir d'une planète plus verte.
+              planté fait germer l&apos;espoir d&apos;une planète plus verte.
             </>
           }
           buttonText="S’inscrire"
@@ -58,11 +57,6 @@ function Banner() {
 
   // Récupérer les données de la route actuelle
   const routeData = routesWithContent[pathname];
-
-  // Debugging pour vérifier ce qui est renvoyé
-  console.log('Current pathname:', pathname);
-  console.log('Route data:', routeData);
-  console.log('Project:', project);
 
   return (
     <div className="relative">
