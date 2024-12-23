@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IProject, IProjectTree } from '../../../@types/index.d';
+import { IProject, IProjectTree } from '../../../@types';
 import api from '../../../api';
 
 const createSlug = (name: string) => {
