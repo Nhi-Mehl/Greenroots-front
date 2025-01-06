@@ -1,13 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
-import LoginPage from '../src/components/LoginPage/LoginPage';
+import LoginPage from '../src/pages/LoginPage/LoginPage';
 import { UserProvider } from '../src/context/UserContext';
 import { ProjectProvider } from '../src/context/ProjectContext';
-import { CartProvider } from '../src/components/Cart/CartContext/CartContext';
-import api from '../src/api/index';
+import { CartProvider } from '../src/pages/Cart/CartContext/CartContext';
 
 // Mock the navigate function from react-router-dom
 vi.mock('react-router-dom', async () => {
