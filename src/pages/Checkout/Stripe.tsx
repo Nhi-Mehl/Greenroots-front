@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CartContext } from '../Cart/CartContext/CartContext';
 
-function Checkout() {
+function Stripe() {
   const { state } = useLocation();
   const orderData = state?.orderData;
   const { cartItems, removeFromCart } = useContext(CartContext);
@@ -46,7 +46,7 @@ function Checkout() {
 
             const { orderId } = orderResponse.data;
             cartItems.map((item) => removeFromCart(item.tree.id));
-            navigate('/confirmPay', {
+            navigate('/confirm-payment', {
               state: {
                 orderData,
                 paymentMethodId: id,
@@ -92,4 +92,4 @@ function Checkout() {
     </div>
   );
 }
-export default Checkout;
+export default Stripe;

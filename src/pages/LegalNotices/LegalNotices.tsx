@@ -1,4 +1,4 @@
-function LegalNotices() {
+function LegalNoticesPage() {
   return (
     <div className="mx-6 my-8 text-center xl:mx-28 xl:my-20 2xl:mx-72 2xl:my-20">
       <h1 className=" text-2xl py-4 text-center text-greenRegular font-semibold md:text-3xl xl:text-5xl xl:py-10 2xl:py-16">
@@ -74,4 +74,4 @@ function LegalNotices() {
   );
 }
 
-export default LegalNotices;
+export default LegalNoticesPage;

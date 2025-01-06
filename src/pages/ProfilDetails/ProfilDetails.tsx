@@ -30,7 +30,7 @@ function ProfilDetails() {
   }, [user, setUser]);
 
   const handleEditClick = () => {
-    navigate('/modifier-mon-profil');
+    navigate('/my-account/settings');
   };
 
   if (!user) {

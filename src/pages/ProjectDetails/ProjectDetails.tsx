@@ -18,7 +18,7 @@ const createSlug = (name: string) => {
     .replace(/[^\w-]+/g, '');
 }; // Renommé en IProject
 
-function ProjectDetails() {
+function ProjectDetailsPage() {
   const { id } = useParams();
 
   // Stockage détail un projet selon son ID dans le State
@@ -158,4 +158,4 @@ function ProjectDetails() {
     </main>
   );
 }
-export default ProjectDetails;
+export default ProjectDetailsPage;

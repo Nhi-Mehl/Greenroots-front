@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IUser } from '../../@types';
 
-function Register() {
+function RegisterPage() {
   // Etats des valeurs du formulaire
   const [formData, setFormData] = useState<IUser>({
     id: '',
@@ -222,4 +222,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;

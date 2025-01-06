@@ -1,8 +1,7 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IProject, IProjectTree } from '../../../@types';
-import api from '../../../api';
+import { IProject } from '../../../@types';
+// import api from '../../../api';
 
 const createSlug = (name: string) => {
   return name
@@ -81,26 +80,24 @@ function ProjectList() {
   //   });
   // });
 
-  console.log('projects', projects);
+  // const fetchTreeData = async () => {
+  //   const progressDataArray = await Promise.all(
+  //     projects.map(async (project) => {
+  //       try {
+  //         const response = await api.get(
+  //           `/project_trees/project/${project.id}`
+  //         );
+  //         return response.data;
+  //       } catch (error) {
+  //         console.error('erreur', error);
+  //         return null;
+  //       }
+  //     })
+  //   );
 
-  const fetchTreeData = async () => {
-    const progressDataArray = await Promise.all(
-      projects.map(async (project) => {
-        try {
-          const response = await api.get(
-            `/project_trees/project/${project.id}`
-          );
-          return response.data;
-        } catch (error) {
-          console.error('erreur', error);
-          return null;
-        }
-      })
-    );
-
-    const validProgressData = progressDataArray.filter((data) => data !== null);
-    setProgressData(validProgressData);
-  };
+  //   const validProgressData = progressDataArray.filter((data) => data !== null);
+  //   setProgressData(validProgressData);
+  // };
 
   return (
     <div className="p-8 flex gap-16 flex-wrap justify-center lg:p-16 lg:flex-row md:flex-col">

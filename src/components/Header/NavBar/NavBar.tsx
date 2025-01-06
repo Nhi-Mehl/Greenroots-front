@@ -48,7 +48,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
       </Link>
       <div className="text-shadow font-semibold hidden space-x-16 text-xl md:flex md:text-xl lg:text-2xl">
         <Link to="/projects">Nos projets</Link>
-        <Link to="/qui-sommes-nous">Qui sommes nous</Link>
+        <Link to="/about-us">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
       <div className="flex gap-4 md:gap-2">
@@ -88,7 +88,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
             Nos projets
           </Link>
           <Link
-            to="/qui-sommes-nous"
+            to="/about-us"
             className="text-lg text-white "
             onClick={handleLinkClick}
           >

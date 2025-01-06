@@ -1,6 +1,6 @@
 import ProjectList from './ProjectList/ProjectList';
 
-function ProjectPage() {
+function ProjectsPage() {
   return (
     <div className="projectPage">
       <ProjectList />
@@ -8,4 +8,4 @@ function ProjectPage() {
   );
 }
 
-export default ProjectPage;
+export default ProjectsPage;

@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { IProjectTree } from '../../@types';
 import { CartContext } from '../Cart/CartContext/CartContext';
 
-function DetailTreePage() {
+function TreeDetailsPage() {
   const location = useLocation();
   const { addToCart } = useContext(CartContext);
   console.log('Location state:', location.state);
@@ -103,4 +103,4 @@ function DetailTreePage() {
   );
 }
 
-export default DetailTreePage;
+export default TreeDetailsPage;

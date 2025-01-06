@@ -23,7 +23,7 @@ interface MixOrderLinesProps extends IOrderLine {
   project_tree: IProjectTreesWithSpecies;
 }
 
-function OrderDetailPage() {
+function OrderDetailsPage() {
   const { orderId } = useParams();
   console.log('orderId', orderId);
 
@@ -170,4 +170,4 @@ function OrderDetailPage() {
   );
 }
 
-export default OrderDetailPage;
+export default OrderDetailsPage;

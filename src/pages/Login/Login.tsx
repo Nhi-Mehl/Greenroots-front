@@ -9,7 +9,7 @@ interface FormDataProps {
   password: string;
 }
 
-function Login() {
+function LoginPage() {
   const navigate = useNavigate();
   // const location = useLocation(); // Obtenir l'URL actuelle
   const [email, setEmail] = useState<string>('');
@@ -120,4 +120,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

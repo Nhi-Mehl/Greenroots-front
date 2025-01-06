@@ -4,7 +4,7 @@ import { CartContext } from './CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
 import { useUser } from '../../context/UserContext';
 
-function Cart() {
+function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
   const { user } = useUser();
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function Cart() {
         })),
       };
       console.log('orderData', orderData);
-      navigate('/payment', { state: { orderData } });
+      navigate('/checkout', { state: { orderData } });
     }
   };
   return (
@@ -79,4 +79,4 @@ function Cart() {
     </div>
   );
 }
-export default Cart;
+export default CartPage;

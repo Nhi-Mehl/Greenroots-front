@@ -1,23 +1,23 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
 import App from './App';
-import Register from './pages/Register/Register';
+import RegisterPage from './pages/Register/Register';
 import HomePage from './pages/HomePage/HomePage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import DetailTreePage from './pages/DetailTreePage/DetaiTreePage';
-import ProjectDetails from './pages/ProjectDetailsPage/ProjectDetails';
-import ProjectPage from './pages/ProjectPage/ProjectPage';
-import Contact from './pages/Contact/Contact';
-import IntroduceGr from './pages/IntroducieGr/IntroduceGr';
-import LegalNotices from './pages/LegalNotices/LegalNotices';
-import Cart from './pages/Cart/Cart';
-import OrdersPage from './pages/OrdersPage/OrdersPage';
-import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage';
+import LoginPage from './pages/Login/Login';
+import TreeDetailsPage from './pages/TreeDetails/TreeDetails';
+import ProjectDetailsPage from './pages/ProjectDetails/ProjectDetails';
+import ProjectsPage from './pages/Projects/Projects';
+import ContactPage from './pages/Contact/Contact';
+import AboutUsPage from './pages/AboutUs/AboutUs';
+import LegalNoticesPage from './pages/LegalNotices/LegalNotices';
+import CartPage from './pages/Cart/Cart';
+import OrdersPage from './pages/Orders/Orders';
+import OrderDetailsPage from './pages/OrderDetails/OrderDetails';
 import ProfilDetails from './pages/ProfilDetails/ProfilDetails';
-import MyAccountPage from './pages/MyAccountPage/MyAccountPage';
-import Stripe from './pages/Stripe/Stripe';
-import ConfirmPay from './pages/Stripe/ConfirmPay';
-import EditProfil from './pages/EditProfil/EditProfil';
+import MyAccountPage from './pages/MyAccount/MyAccount';
+import ConfirmPaymentPage from './pages/ConfirmPayment/ConfirmPayment';
+import EditProfilePage from './pages/EditProfil/EditProfil';
+import CheckoutPage from './pages/Checkout/Checkout';
 
 const router = createBrowserRouter([
   {
@@ -34,23 +34,23 @@ const router = createBrowserRouter([
       },
       {
         path: '/register',
-        element: <Register />,
+        element: <RegisterPage />,
       },
       {
         path: '/tree/:id/:slug',
-        element: <DetailTreePage />,
+        element: <TreeDetailsPage />,
       },
       {
         path: '/projects',
-        element: <ProjectPage />,
+        element: <ProjectsPage />,
       },
       {
         path: '/projects/:id/:slug',
-        element: <ProjectDetails />,
+        element: <ProjectDetailsPage />,
       },
       {
         path: '/contact',
-        element: <Contact />,
+        element: <ContactPage />,
       },
       {
         path: '/userdetails',
@@ -61,24 +61,24 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/modifier-mon-profil',
+        path: '/my-account/settings',
         element: (
           <ProtectedRoute>
-            <EditProfil />
+            <EditProfilePage />
           </ProtectedRoute>
         ),
       },
       {
-        path: '/qui-sommes-nous',
-        element: <IntroduceGr />,
+        path: '/about-us',
+        element: <AboutUsPage />,
       },
       {
-        path: '/mentions-legales',
-        element: <LegalNotices />,
+        path: '/legal-notices',
+        element: <LegalNoticesPage />,
       },
       {
         path: '/cart',
-        element: <Cart />,
+        element: <CartPage />,
       },
       {
         path: '/my-account',
@@ -97,26 +97,26 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/orders-details/:orderId',
+        path: '/order-details/:orderId',
         element: (
           <ProtectedRoute>
-            <OrderDetailPage />
+            <OrderDetailsPage />
           </ProtectedRoute>
         ),
       },
       {
-        path: '/payment',
+        path: '/checkout',
         element: (
           <ProtectedRoute>
-            <Stripe />
+            <CheckoutPage />
           </ProtectedRoute>
         ),
       },
       {
-        path: '/confirmPay',
+        path: '/confirm-payment',
         element: (
           <ProtectedRoute>
-            <ConfirmPay />
+            <ConfirmPaymentPage />
           </ProtectedRoute>
         ),
       },

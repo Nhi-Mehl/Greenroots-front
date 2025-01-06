@@ -4,7 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { IUser } from '../../@types';
 import api from '../../api';
 
-function EditProfil() {
+function EditProfilePage() {
   const { user, setUser } = useUser();
   const [formData, setFormData] = useState<IUser>(user as IUser);
   const navigate = useNavigate();
@@ -210,4 +210,4 @@ function EditProfil() {
   );
 }
 
-export default EditProfil;
+export default EditProfilePage;

@@ -70,7 +70,7 @@ function OrdersPage() {
                     className="btn text-white py-2 px-4 rounded"
                     type="button"
                     onClick={() => {
-                      navigate(`/orders-details/${order.id}`);
+                      navigate(`/order-details/${order.id}`);
                     }}
                   >
                     Consulter

@@ -1,4 +1,4 @@
-function Contact() {
+function ContactPage() {
   return (
     <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
       <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
@@ -70,4 +70,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default ContactPage;

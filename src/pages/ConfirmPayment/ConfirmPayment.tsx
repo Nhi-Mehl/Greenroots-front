@@ -1,7 +1,7 @@
 import { useLocation, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
-function ConfirmPay() {
+function ConfirmPaymentPage() {
   const { state } = useLocation();
   const { orderData, paymentMethodId, orderId } = state;
   const { user } = useUser();
@@ -48,4 +48,4 @@ function ConfirmPay() {
   );
 }
 
-export default ConfirmPay;
+export default ConfirmPaymentPage;
