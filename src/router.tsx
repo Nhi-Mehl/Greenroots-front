@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
 import App from './App';
 import RegisterPage from './pages/Register/Register';
-import HomePage from './pages/HomePage/HomePage';
+import HomePage from './pages/Home/Home';
 import LoginPage from './pages/Login/Login';
 import TreeDetailsPage from './pages/TreeDetails/TreeDetails';
 import ProjectDetailsPage from './pages/ProjectDetails/ProjectDetails';
@@ -13,11 +13,11 @@ import LegalNoticesPage from './pages/LegalNotices/LegalNotices';
 import CartPage from './pages/Cart/Cart';
 import OrdersPage from './pages/Orders/Orders';
 import OrderDetailsPage from './pages/OrderDetails/OrderDetails';
-import ProfilDetails from './pages/ProfilDetails/ProfilDetails';
 import MyAccountPage from './pages/MyAccount/MyAccount';
 import ConfirmPaymentPage from './pages/ConfirmPayment/ConfirmPayment';
 import EditProfilePage from './pages/EditProfil/EditProfil';
 import CheckoutPage from './pages/Checkout/Checkout';
+import ProfilDetailsPage from './pages/ProfilDetails/ProfilDetails';
 
 const router = createBrowserRouter([
   {
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         path: '/userdetails',
         element: (
           <ProtectedRoute>
-            <ProfilDetails />
+            <ProfilDetailsPage />
           </ProtectedRoute>
         ),
       },

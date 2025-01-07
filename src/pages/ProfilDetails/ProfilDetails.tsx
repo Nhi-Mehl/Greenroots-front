@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import api from '../../api';
 
-function ProfilDetails() {
+function ProfilDetailsPage() {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
@@ -91,4 +91,4 @@ function ProfilDetails() {
   );
 }
 
-export default ProfilDetails;
+export default ProfilDetailsPage;
