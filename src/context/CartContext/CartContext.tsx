@@ -1,10 +1,10 @@
-// src/context/CartContext.js
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { CartReducer, initialState } from './CartReducer';
 import { addToCart, removeFromCart, updateQuantity } from './CartAction';
 import { IProjectTreeSpecies } from '../../@types';
 
-interface DefautCartContextType {
+// Interface pour définir le type du contexte par défaut
+interface DefaultCartContextType {
   cartItems: {
     tree: IProjectTreeSpecies;
     projectName: string;
@@ -18,22 +18,30 @@ interface DefautCartContextType {
   updateQuantity: (id: number, quantity: number) => void;
 }
 
-const defaultCartContext = {
+// Contexte par défaut
+const defaultCartContext: DefaultCartContextType = {
   cartItems: [],
   addToCart: () => {},
   removeFromCart: () => {},
   updateQuantity: () => {},
 };
-export const CartContext =
-  createContext<DefautCartContextType>(defaultCartContext);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+// Création du contexte Cart
+export const CartContext =
+  createContext<DefaultCartContextType>(defaultCartContext);
+
+// Composant CartProvider
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(CartReducer, initialState);
 
-  // Synchroniser le panier avec localStorage à chaque changement du panier
+  // Synchronise le panier avec localStorage à chaque changement de `cartItems`
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cartItems));
   }, [state.cartItems]);
+
+  // Mémorise les valeurs du contexte pour éviter les recalculs inutiles
   const cartContextValue = useMemo(
     () => ({
       cartItems: state.cartItems,
