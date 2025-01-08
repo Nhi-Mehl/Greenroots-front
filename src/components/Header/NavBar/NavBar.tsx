@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { CartContext } from '../../../pages/Cart/CartContext/CartContext';
+import { CartContext } from '../../../context/CartContext/CartContext';
 import { useUser } from '../../../context/UserContext';
 
 interface ShowBannerProps {

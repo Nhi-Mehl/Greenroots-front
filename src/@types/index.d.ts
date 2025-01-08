@@ -14,7 +14,11 @@ export interface IProjectTree {
   basic_quantity: number;
   current_quantity: number;
   project_id: number;
-  tree_id: number;
+  species_id: number;
+}
+
+export interface IProjectTreeSpecies extends IProjectTree {
+  species: ISpecies;
 }
 
 export interface ISpecies {

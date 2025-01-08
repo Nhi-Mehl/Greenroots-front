@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from './CartContext/CartContext';
+import { CartContext } from '../../context/CartContext/CartContext';
 import OrderLine from './OrderLine/OrderLine';
 import { useUser } from '../../context/UserContext';
 
@@ -44,7 +44,7 @@ function CartPage() {
           </p>
         ) : (
           <div>
-            {cartItems.map((item, index) => (
+            {cartItems.map((item) => (
               <OrderLine
                 key={item.tree.id}
                 item={item}

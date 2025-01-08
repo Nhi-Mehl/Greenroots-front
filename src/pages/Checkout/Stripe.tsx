@@ -2,7 +2,7 @@ import axios from 'axios';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CartContext } from '../Cart/CartContext/CartContext';
+import { CartContext } from '../../context/CartContext/CartContext';
 
 function Stripe() {
   const { state } = useLocation();

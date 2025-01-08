@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api/index';
-import { CartContext } from '../Cart/CartContext/CartContext';
+import { CartContext } from '../../context/CartContext/CartContext';
 import { useProject } from '../../context/ProjectContext';
 import { ISpecies, IProjectTree } from '../../@types';
 

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { IProjectTree } from '../../@types';
-import { CartContext } from '../Cart/CartContext/CartContext';
+import { CartContext } from '../../context/CartContext/CartContext';
 
 function TreeDetailsPage() {
   const location = useLocation();
