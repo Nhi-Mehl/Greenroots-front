@@ -2,7 +2,6 @@ import { createApi, BaseQueryFn } from '@reduxjs/toolkit/query/react';
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import api from './api';
 import { IUser } from '../@types';
-import { I } from 'vitest/dist/chunks/reporters.D7Jzd9GS.js';
 
 type BaseQueryParams = {
   url: string;
@@ -12,13 +11,13 @@ type BaseQueryParams = {
 };
 
 // types.ts
-export interface UserProfile {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-}
-export interface SignUpRequest {
+// export type UserProfile = {
+//   id: number;
+//   firstname: string;
+//   lastname: string;
+//   email: string;
+// };
+export type SignUpRequest = {
   first_name: string;
   last_name: string;
   address: string;
@@ -29,19 +28,19 @@ export interface SignUpRequest {
   email: string;
   password: string;
   confirmation: string;
-}
-export interface SignUpResponse {
+};
+export type SignUpResponse = {
   message: string;
-}
-export interface LoginRequest {
+};
+export type LoginRequest = {
   email: string;
   password: string;
-}
+};
 
-export interface LoginResponse {
-  user: UserProfile;
+export type LoginResponse = {
+  // user: UserProfile;
   token: string;
-}
+};
 export type GetProfileResponse = Omit<IUser, 'password' | 'confirmation'>;
 
 // Custom base query to use Axios
@@ -102,4 +101,6 @@ export const apiSlice = createApi({
   }),
 });
 
+// RTK Query automatically generates hooks for each endpoint
+// as use{EndpointName}Query or use{EndpointName}Mutation
 export const { useLoginMutation, useGetProfileQuery } = apiSlice;
