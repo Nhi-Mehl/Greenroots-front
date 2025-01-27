@@ -12,7 +12,7 @@ function ProfilDetailsPage() {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await api.get(`/users/${user?.id}`, {
+        const response = await api.get(`/users/profil`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 200) {

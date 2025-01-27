@@ -25,7 +25,7 @@ function LoginPage() {
       if (response.status === 200) {
         localStorage.setItem('token', response.data.accessToken);
 
-        const userResponse = await api.get(`/users/${response.data.id}`);
+        const userResponse = await api.get(`/users/profil`);
         console.log('userReponse', userResponse);
 
         if (userResponse.status === 200) {
