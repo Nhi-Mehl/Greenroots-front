@@ -13,8 +13,9 @@ const api: AxiosInstance = axios.create({
 api.interceptors.request.use(function addAuthToken(originalConfig) {
   const config = { ...originalConfig };
   // Do something before request is sent
+  // const token = localStorage.getItem('token');
   const state: RootState = store.getState();
-  const { token } = state.user; // Récupère le token depuis Redux
+  const { token } = state.auth;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
