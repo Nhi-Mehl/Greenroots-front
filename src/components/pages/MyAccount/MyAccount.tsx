@@ -35,7 +35,7 @@ function MyAccountPage() {
           className="btn w-full"
           type="button"
           onClick={() => {
-            navigate(`/orders/:id`);
+            navigate(`/orders`);
           }}
         >
           Mes commandes
