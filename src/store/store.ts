@@ -2,6 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../api/apiSlice';
 import authReducer from '../features/auth/authSlice';
 
+const isDevMode = import.meta.env.MODE === 'development';
+
+// Configuration du store Redux
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -9,10 +12,10 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: true,
+  devTools: isDevMode,
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+// Types utilitaires
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+// on recupere le type de la fonction dispatch du store dans AppDispatch
 export type AppDispatch = typeof store.dispatch;

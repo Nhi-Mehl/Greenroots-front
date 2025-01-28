@@ -30,22 +30,6 @@ export interface ISpecies {
   picture: string;
   co2_compensation: number;
 }
-
-export interface IUser {
-  id: number;
-  first_name: string;
-  last_name: string;
-  role: string;
-  address: string;
-  zip_code: string;
-  city: string;
-  country: string;
-  phone_number: string;
-  email: string;
-  password: string;
-  confirmation: string;
-}
-
 export interface IOrder {
   id: number;
   amount: number;

@@ -49,4 +49,10 @@ module.exports = {
     'no-restricted-imports': 0,
     'react/require-default-props': 0,
   },
+  overrides: [
+    {
+      files: ['src/**/features/**/*.ts'],
+      rules: { 'no-param-reassign': ['error', { props: false }] },
+    },
+  ],
 };
