@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useLoginMutation, useGetProfileQuery } from '../../api/apiSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { useLoginMutation, useGetProfileQuery } from '../api/apiSlice';
 import {
   login,
   logout,
   updateProfile,
   selectCurrentUser,
-} from '../../features/auth/authSlice';
+} from '../features/auth/authSlice';
 
 const useAuth = () => {
   const dispatch = useAppDispatch();
