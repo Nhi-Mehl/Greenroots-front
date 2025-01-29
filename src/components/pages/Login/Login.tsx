@@ -1,99 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { LoginRequest, useLoginMutation } from '../../../api/apiSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import api from '../../../api/index';
-import { useUser } from '../../../context/UserContext';
-import { login } from '../../../features/auth/authSlice';
+import {
+  useGetProfileQuery,
+  useLoginMutation,
+} from '../../../api/authApiSlice';
+import { useAppDispatch } from '../../../store/hooks';
+import { setToken, setUser } from '../../../features/auth/authSlice';
+import { GetProfileResponse } from '../../../@types/Credentials';
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
-
-  console.log('token', token);
-
-  // State pour les inputs
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const { setUser, user } = useUser();
+  // const { token } = useAppSelector((state) => state.auth);
 
   // Utilisation de la mutation login de Redux RTK Query
-  const [loginMutation, { data, isLoading, isError, error }] =
-    useLoginMutation();
+  const [
+    loginMutation,
+    { data: accessToken, isLoading, isError, error, isUninitialized },
+  ] = useLoginMutation();
 
-  console.log('data', data);
+  // Récupérer le profil utilisateur
+  const {
+    data: userProfile,
+    isLoading: isLoadingProfile,
+    isError: isErrorProfile,
+  } = useGetProfileQuery();
+
+  console.log('🔑 Token d’accès récupéré :', accessToken);
+  console.log('🔍 Profil utilisateur récupéré :', userProfile);
+  console.log('⏳ Chargement du profil :', isLoadingProfile);
+  console.log('❌ Erreur de profil :', isErrorProfile);
 
   // Gérer la redirection si un utilisateur est déjà connecté
   useEffect(() => {
-    if (token) {
-      navigate('/my-account'); // Redirige vers le compte utilisateur
+    if (accessToken && userProfile) {
+      console.log('🚀 Redirection dans 1 seconde...');
+      // Mettre à jour le state global Redux
+      dispatch(setToken(accessToken));
+      dispatch(setUser(userProfile as GetProfileResponse));
+      setTimeout(() => {
+        console.log('✅ Redirection en cours...');
+        navigate('/my-account');
+      }, 1000); // ⚡️ Ajout d’un délai de 1 seconde
     }
-  }, [token, navigate]);
+  }, [navigate, dispatch, accessToken, userProfile]);
 
   // Gestion de la soumission du formulaire
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Empêcher le rechargement de la page
-    try {
-      const formData: LoginRequest = {
-        email,
-        password,
-      };
-      // Exécuter la mutation login
-      const response = await loginMutation(formData).unwrap();
-      console.log('response', response);
+    const formData = new FormData(e.currentTarget);
 
-      // Mettre à jour le state global Redux
-      dispatch(login(response));
+    const credentials = {
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+    };
 
-      // Rediriger après succès
-
-      navigate('/my-account');
-    } catch (err) {
-      console.error('Erreur lors de la connexion:', err);
-      // Une gestion des erreurs plus poussée pourrait être ajoutée ici
-    }
+    // Exécuter la mutation login
+    loginMutation(credentials);
   };
 
-  // s'authentifier en fournissant les identifiants
-  // const authenticate = async (formData: FormDataProps) => {
-  //   try {
-  //     const response = await api.post('/auth/login', formData);
-  //     console.log('reponse', response);
-
-  //     if (response.status === 200) {
-  //       localStorage.setItem('token', response.data.accessToken);
-
-  //       const userResponse = await api.get(`/users/profile`);
-  //       console.log('userReponse', userResponse);
-
-  //       if (userResponse.status === 200) {
-  //         setUser(userResponse.data);
-  //       }
-  //     }
-  //   } catch (error: import('axios').AxiosError | unknown) {
-  //     if (axios.isAxiosError(error)) {
-  //       alert(error?.response?.data.message);
-  //     }
-  //   }
-  // };
-  // console.log('user avant userEffect', user);
-
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const formData = new FormData(e.currentTarget);
-  //   // on veut juste le contenu des champs
-
-  //   const data: FormDataProps = {
-  //     email: formData.get('email') as string,
-  //     password: formData.get('password') as string,
-  //   };
-
-  //   console.log('Form submitted:', data); // Log pour vérifier les données soumises
-  //   authenticate(data);
-  // };
+  if (isError) {
+    return (
+      <p className="text-red-500 mt-4">
+        Erreur :{' '}
+        {(error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message || 'Une erreur est survenue'}
+      </p>
+    );
+  }
 
   return (
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
@@ -102,9 +77,9 @@ function LoginPage() {
           Connectez-vous
         </h1>
         <p className="text-sm text-justify sm:text-base md:text-lg lg:text-xl">
-          Connectez-vous pour accéder à votre compte, suivre vos achats d'arbres
-          et voir l&apos;impact de vos contributions. Rejoignez la communauté et
-          continuez à agir pour la reforestation.
+          Connectez-vous pour accéder à votre compte, suivre vos achats
+          d&apos;arbres et voir l&apos;impact de vos contributions. Rejoignez la
+          communauté et continuez à agir pour la reforestation.
         </p>
       </section>
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
@@ -112,12 +87,10 @@ function LoginPage() {
           <label htmlFor="email">
             Email
             <input
-              value={email}
+              name="email"
               type="email"
               id="email"
-              name="email"
               placeholder="Votre email"
-              onChange={(e) => setEmail(e.target.value)}
               className="input"
               required
             />
@@ -126,11 +99,9 @@ function LoginPage() {
           <label htmlFor="password">
             Mot de passe
             <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               type="password"
               id="password"
-              name="password"
               placeholder="Votre mot de passe"
               className="input"
               required
@@ -138,16 +109,11 @@ function LoginPage() {
           </label>
 
           <button className="btn-form mt-4" type="submit" disabled={isLoading}>
-            {isLoading ? 'Connexion en cours...' : 'Connexion'}
+            {isLoading || isUninitialized
+              ? 'Connexion en cours...'
+              : 'Connexion'}
           </button>
         </form>
-        {isError && (
-          <p className="text-red-500 mt-4">
-            Erreur :{' '}
-            {(error as { response?: { data?: { message?: string } } })?.response
-              ?.data?.message || 'Une erreur est survenue'}
-          </p>
-        )}
         <div className="flex flex-col items-center gap-2 mt-4">
           <Link to="/register" className="text-greenRegular">
             Cliquez ici pour vous inscrire
