@@ -1,20 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LoginResponse } from '../../api/apiSlice';
-import { GetProfileResponse } from '../../@types/Credentials';
+import { GetProfileResponse, LoginResponse } from '../../@types/Credentials';
+
+import type { RootState } from '../../store/store';
 
 // Définir les types TypeScript pour l'état utilisateur
-type InitialUserState = {
+type InitialAuthState = {
   user: GetProfileResponse | null;
-  token: string | null;
+  accessToken: string | null;
   isAuthenticated: boolean; // Ajout pour indiquer si l'utilisateur est connecté
 };
 // Chargement initial du token depuis le localStorage
 const tokenFromStorage = localStorage.getItem('token');
 
+console.log('🔑 Token chargé depuis localStorage:', tokenFromStorage);
+
 // Définir l'état initial
-const initialState: InitialUserState = {
+const initialState: InitialAuthState = {
   user: null,
-  token: null,
+  accessToken: null,
   isAuthenticated: !!tokenFromStorage, // Si un token est présent,
 };
 
@@ -24,34 +27,40 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     // Action pour définir les informations utilisateur lors de la connexion
-    login: (state, action: PayloadAction<LoginResponse>) => {
-      const { token } = action.payload;
-      if (token) {
-        state.token = token;
+    setToken: (state, action: PayloadAction<LoginResponse>) => {
+      const { accessToken } = action.payload;
+      console.log('🟢 setToken appelé avec:', accessToken);
+      if (accessToken) {
+        state.accessToken = accessToken;
         state.isAuthenticated = true;
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', accessToken);
+        console.log(
+          '✅ Token stocké dans localStorage:',
+          localStorage.getItem('token')
+        );
+      } else {
+        console.warn('⚠️ Token vide ou invalide reçu par setToken');
       }
     },
     // Action pour déconnecter l'utilisateur
     logout: (state) => {
       state.user = null;
-      state.token = null;
+      state.accessToken = null;
       state.isAuthenticated = false;
       localStorage.removeItem('token');
     },
     // Action pour mettre à jour les informations utilisateur
-    updateProfile: (state, action: PayloadAction<GetProfileResponse>) => {
+    setUser: (state, action: PayloadAction<GetProfileResponse>) => {
       state.user = action.payload;
     },
   },
 });
 
 // Exporter les actions générées
-export const { login, logout, updateProfile } = authSlice.actions;
+export const { setToken, logout, setUser } = authSlice.actions;
+
+// Selector pour obtenir l'utilisateur actuellement connecté
+export const selectCurrentUser = (state: RootState) => state.auth.user;
 
 // Exporter le reducer pour l'intégrer dans le store Redux
 export default authSlice.reducer;
-
-// Selector pour obtenir l'utilisateur actuellement connecté
-export const selectCurrentUser = (state: { auth: InitialUserState }) =>
-  state.auth.user;
