@@ -1,41 +1,16 @@
-import { useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useUser } from '../../../context/UserContext';
-import api from '../../../api';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks';
+import { selectCurrentUser } from '../../../features/auth/authSlice';
 
 function ProfilDetailsPage() {
-  const { user, setUser } = useUser();
+  // const { user, setUser } = useUser();
   const navigate = useNavigate();
-
-  // Chargement du formulaire lié à l'utilisateur connecté
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await api.get(`/users/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (response.status === 200) {
-          setUser(response.data);
-        }
-      } catch (error) {
-        console.error('ca marche pas', error);
-      }
-    };
-
-    // si `user` est indéfini ou `user.id` n'est pas disponible
-    if (!user || !user.id) {
-      fetchUserData();
-    }
-  }, [user, setUser]);
+  // Récupérer l'utilisateur connecté de la store Redux
+  const user = useAppSelector(selectCurrentUser);
 
   const handleEditClick = () => {
     navigate('/my-account/settings');
   };
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
@@ -44,38 +19,38 @@ function ProfilDetailsPage() {
         <div className="md:w-1/2 space-y-4">
           <p>
             <span className="font-bold text-greenRegular">Nom :</span>{' '}
-            {user.last_name}
+            {user?.last_name}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Prénom :</span>{' '}
-            {user.first_name}
+            {user?.first_name}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Email :</span>{' '}
-            {user.email}
+            {user?.email}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Téléphone :</span>{' '}
-            {user.phone_number}
+            {user?.phone_number}
           </p>
         </div>
 
         <div className="md:w-1/2 space-y-4">
           <p>
             <span className="font-bold text-greenRegular">Adresse :</span>{' '}
-            {user.address}
+            {user?.address}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Code postal :</span>{' '}
-            {user.zip_code}
+            {user?.zip_code}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Ville :</span>{' '}
-            {user.city}
+            {user?.city}
           </p>
           <p>
             <span className="font-bold text-greenRegular">Pays :</span>{' '}
-            {user.country}
+            {user?.country}
           </p>
         </div>
       </section>
