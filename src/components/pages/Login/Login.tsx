@@ -17,22 +17,18 @@ function LoginPage() {
   // Utilisation de la mutation login de Redux RTK Query
   const [
     loginMutation,
-    { data: accessToken, isLoading, isError, error, isUninitialized },
+    {
+      data: accessToken,
+      isLoading: isLoadingLogin,
+      isError: isErrorLogin,
+      error: loginError,
+    },
   ] = useLoginMutation();
 
   // Récupérer le profil utilisateur
-  const {
-    data: userProfile,
-    isLoading: isLoadingProfile,
-    isError: isErrorProfile,
-  } = useGetProfileQuery(undefined, {
+  const { data: userProfile } = useGetProfileQuery(undefined, {
     skip: !accessToken, // Éviter de faire la requête si aucun token n'est disponible
   });
-
-  console.log('🔑 Token d’accès récupéré :', accessToken);
-  console.log('🔍 Profil utilisateur récupéré :', userProfile);
-  console.log('⏳ Chargement du profil :', isLoadingProfile);
-  console.log('❌ Erreur de profil :', isErrorProfile);
 
   // Gérer la redirection si un utilisateur est déjà connecté
   useEffect(() => {
@@ -62,12 +58,16 @@ function LoginPage() {
     loginMutation(credentials);
   };
 
-  if (isError) {
+  if (isLoadingLogin) {
+    return 'Connexion en cours...';
+  }
+
+  if (isErrorLogin) {
     return (
       <p className="text-red-500 mt-4">
         Erreur :{' '}
-        {(error as { response?: { data?: { message?: string } } })?.response
-          ?.data?.message || 'Une erreur est survenue'}
+        {(loginError as { response?: { data?: { message?: string } } })
+          ?.response?.data?.message || 'Une erreur est survenue'}
       </p>
     );
   }
@@ -110,10 +110,12 @@ function LoginPage() {
             />
           </label>
 
-          <button className="btn-form mt-4" type="submit" disabled={isLoading}>
-            {isLoading || isUninitialized
-              ? 'Connexion en cours...'
-              : 'Connexion'}
+          <button
+            className="btn-form mt-4"
+            type="submit"
+            disabled={isLoadingLogin}
+          >
+            Se connecter
           </button>
         </form>
         <div className="flex flex-col items-center gap-2 mt-4">
