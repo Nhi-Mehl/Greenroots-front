@@ -12,10 +12,18 @@ function MyAccountPage() {
   const user = useAppSelector(selectCurrentUser);
   const [logout] = useLogoutMutation();
 
-  const handleLogout = () => {
-    logout(); // On envoie une requête POST à l'API pour déconnecter l'utilisateur et invalider le token
-    dispatch(logoutAction()); // On met à jour le state Redux pour déconnecter l'utilisateur
-    navigate('/login'); // On redirige l'utilisateur vers la page de connexion
+  const handleLogout = async () => {
+    try {
+      // On envoie une requête POST à l'API pour déconnecter l'utilisateur et invalider le token blacklisted
+      // unwrap attend la requêtte termine avant aller dans action logout
+      await logout().unwrap();
+      // On met à jour le state Redux pour déconnecter l'utilisateur
+      dispatch(logoutAction());
+      // On redirige l'utilisateur vers la page de connexion
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
