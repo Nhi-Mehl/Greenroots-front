@@ -43,7 +43,7 @@ const authSlice = createSlice({
       }
     },
     // Action pour déconnecter l'utilisateur
-    logout: (state) => {
+    logoutAction: (state) => {
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
@@ -57,7 +57,7 @@ const authSlice = createSlice({
 });
 
 // Exporter les actions générées
-export const { setToken, logout, setUser } = authSlice.actions;
+export const { setToken, logoutAction, setUser } = authSlice.actions;
 
 // Selector pour obtenir l'utilisateur actuellement connecté
 export const selectCurrentUser = (state: RootState) => state.auth.user;
