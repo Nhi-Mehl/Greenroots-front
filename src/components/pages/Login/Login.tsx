@@ -7,7 +7,7 @@ import {
 } from '../../../api/authApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { setToken, setUser } from '../../../features/auth/authSlice';
-import { GetProfileResponse } from '../../../@types/Credentials';
+import { GetProfileResponse, LoginResponse } from '../../../@types/Credentials';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -25,7 +25,9 @@ function LoginPage() {
     data: userProfile,
     isLoading: isLoadingProfile,
     isError: isErrorProfile,
-  } = useGetProfileQuery();
+  } = useGetProfileQuery(undefined, {
+    skip: !accessToken, // Éviter de faire la requête si aucun token n'est disponible
+  });
 
   console.log('🔑 Token d’accès récupéré :', accessToken);
   console.log('🔍 Profil utilisateur récupéré :', userProfile);
@@ -34,10 +36,10 @@ function LoginPage() {
 
   // Gérer la redirection si un utilisateur est déjà connecté
   useEffect(() => {
-    if (accessToken && userProfile) {
+    if (accessToken) {
       console.log('🚀 Redirection dans 1 seconde...');
-      // Mettre à jour le state global Redux
       dispatch(setToken(accessToken));
+      // Mettre à jour le state global Redux
       dispatch(setUser(userProfile as GetProfileResponse));
       setTimeout(() => {
         console.log('✅ Redirection en cours...');
