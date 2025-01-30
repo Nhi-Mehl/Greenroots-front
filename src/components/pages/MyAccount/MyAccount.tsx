@@ -1,17 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { selectCurrentUser } from '../../../features/auth/authSlice';
-import { useAppSelector } from '../../../store/hooks';
+import {
+  selectCurrentUser,
+  logoutAction,
+} from '../../../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useLogoutMutation } from '../../../api/authApiSlice';
 
 function MyAccountPage() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
+  const [logout] = useLogoutMutation();
 
-  // const handleLogout = async () => {
-  //   await api.post('/auth/logout'); // On envoie une requête POST à l'API pour déconnecter l'utilisateur et invalider le token
-  //   localStorage.removeItem('token'); // On supprime le token du stockage local
-  //   setUser(null); // On réinitialise l'utilisateur dans le contexte
-  //   navigate('/login'); // On redirige l'utilisateur vers la page de connexion
-  // };
+  const handleLogout = () => {
+    logout(); // On envoie une requête POST à l'API pour déconnecter l'utilisateur et invalider le token
+    dispatch(logoutAction()); // On met à jour le state Redux pour déconnecter l'utilisateur
+    navigate('/login'); // On redirige l'utilisateur vers la page de connexion
+  };
 
   return (
     <main className="flex flex-col justify-center min-h-screen">
@@ -36,7 +41,7 @@ function MyAccountPage() {
         >
           Mes commandes
         </button>
-        <button className="btn w-full" type="button">
+        <button className="btn w-full" type="button" onClick={handleLogout}>
           Déconnexion
         </button>
       </div>

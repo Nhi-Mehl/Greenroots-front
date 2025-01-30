@@ -26,6 +26,13 @@ const authApiSlice = apiSlice.injectEndpoints({
         data: { ...credentials },
       }),
     }),
+    // Endpoint pour la deconnexion
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: '/auth/logout',
+        method: 'post',
+      }),
+    }),
     // Endpoint pour récupérer le profil utilisateur
     getProfile: builder.query<GetProfileResponse, void>({
       query: () => ({
@@ -41,5 +48,9 @@ const authApiSlice = apiSlice.injectEndpoints({
 
 // RTK Query automatically generates hooks for each endpoint
 // as use{EndpointName}Query or use{EndpointName}Mutation
-export const { useLoginMutation, useRegisterMutation, useGetProfileQuery } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetProfileQuery,
+  useLogoutMutation,
+} = authApiSlice;
