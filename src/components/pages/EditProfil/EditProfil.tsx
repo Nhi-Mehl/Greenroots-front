@@ -1,27 +1,45 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useUser } from '../../../context/UserContext';
-import { IUser } from '../../../@types';
-import api from '../../../api';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from '../../../store/hooks';
+import { setUser } from '../../../store/features/auth/authSlice';
+import { UpdateProfileRequest } from '../../../@types/IUser';
+import {
+  useUpdateProfileMutation,
+  useGetProfileQuery,
+} from '../../../store/features/user/userApiSlice';
 
 function EditProfilePage() {
-  const { user, setUser } = useUser();
-  const [formData, setFormData] = useState<IUser>(user as IUser);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // Chargement du formulaire lié à l'utilisateur connecté
+  // Récupérer le profil actuel via RTK Query
+  const {
+    data: user,
+    isLoading: isLoadingUser,
+    isError: isErrorUser,
+    refetch,
+  } = useGetProfileQuery();
+  const [updateProfile, { isLoading: isLoadingUpdate }] =
+    useUpdateProfileMutation();
+
+  // État local du formulaire
+  const [formData, setFormData] = useState<UpdateProfileRequest | null>(null);
+
+  // Charger les données de l'utilisateur dans le formulaire
   useEffect(() => {
     if (user) {
       setFormData(user);
     }
   }, [user]);
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  // Vérifier si les données sont en cours de chargement
+  if (isLoadingUser) return <p>Chargement des données...</p>;
+  if (isErrorUser || !formData)
+    return <p>Erreur lors du chargement des données.</p>;
 
   // Gestion des changements dans les champs du formulaire
-  const handleChange = async (e) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData((previousData) => ({
@@ -31,55 +49,47 @@ function EditProfilePage() {
   };
 
   // Modification des données de l'utilisateur
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formData) return;
 
-    if (!formData) {
-      console.error('Les données du formulaire sont nulles');
-      return;
-    }
-    console.log(formData);
-
-    const token = localStorage.getItem('token');
     try {
-      const response = await api.put(
-        `http://localhost:3000/api/users/${user?.id}`,
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setUser(response.data);
+      // 🔹 Exécuter la mutation pour mettre à jour le profil
+      const userUpdated = await updateProfile(formData).unwrap();
 
+      // 🔹 Mettre à jour Redux avec les nouvelles infos utilisateur
+      dispatch(setUser(userUpdated.data));
+
+      // 🔹 Recharger les données de l'utilisateur
+      await refetch();
+
+      // 🔹 Rediriger l'utilisateur vers la page de détails de profil
       navigate('/userdetails');
     } catch (error) {
       console.error('Erreur lors de la mise à jour du profil', error);
     }
-    console.log(formData);
   };
 
   // Gestion de la suppression de l'utilisateur
-  const handleDelete = async () => {
-    if (!user) {
-      console.error('Utilisateur non trouvé');
-      return;
-    }
+  // const handleDelete = async () => {
+  //   if (!user) {
+  //     console.error('Utilisateur non trouvé');
+  //     return;
+  //   }
 
-    if (
-      window.confirm(
-        'Êtes-vous sûr de vouloir quitter définitivement GreenRoots?'
-      )
-    )
-      try {
-        await api.delete(`/users/${user?.id}`);
-        setUser(null);
-        navigate('/');
-      } catch (error) {
-        console.error('Erreur lors de la suppression du profil');
-      }
-  };
-
-  if (!formData) {
-    return <p>Chargement des données...</p>;
-  }
+  //   if (
+  //     window.confirm(
+  //       'Êtes-vous sûr de vouloir quitter définitivement GreenRoots?'
+  //     )
+  //   )
+  //     try {
+  //       await api.delete(`/users/${user?.id}`);
+  //       setUser(null);
+  //       navigate('/');
+  //     } catch (error) {
+  //       console.error('Erreur lors de la suppression du profil');
+  //     }
+  // };
 
   return (
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
@@ -198,10 +208,10 @@ function EditProfilePage() {
           </label>
         </div>
         <div className="flex flex-row mt-8 gap-12">
-          <button type="submit" className="btn-form">
-            Valider
+          <button type="submit" className="btn-form" disabled={isLoadingUpdate}>
+            {isLoadingUpdate ? 'Mise à jour...' : 'Valider'}
           </button>
-          <button type="button" onClick={handleDelete} className="btn-form">
+          <button type="button" className="btn-form">
             Supprimer mon profil
           </button>
         </div>
