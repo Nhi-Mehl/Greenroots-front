@@ -40,10 +40,14 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
       localStorage.removeItem('token');
+      console.log('🚀 Utilisateur déconnecté user:', state.user);
     },
 
     // Action pour mettre à jour les informations utilisateur
     setUser: (state, action: PayloadAction<GetProfileResponse | null>) => {
+      // Mettre à jour l'utilisateur actuellement connecté
+      console.log('🚀 Utilisateur mis à jour:', action.payload);
+
       state.user = action.payload;
     },
   },

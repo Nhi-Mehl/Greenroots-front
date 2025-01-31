@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Swal from 'sweetalert2';
+
 import Form from '../../Form/Form';
 import Input from '../../Form/Input/Input';
+import Button from '../../Form/Button/Button';
 import { useLoginMutation } from '../../../store/features/auth/authApiSlice';
 import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { setToken, setUser } from '../../../store/features/auth/authSlice';
 import { GetProfileResponse } from '../../../@types/IUser';
-import Button from '../../Form/Button/Button';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -22,55 +24,103 @@ function LoginPage() {
       isLoading: isLoadingLogin,
       isError: isErrorLogin,
       error: loginError,
+      isSuccess: isSuccessLogin,
     },
   ] = useLoginMutation();
 
-  // Récupérer le profil utilisateur
+  // Récupérer le profil utilisateur après connexion
   const { data: userProfile } = useGetProfileQuery(undefined, {
     skip: !accessToken, // Éviter de faire la requête si aucun token n'est disponible
   });
 
-  // Gérer la redirection si un utilisateur est déjà connecté
+  /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
   useEffect(() => {
-    if (accessToken) {
-      console.log('🚀 Redirection dans 1 seconde...');
-      dispatch(setToken(accessToken));
-      // Mettre à jour le state global Redux
-      dispatch(setUser(userProfile as GetProfileResponse));
-      setTimeout(() => {
-        console.log('✅ Redirection en cours...');
-        navigate('/my-account');
-      }, 1000); // ⚡️ Ajout d’un délai de 1 seconde
+    if (isLoadingLogin) {
+      // Afficher une alerte de chargement
+      Swal.fire({
+        title: 'Connexion en cours...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+    } else {
+      Swal.close(); // Fermer le chargement dès qu'il y a une réponse
     }
-  }, [navigate, dispatch, accessToken, userProfile]);
+  }, [isLoadingLogin]);
 
-  // Gestion de la soumission du formulaire
+  /** ===================== ✅ GESTION DU SUCCÈS ===================== */
+  useEffect(() => {
+    if (isSuccessLogin && accessToken && userProfile) {
+      dispatch(setToken(accessToken));
+      dispatch(setUser(userProfile as GetProfileResponse));
+
+      // Afficher une alerte de succès si la connexion est réussie
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: 'success',
+        title: 'Connexion reussie',
+        text: `Bienvenue ${userProfile?.first_name}`,
+      });
+
+      setTimeout(() => {
+        navigate('/my-account');
+      }, 1000);
+    }
+  }, [isSuccessLogin, accessToken, userProfile, dispatch, navigate]);
+
+  /** ===================== ❌ GESTION DES ERREURS ===================== */
+  useEffect(() => {
+    if (isErrorLogin) {
+      let errorMessage = 'Une erreur est survenue, veuillez réessayer.';
+      if (loginError && 'data' in loginError) {
+        errorMessage =
+          (loginError as { data?: { message?: string } })?.data?.message ||
+          errorMessage;
+      }
+      // Afficher une alerte d'erreur
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur de connexion',
+        text: errorMessage,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Réessayer',
+      });
+    }
+  }, [isErrorLogin, loginError]);
+
+  /** ===================== ✍️ GESTION DE LA SOUMISSION DU FORMULAIRE ===================== */
+  // 📌 Utilisation de new FormData() pour récupérer les valeurs du formulaire
+
+  //   ✅ Avantages :
+  // ✔ Simple et concis → Pas besoin de gérer des useState() pour chaque champ.
+  // ✔ Facile à utiliser avec des formulaires plus longs → FormData récupère tous les champs en une seule ligne.
+  // ✔ Pratique si tu veux envoyer des fichiers → FormData gère aussi les fichiers (input type="file").
+
+  // ❌ Inconvénients :
+  // ❌ Moins réactif → Les valeurs ne sont lues qu'au moment de la soumission. Pas de mise à jour en temps réel.
+  // ❌ Difficile à valider en direct → Impossible d'afficher un message d'erreur instantané si l'email est invalide avant l'envoi.
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Empêcher le rechargement de la page
+    // Eviter le rechargement de la page
+    e.preventDefault();
+    // Créer un objet FormData à partir du formulaire
     const formData = new FormData(e.currentTarget);
-
+    // Récupérer les informations du formulaire
     const credentials = {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     };
-
     // Exécuter la mutation login
     loginMutation(credentials);
   };
-
-  if (isLoadingLogin) {
-    return 'Connexion en cours...';
-  }
-
-  if (isErrorLogin) {
-    return (
-      <p className="text-red-500 mt-4">
-        Erreur :{' '}
-        {(loginError as { response?: { data?: { message?: string } } })
-          ?.response?.data?.message || 'Une erreur est survenue'}
-      </p>
-    );
-  }
 
   return (
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
@@ -104,7 +154,7 @@ function LoginPage() {
             placeholder="Votre mot de passe"
             required
           />
-          <Button type="submit" variant="form" disabled={isLoadingLogin}>
+          <Button type="submit" variant="form">
             Se connecter
           </Button>
         </Form>
@@ -112,9 +162,9 @@ function LoginPage() {
           <Link to="/register" className="text-greenRegular">
             Cliquez ici pour vous inscrire
           </Link>
-          {/* <Link to="/forgot-password" className=" text-red-600">
+          <Link to="/forgot-password" className=" text-red-600">
             Mot de passe oublié
-          </Link> */}
+          </Link>
         </div>
       </section>
     </main>
