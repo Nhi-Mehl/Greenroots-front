@@ -3,11 +3,9 @@ import { useEffect, useRef } from 'react';
 function Video() {
   // Utilisation de la référence avec un type HTMLVideoElement
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  console.log('videoRef', videoRef);
 
   useEffect(() => {
     const videoElement = videoRef.current;
-    console.log('videoElement', videoElement);
 
     // Vérifier que l'élément vidéo existe avant de l'utiliser
     if (!videoElement) {
@@ -16,7 +14,6 @@ function Video() {
 
     const handlePlayVideo: IntersectionObserverCallback = (entries) => {
       const [entry] = entries;
-      console.log('entry', entry);
 
       // Lancer la vidéo si elle est visible
       if (entry.isIntersecting) {
