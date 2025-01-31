@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   selectCurrentUser,
   setUser,
 } from '../../../store/features/auth/authSlice';
-import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
+import {
+  useDeleteAccountMutation,
+  useGetProfileQuery,
+} from '../../../store/features/user/userApiSlice';
 
 function ProfilDetailsPage() {
   const navigate = useNavigate();
@@ -14,6 +18,7 @@ function ProfilDetailsPage() {
   const user = useAppSelector(selectCurrentUser);
   // Récupérer les informations utilisateur via RTK Query
   const { data, isLoading, isError } = useGetProfileQuery();
+  const [deleteUser] = useDeleteAccountMutation();
 
   // Mettre à jour Redux quand l'API répond
   if (data && data.id !== user?.id) {
@@ -27,6 +32,40 @@ function ProfilDetailsPage() {
   // Gestion de la redirection vers la page de modification
   const handleEditClick = () => {
     navigate('/my-account/settings');
+  };
+
+  // Gestion de la suppression de l'utilisateur
+  const handleDeleteUser = () => {
+    if (!user) return;
+
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: 'Cette action est irréversible !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      deleteUser(user.id);
+      // Supprimer l'utilisateur du store Redux
+      dispatch(setUser(null));
+
+      // Afficher un message de succès
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Supprimé!',
+          text: 'Votre compte a été supprimé.',
+          icon: 'success',
+        });
+      }
+    });
+
+    // Rediriger vers la page d'accueil après un court délai
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   };
 
   return (
@@ -71,14 +110,14 @@ function ProfilDetailsPage() {
           </p>
         </div>
       </section>
-
-      <button
-        className="btn block mx-auto mt-8"
-        type="button"
-        onClick={handleEditClick}
-      >
-        Modifier
-      </button>
+      <div className="lg:max-w-[900px] lg:mx-auto flex flex-row mt-8 gap-12">
+        <button className="btn-form" type="button" onClick={handleEditClick}>
+          Modifier
+        </button>
+        <button type="button" className="btn-form" onClick={handleDeleteUser}>
+          Supprimer mon profil
+        </button>
+      </div>
     </main>
   );
 }
