@@ -6,11 +6,7 @@ interface FormProps {
 
 const Form = ({ action, onSubmit, children }: FormProps) => {
   return (
-    <form
-      action={action}
-      className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto"
-      onSubmit={onSubmit}
-    >
+    <form action={action} onSubmit={onSubmit}>
       {children}
     </form>
   );
