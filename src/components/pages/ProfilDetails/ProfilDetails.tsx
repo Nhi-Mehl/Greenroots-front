@@ -1,13 +1,30 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks';
-import { selectCurrentUser } from '../../../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  selectCurrentUser,
+  setUser,
+} from '../../../store/features/auth/authSlice';
+import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 
 function ProfilDetailsPage() {
-  // const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   // Récupérer l'utilisateur connecté de la store Redux
   const user = useAppSelector(selectCurrentUser);
+  // Récupérer les informations utilisateur via RTK Query
+  const { data, isLoading, isError } = useGetProfileQuery();
 
+  // Mettre à jour Redux quand l'API répond
+  if (data && data.id !== user?.id) {
+    dispatch(setUser(data));
+  }
+
+  // Gestion du chargement et des erreurs
+  if (isLoading) return <p>Chargement...</p>;
+  if (isError) return <p>Une erreur est survenue</p>;
+
+  // Gestion de la redirection vers la page de modification
   const handleEditClick = () => {
     navigate('/my-account/settings');
   };
