@@ -49,6 +49,7 @@ module.exports = {
     'no-restricted-imports': 0,
     'react/require-default-props': 0,
   },
+  // Ces deux lignes permettent de ne pas avoir d'erreur de type multation dans dossier features car on utilise immer de react toolkit
   overrides: [
     {
       files: ['src/**/features/**/*.ts'],
