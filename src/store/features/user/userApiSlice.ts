@@ -4,6 +4,7 @@ import {
   UpdateProfileRequest,
   UpdateProfileResponse,
 } from '../../../@types/IUser';
+import { DeleteUserResponse } from '../../../@types/Credentials';
 
 const userApiSlice = apiSlice
   .enhanceEndpoints({ addTagTypes: ['User'] })
@@ -17,14 +18,6 @@ const userApiSlice = apiSlice
           providesTags: ['User'],
         }),
       }),
-      // Endpoint pour récupérer le profil utilisateur par son id
-      //   getUserById: builder.query<GetProfileResponse, number>({
-      //     query: (userId) => ({
-      //       url: `/users/${userId}`,
-      //       method: 'get',
-      //       providesTags: ['User'],
-      //     }),
-      //   }),
       // Endpoint pour la mise à jour du profil
       updateProfile: builder.mutation<
         UpdateProfileResponse,
@@ -38,10 +31,11 @@ const userApiSlice = apiSlice
         }),
       }),
       // Endpoint pour la suppression du compte utilisateur
-      deleteAccount: builder.mutation<void, number | undefined>({
+      deleteAccount: builder.mutation<DeleteUserResponse, number>({
         query: (userId) => ({
           url: `/users/${userId}`,
           method: 'delete',
+          invalidatesTags: ['User'],
         }),
       }),
     }),

@@ -43,12 +43,7 @@ const authSlice = createSlice({
     },
 
     // Action pour mettre à jour les informations utilisateur
-    // updateUser: (state, action: PayloadAction<GetProfileResponse>) => {
-    //   state.user = action.payload;
-    // },
-
-    // Action pour mettre à jour les informations utilisateur
-    setUser: (state, action: PayloadAction<GetProfileResponse>) => {
+    setUser: (state, action: PayloadAction<GetProfileResponse | null>) => {
       state.user = action.payload;
     },
   },
