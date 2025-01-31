@@ -1,19 +1,15 @@
 // This component will be used to protect routes that require authentication.
 // If the user is not authenticated, they will be redirected to the login page.
 import { Navigate, useLocation } from 'react-router-dom';
-import { useGetProfileQuery } from '../store/features/user/userApiSlice';
+import { useAppSelector } from '../store/hooks';
+import { selectCurrentUser } from '../store/features/auth/authSlice';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
-  const { data: user, isLoading, isError } = useGetProfileQuery();
-
-  //  Wait for the data to load before deciding
-  if (isLoading) {
-    return <p>Chargement...</p>;
-  }
+  const user = useAppSelector(selectCurrentUser);
 
   // Redirect to /login if not authenticated or API error
-  if (isError || !user) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
