@@ -11,3 +11,6 @@ export type LoginRequest = Pick<IUser, 'email' | 'password'>;
 
 // Types données de la réponse de la connexion
 export type LoginResponse = { accessToken: string };
+
+// Types données de la réponse de la suppression profil utilisateur
+export type DeleteUserResponse = { success: boolean; message: string };
