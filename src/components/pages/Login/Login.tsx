@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Form from '../../Form/Form';
+import Input from '../../Form/Input/Input';
 import { useLoginMutation } from '../../../store/features/auth/authApiSlice';
 import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
@@ -10,7 +12,6 @@ import { GetProfileResponse } from '../../../@types/IUser';
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const { token } = useAppSelector((state) => state.auth);
 
   // Utilisation de la mutation login de Redux RTK Query
   const [
@@ -82,32 +83,26 @@ function LoginPage() {
           communauté et continuez à agir pour la reforestation.
         </p>
       </section>
-      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
-        <form action="/login" onSubmit={handleSubmit}>
-          <label htmlFor="email">
-            Email
-            <input
-              name="email"
-              type="email"
-              id="email"
-              placeholder="Votre email"
-              className="input"
-              required
-            />
-          </label>
-
-          <label htmlFor="password">
-            Mot de passe
-            <input
-              name="password"
-              type="password"
-              id="password"
-              placeholder="Votre mot de passe"
-              className="input"
-              required
-            />
-          </label>
-
+      <section>
+        <Form action="/login" onSubmit={handleSubmit}>
+          <Input
+            htmlFor="email"
+            label="Email"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Votre email"
+            required
+          />
+          <Input
+            htmlFor="password"
+            label="Mot de passe"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Votre mot de passe"
+            required
+          />
           <button
             className="btn-form mt-4"
             type="submit"
@@ -115,7 +110,7 @@ function LoginPage() {
           >
             Se connecter
           </button>
-        </form>
+        </Form>
         <div className="flex flex-col items-center gap-2 mt-4">
           <Link to="/register" className="text-greenRegular">
             Cliquez ici pour vous inscrire
