@@ -40,9 +40,5 @@ const authApiSlice = apiSlice.injectEndpoints({
 
 // RTK Query automatically generates hooks for each endpoint
 // as use{EndpointName}Query or use{EndpointName}Mutation
-export const {
-  useLoginMutation,
-  useRegisterMutation,
-  useGetProfileQuery,
-  useLogoutMutation,
-} = authApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+  authApiSlice;
