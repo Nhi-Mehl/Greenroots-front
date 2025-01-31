@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { IUser } from '../../../@types';
+import Form from '../../Form/Form';
+import Input from '../../Form/Input/Input';
+import Button from '../../Form/Button/Button';
 
 function RegisterPage() {
   // Etats des valeurs du formulaire
@@ -85,138 +88,120 @@ function RegisterPage() {
         </p>
       </section>
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
-        <form action="/register" onSubmit={handleSubmit}>
+        <Form action="/register" onSubmit={handleSubmit}>
           <div className="md:grid md:grid-cols-2 md:gap-x-6">
             {/* Message d'erreur si les mots de passe ne correspondent pas */}
             {errorMessage && (
               <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
             )}
 
-            <label htmlFor="first_name">
-              Prénom
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                placeholder="Votre prénom"
-                value={formData.first_name}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="last_name">
-              Nom
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                placeholder="Votre nom"
-                value={formData.last_name}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="address">
-              Adresse
-              <input
-                type="text"
-                id="address"
-                name="address"
-                placeholder="Votre adresse"
-                value={formData.address}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="zip_code">
-              Code postal
-              <input
-                type="text"
-                id="zip_code"
-                name="zip_code"
-                placeholder="Votre code postal"
-                value={formData.zip_code}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="city">
-              Ville
-              <input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="Votre ville"
-                value={formData.city}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="country">
-              Pays
-              <input
-                type="text"
-                id="country"
-                name="country"
-                placeholder="Votre pays"
-                value={formData.country}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="phone_number">
-              Téléphone
-              <input
-                type="text"
-                id="phone_number"
-                name="phone_number"
-                placeholder="Votre téléphone"
-                value={formData.phone_number}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="email">
-              Email
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Votre email"
-                value={formData.email}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="password">
-              Mot de passe
-              <input
-                type="text"
-                id="password"
-                name="password"
-                placeholder="Votre mot de passe"
-                value={formData.password}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
-            <label htmlFor="confirmation">
-              Confirmation de mot de passe
-              <input
-                type="password"
-                id="confirmation"
-                name="confirmation"
-                placeholder="Confirmez votre mot de passe"
-                value={formData.confirmation}
-                onChange={handleChange}
-                className="input"
-              />
-            </label>
+            <Input
+              htmlFor="first_name"
+              label="Prénom"
+              type="text"
+              name="first_name"
+              id="first_name"
+              placeholder="Votre prénom"
+              value={formData.first_name}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="last_name"
+              label="Nom"
+              type="text"
+              name="last_name"
+              id="last_name"
+              placeholder="Votre nom"
+              value={formData.last_name}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="address"
+              label="Adresse"
+              type="text"
+              name="address"
+              id="address"
+              placeholder="Votre adresse"
+              value={formData.address}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="zip_code"
+              label="Code postal"
+              type="text"
+              name="zip_code"
+              id="zip_code"
+              placeholder="Votre code postal"
+              value={formData.zip_code}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="city"
+              label="Ville"
+              type="text"
+              name="city"
+              id="city"
+              placeholder="Votre ville"
+              value={formData.city}
+              onChange={handleChange}
+            />
+
+            <Input
+              htmlFor="country"
+              label="Pays"
+              type="text"
+              name="country"
+              id="country"
+              placeholder="Votre pays"
+              value={formData.country}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="phone_number"
+              label="Téléphone"
+              type="text"
+              name="phone_number"
+              id="phone_number"
+              placeholder="Votre téléphone"
+              value={formData.phone_number}
+              onChange={handleChange}
+            />
+
+            <Input
+              htmlFor="email"
+              label="Email"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Votre email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="password"
+              label="Mot de passe"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Votre mot de passe"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <Input
+              htmlFor="confirmation"
+              label="Confirmation de mot de passe"
+              type="password"
+              name="confirmation"
+              id="confirmation"
+              placeholder="Confirmez votre mot de passe"
+              value={formData.confirmation}
+              onChange={handleChange}
+            />
           </div>
-          <button type="submit" className="btn-form mt-4">
+          <Button type="submit" variant="form">
             Valider
-          </button>
-        </form>
+          </Button>
+        </Form>
       </section>
     </main>
   );
