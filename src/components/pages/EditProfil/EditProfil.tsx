@@ -70,27 +70,6 @@ function EditProfilePage() {
     }
   };
 
-  // Gestion de la suppression de l'utilisateur
-  // const handleDelete = async () => {
-  //   if (!user) {
-  //     console.error('Utilisateur non trouvé');
-  //     return;
-  //   }
-
-  //   if (
-  //     window.confirm(
-  //       'Êtes-vous sûr de vouloir quitter définitivement GreenRoots?'
-  //     )
-  //   )
-  //     try {
-  //       await api.delete(`/users/${user?.id}`);
-  //       setUser(null);
-  //       navigate('/');
-  //     } catch (error) {
-  //       console.error('Erreur lors de la suppression du profil');
-  //     }
-  // };
-
   return (
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
       <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
@@ -207,14 +186,10 @@ function EditProfilePage() {
             />
           </label>
         </div>
-        <div className="flex flex-row mt-8 gap-12">
-          <button type="submit" className="btn-form" disabled={isLoadingUpdate}>
-            {isLoadingUpdate ? 'Mise à jour...' : 'Valider'}
-          </button>
-          <button type="button" className="btn-form">
-            Supprimer mon profil
-          </button>
-        </div>
+
+        <button type="submit" className="btn-form" disabled={isLoadingUpdate}>
+          {isLoadingUpdate ? 'Mise à jour...' : 'Valider'}
+        </button>
       </form>
     </main>
   );
