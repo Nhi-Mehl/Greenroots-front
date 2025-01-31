@@ -1,20 +1,22 @@
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   faCartShopping,
   faUser,
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
 import { CartContext } from '../../../context/CartContext/CartContext';
-import { useUser } from '../../../context/UserContext';
+import { useAppSelector } from '../../../store/hooks';
+import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 
 interface ShowBannerProps {
   showBanner: boolean;
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
-  const { user } = useUser();
+  // const { user } = useUser();
+  const user = useAppSelector(selectCurrentUser);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
 
