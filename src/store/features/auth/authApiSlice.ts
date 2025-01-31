@@ -1,11 +1,10 @@
-import apiSlice from './apiSlice';
+import apiSlice from '../../api/apiSlice';
 import {
-  GetProfileResponse,
   LoginRequest,
   LoginResponse,
   SignUpRequest,
   SignUpResponse,
-} from '../@types/Credentials';
+} from '../../../@types/Credentials';
 
 // Étendre apiSlice pour ajouter des endpoints spécifiques à l'authentification
 const authApiSlice = apiSlice.injectEndpoints({
@@ -31,13 +30,6 @@ const authApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: '/auth/logout',
         method: 'post',
-      }),
-    }),
-    // Endpoint pour récupérer le profil utilisateur
-    getProfile: builder.query<GetProfileResponse, void>({
-      query: () => ({
-        url: '/users/profile',
-        method: 'get',
       }),
     }),
     // protected: builder.mutation<{ message: string }, void>({
