@@ -8,6 +8,7 @@ import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { setToken, setUser } from '../../../store/features/auth/authSlice';
 import { GetProfileResponse } from '../../../@types/IUser';
+import Button from '../../Form/Button/Button';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ function LoginPage() {
           communauté et continuez à agir pour la reforestation.
         </p>
       </section>
-      <section>
+      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
         <Form action="/login" onSubmit={handleSubmit}>
           <Input
             htmlFor="email"
@@ -103,13 +104,9 @@ function LoginPage() {
             placeholder="Votre mot de passe"
             required
           />
-          <button
-            className="btn-form mt-4"
-            type="submit"
-            disabled={isLoadingLogin}
-          >
+          <Button type="submit" variant="form" disabled={isLoadingLogin}>
             Se connecter
-          </button>
+          </Button>
         </Form>
         <div className="flex flex-col items-center gap-2 mt-4">
           <Link to="/register" className="text-greenRegular">
