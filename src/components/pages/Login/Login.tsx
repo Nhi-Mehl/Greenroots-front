@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import {
-  useGetProfileQuery,
-  useLoginMutation,
-} from '../../../api/authApiSlice';
+import { useLoginMutation } from '../../../store/features/auth/authApiSlice';
+import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
-import { setToken, setUser } from '../../../features/auth/authSlice';
-import { GetProfileResponse, LoginResponse } from '../../../@types/Credentials';
+import { setToken, setUser } from '../../../store/features/auth/authSlice';
+import { GetProfileResponse } from '../../../@types/IUser';
 
 function LoginPage() {
   const navigate = useNavigate();

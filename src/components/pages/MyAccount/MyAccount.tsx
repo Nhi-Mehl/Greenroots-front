@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   selectCurrentUser,
   logoutAction,
-} from '../../../features/auth/authSlice';
+} from '../../../store/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useLogoutMutation } from '../../../api/authApiSlice';
+import { useLogoutMutation } from '../../../store/features/auth/authApiSlice';
 
 function MyAccountPage() {
   const navigate = useNavigate();

@@ -10,7 +10,7 @@ import {
 } from '../../../@types';
 import { useUser } from '../../../context/UserContext';
 // import { useProject } from '../../context/ProjectContext';
-import api from '../../../api';
+import api from '../../../store/api';
 
 interface IOrderWithDate extends IOrder {
   createdAt: string;

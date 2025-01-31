@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Project from './Project';
 import { IProject } from '../../../../@types';
-import api from '../../../../api/index';
+import api from '../../../../store/api/index';
 
 function Projects() {
   const [projects, SetProjects] = useState<IProject[]>([]);

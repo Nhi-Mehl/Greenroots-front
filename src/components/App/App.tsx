@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 
 // import { CartProvider } from '../Cart/CartContext/CartContext';
 import { useUser } from '../../context/UserContext';
-import api from '../../api';
+import api from '../../store/api';
 import Header from '../Header/Header';
 
 function App() {

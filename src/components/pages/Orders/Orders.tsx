@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../../context/UserContext';
 import { IOrder } from '../../../@types';
-import api from '../../../api/index';
+import api from '../../../store/api/index';
 
 interface IOrderWithDate extends IOrder {
   createdAt: string;

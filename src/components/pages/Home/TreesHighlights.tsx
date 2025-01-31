@@ -2,7 +2,7 @@ import axios from 'axios';
 // import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import api from '../../../api/index';
+import api from '../../../store/api/index';
 // import { CartContext } from '../Cart/CartContext/CartContext';
 // import { useProject } from '../../context/ProjectContext';
 
