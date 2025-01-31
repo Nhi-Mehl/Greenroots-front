@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { IUser } from '../../../@types';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 import Form from '../../Form/Form';
 import Input from '../../Form/Input/Input';
 import Button from '../../Form/Button/Button';
 
+import { SignUpRequest } from '../../../@types/Credentials';
+import { useRegisterMutation } from '../../../store/features/auth/authApiSlice';
+
 function RegisterPage() {
+  const navigate = useNavigate();
   // Etats des valeurs du formulaire
-  const [formData, setFormData] = useState<IUser>({
-    id: '',
+  const [formData, setFormData] = useState<SignUpRequest>({
     first_name: '',
     last_name: '',
     address: '',
@@ -16,63 +21,81 @@ function RegisterPage() {
     country: '',
     phone_number: '',
     email: '',
-    // password: '',
-    // confirmation: '',
+    password: '',
+    confirmation: '',
   });
 
   // Etat de succès ou d'erreur
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  // Changements dans les inputs
+  // Exécuter la mutation d'inscription
+  const [
+    createUser,
+    {
+      isLoading: isLoadingRegister,
+      isError: isErrorRegister,
+      // error: registerError,
+    },
+  ] = useRegisterMutation();
 
+  // Gestion des changements dans les inputs
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setFormData({ ...formData, [name]: value });
   };
 
-  // Soumission du formulaire
+  // Gestion de l'inscription
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Vérification du mot de passe
-    if (formData.password !== formData.confirmation) {
+    if (formData?.password !== formData?.confirmation) {
       setErrorMessage('Les mots de passe ne correspondent pas');
     }
-
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Exécuter la mutation d'inscription
+      await createUser(formData).unwrap();
+
+      // Affichage de l'alerte de succès
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Inscription réussie',
+        text: `Félicitations ${formData?.first_name} ! Vous êtes maintenant inscrit sur notre plateforme`,
+        showConfirmButton: false,
+        timer: 2000,
       });
-
-      if (!response.ok) {
-        console.error("Erreur lors de l'inscription");
-        return;
-      }
-
-      setIsRegistered(true);
+      // Rediriger vers la page d'accueil après un court délai
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
-      console.error('erreur pendant la requête', error);
+      console.error("Erreur lors de l'inscription", error);
     }
   };
 
-  if (isRegistered) {
-    return (
-      <div className="p-20">
-        <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
-          <h1 className="text-3xl mb-4">Inscription réussie</h1>
-          <p className="text-lg">
-            Félicitations {formData.first_name} ! Vous êtes maintenant inscrit
-            sur notre plateforme.
-          </p>
-        </div>
-      </div>
-    );
+  if (isErrorRegister) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Une erreur est survenue lors de votre inscription.',
+    });
   }
+
+  // if (isSuccessRegister) {
+  //   return (
+  //     <div className="p-20">
+  //       <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
+  //         <h1 className="text-3xl mb-4">Inscription réussie</h1>
+  //         <p className="text-lg">
+  //           Félicitations {formData?.first_name} ! Vous êtes maintenant inscrit
+  //           sur notre plateforme.
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
@@ -102,7 +125,7 @@ function RegisterPage() {
               name="first_name"
               id="first_name"
               placeholder="Votre prénom"
-              value={formData.first_name}
+              value={formData?.first_name}
               onChange={handleChange}
             />
             <Input
@@ -112,7 +135,7 @@ function RegisterPage() {
               name="last_name"
               id="last_name"
               placeholder="Votre nom"
-              value={formData.last_name}
+              value={formData?.last_name}
               onChange={handleChange}
             />
             <Input
@@ -122,7 +145,7 @@ function RegisterPage() {
               name="address"
               id="address"
               placeholder="Votre adresse"
-              value={formData.address}
+              value={formData?.address}
               onChange={handleChange}
             />
             <Input
@@ -132,7 +155,7 @@ function RegisterPage() {
               name="zip_code"
               id="zip_code"
               placeholder="Votre code postal"
-              value={formData.zip_code}
+              value={formData?.zip_code}
               onChange={handleChange}
             />
             <Input
@@ -142,7 +165,7 @@ function RegisterPage() {
               name="city"
               id="city"
               placeholder="Votre ville"
-              value={formData.city}
+              value={formData?.city}
               onChange={handleChange}
             />
 
@@ -153,7 +176,7 @@ function RegisterPage() {
               name="country"
               id="country"
               placeholder="Votre pays"
-              value={formData.country}
+              value={formData?.country}
               onChange={handleChange}
             />
             <Input
@@ -163,7 +186,7 @@ function RegisterPage() {
               name="phone_number"
               id="phone_number"
               placeholder="Votre téléphone"
-              value={formData.phone_number}
+              value={formData?.phone_number}
               onChange={handleChange}
             />
 
@@ -174,7 +197,7 @@ function RegisterPage() {
               name="email"
               id="email"
               placeholder="Votre email"
-              value={formData.email}
+              value={formData?.email}
               onChange={handleChange}
             />
             <Input
@@ -184,7 +207,7 @@ function RegisterPage() {
               name="password"
               id="password"
               placeholder="Votre mot de passe"
-              value={formData.password}
+              value={formData?.password}
               onChange={handleChange}
             />
             <Input
@@ -194,11 +217,16 @@ function RegisterPage() {
               name="confirmation"
               id="confirmation"
               placeholder="Confirmez votre mot de passe"
-              value={formData.confirmation}
+              value={formData?.confirmation}
               onChange={handleChange}
             />
           </div>
-          <Button type="submit" variant="form">
+          <Button
+            type="submit"
+            variant="form"
+            isLoading={isLoadingRegister}
+            disabled={isLoadingRegister}
+          >
             Valider
           </Button>
         </Form>
