@@ -48,24 +48,23 @@ function ProfilDetailsPage() {
       confirmButtonText: 'Oui, supprimer!',
       cancelButtonText: 'Annuler',
     }).then((result) => {
-      deleteUser(user.id);
-      // Supprimer l'utilisateur du store Redux
-      dispatch(setUser(null));
-
       // Afficher un message de succès
       if (result.isConfirmed) {
+        deleteUser(user.id);
+        // Supprimer l'utilisateur du store Redux
+        dispatch(setUser(null));
+        // Afficher un message de succès
         Swal.fire({
           title: 'Supprimé!',
           text: 'Votre compte a été supprimé.',
           icon: 'success',
         });
+        // Rediriger vers la page d'accueil après un court délai
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       }
     });
-
-    // Rediriger vers la page d'accueil après un court délai
-    setTimeout(() => {
-      navigate('/');
-    }, 1500);
   };
 
   return (
