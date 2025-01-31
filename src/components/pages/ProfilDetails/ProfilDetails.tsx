@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -17,17 +18,23 @@ function ProfilDetailsPage() {
   // Récupérer l'utilisateur connecté de la store Redux
   const user = useAppSelector(selectCurrentUser);
   // Récupérer les informations utilisateur via RTK Query
-  const { data, isLoading, isError } = useGetProfileQuery();
+  const {
+    data,
+    isLoading: isLoadingProfile,
+    isError: isErrorProfile,
+  } = useGetProfileQuery();
   const [deleteUser] = useDeleteAccountMutation();
 
-  // Mettre à jour Redux quand l'API répond
-  if (data && data.id !== user?.id) {
-    dispatch(setUser(data));
-  }
+  useEffect(() => {
+    // Mettre à jour Redux quand l'API répond
+    if (data && data.id !== user?.id) {
+      dispatch(setUser(data));
+    }
+  });
 
   // Gestion du chargement et des erreurs
-  if (isLoading) return <p>Chargement...</p>;
-  if (isError) return <p>Une erreur est survenue</p>;
+  if (isLoadingProfile) return <p>Chargement...</p>;
+  if (isErrorProfile) return <p>Une erreur est survenue</p>;
 
   // Gestion de la redirection vers la page de modification
   const handleEditClick = () => {
@@ -53,6 +60,8 @@ function ProfilDetailsPage() {
         deleteUser(user.id);
         // Supprimer l'utilisateur du store Redux
         dispatch(setUser(null));
+        console.log('🚀 Utilisateur supprimé:', user);
+
         // Afficher un message de succès
         Swal.fire({
           title: 'Supprimé!',
