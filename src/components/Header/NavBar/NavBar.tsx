@@ -7,17 +7,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CartContext } from '../../../context/CartContext/CartContext';
-import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
-// import { useAppSelector } from '../../../store/hooks';
-// import { selectCurrentUser } from '../../../store/features/auth/authSlice';
+// import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
+import { useAppSelector } from '../../../store/hooks';
+import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 
 interface ShowBannerProps {
   showBanner: boolean;
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
-  const { data: user } = useGetProfileQuery();
-  // const user = useAppSelector(selectCurrentUser);
+  // const { data: user } = useGetProfileQuery();
+  const user = useAppSelector(selectCurrentUser);
   console.log('User:', user);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
