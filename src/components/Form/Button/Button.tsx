@@ -29,7 +29,7 @@ const Button = ({
         },
         className
       )}
-      disabled={disabled || isLoading}
+      disabled={isLoading}
       {...props}
     >
       {isLoading ? 'Chargement...' : children}
