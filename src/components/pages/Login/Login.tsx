@@ -52,7 +52,7 @@ function LoginPage() {
 
   /** ===================== ✅ GESTION DU SUCCÈS ===================== */
   useEffect(() => {
-    if (isSuccessLogin && accessToken && userProfile) {
+    if (isSuccessLogin && accessToken) {
       dispatch(setToken(accessToken));
       dispatch(setUser(userProfile as GetProfileResponse));
 
