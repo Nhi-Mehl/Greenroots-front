@@ -17,7 +17,7 @@ const tokenFromStorage = localStorage.getItem('token');
 const initialState: InitialAuthState = {
   user: null,
   accessToken: null,
-  isAuthenticated: !!tokenFromStorage, // Si un token est présent,
+  isAuthenticated: Boolean(tokenFromStorage),
 };
 
 // Créer le slice utilisateur
@@ -25,7 +25,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Action pour définir les informations utilisateur lors de la connexion
+    // Action pour définir le token et l'état d'authentification lors de la connexion
     setToken: (state, action: PayloadAction<LoginResponse>) => {
       const { accessToken } = action.payload;
 
@@ -34,8 +34,8 @@ const authSlice = createSlice({
       localStorage.setItem('token', accessToken);
     },
 
-    // Action pour déconnecter l'utilisateur
-    logoutAction: (state) => {
+    // Action pour gérer la déconnexion ou la suppression de l'utilisateur
+    clearAuth: (state) => {
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
@@ -45,16 +45,14 @@ const authSlice = createSlice({
 
     // Action pour mettre à jour les informations utilisateur
     setUser: (state, action: PayloadAction<GetProfileResponse | null>) => {
-      // Mettre à jour l'utilisateur actuellement connecté
-      console.log('🚀 Utilisateur mis à jour:', action.payload);
-
       state.user = action.payload;
+      console.log('🚀 Utilisateur mis à jour:', action.payload);
     },
   },
 });
 
 // Exporter les actions générées
-export const { setToken, logoutAction, setUser } = authSlice.actions;
+export const { setToken, clearAuth, setUser } = authSlice.actions;
 
 // Selector pour obtenir l'utilisateur actuellement connecté
 export const selectCurrentUser = (state: RootState) => state.auth.user;
