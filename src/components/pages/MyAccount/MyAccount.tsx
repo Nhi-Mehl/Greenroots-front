@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import {
   selectCurrentUser,
-  logoutAction,
+  clearAuth,
 } from '../../../store/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useLogoutMutation } from '../../../store/features/auth/authApiSlice';
@@ -18,7 +18,7 @@ function MyAccountPage() {
       // unwrap attend la requêtte termine avant aller dans action logout
       await logout().unwrap();
       // On met à jour le state Redux pour déconnecter l'utilisateur
-      dispatch(logoutAction());
+      dispatch(clearAuth());
       // On redirige l'utilisateur vers la page de connexion
       navigate('/login');
     } catch (error) {
