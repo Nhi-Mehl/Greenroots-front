@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../../../store/features/auth/authSlice';
@@ -14,17 +15,21 @@ function EditProfilePage() {
   const dispatch = useAppDispatch();
 
   // Récupérer le profil actuel via RTK Query
-  const {
-    data: user,
-    isLoading: isLoadingUser,
-    isError: isErrorUser,
-    refetch,
-  } = useGetProfileQuery();
-  const [updateProfile, { isLoading: isLoadingUpdate }] =
-    useUpdateProfileMutation();
+  const { data: user, refetch } = useGetProfileQuery();
+  const [
+    updateProfile,
+    {
+      isLoading: isLoadingUpdate,
+      isError: isErrorUpdate,
+      error: updateError,
+      isSuccess: isSuccessUpdate,
+    },
+  ] = useUpdateProfileMutation();
 
   // État local du formulaire
-  const [formData, setFormData] = useState<UpdateProfileRequest | null>(null);
+  const [formData, setFormData] = useState<UpdateProfileRequest>(
+    user as UpdateProfileRequest
+  );
 
   // Charger les données de l'utilisateur dans le formulaire
   useEffect(() => {
@@ -33,12 +38,71 @@ function EditProfilePage() {
     }
   }, [user]);
 
-  // Vérifier si les données sont en cours de chargement
-  if (isLoadingUser) return <p>Chargement des données...</p>;
-  if (isErrorUser || !formData)
-    return <p>Erreur lors du chargement des données.</p>;
+  /** ===================== ✅ GESTION DU SUCCÈS ===================== */
+  useEffect(() => {
+    if (isSuccessUpdate) {
+      // Afficher une alerte de succès si la connexion est réussie
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: 'success',
+        title: 'Vos informations ont été mises à jour avec succès.',
+      });
 
-  // Gestion des changements dans les champs du formulaire
+      // 🔹 Rediriger l'utilisateur vers la page de détails de profil
+      setTimeout(() => {
+        navigate('/userdetails');
+      }, 1000);
+    }
+  }, [isSuccessUpdate, navigate]);
+
+  /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
+  useEffect(() => {
+    if (isLoadingUpdate) {
+      // Afficher une alerte de chargement
+      Swal.fire({
+        title: 'Chargement des données...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+    } else {
+      Swal.close(); // Fermer le chargement dès qu'il y a une réponse
+    }
+  }, [isLoadingUpdate]);
+
+  /** ===================== ❌ GESTION DES ERREURS ===================== */
+  useEffect(() => {
+    if (isErrorUpdate || !formData) {
+      let errorMessage =
+        'Une erreur est survenue lors du chargement des données.';
+      if (
+        updateError &&
+        typeof updateError === 'object' &&
+        'data' in updateError
+      ) {
+        errorMessage = (updateError as { data: string }).data;
+      }
+
+      // Afficher une alerte d'erreur
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors du chargement des données.',
+        text: errorMessage,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Réessayer',
+      });
+    }
+  }, [isErrorUpdate, updateError, formData]);
+
+  /** ===================== 🟢 GESTION DES CHANGEMENTS DANS LES CHAMPS DU FORMULAIRE ===================== */
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -48,7 +112,7 @@ function EditProfilePage() {
     }));
   };
 
-  // Modification des données de l'utilisateur
+  /** ===================== ✍️ GESTION DE LA SOUMISSION DU FORMULAIRE ===================== */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData) return;
@@ -62,9 +126,6 @@ function EditProfilePage() {
 
       // 🔹 Recharger les données de l'utilisateur
       await refetch();
-
-      // 🔹 Rediriger l'utilisateur vers la page de détails de profil
-      navigate('/userdetails');
     } catch (error) {
       console.error('Erreur lors de la mise à jour du profil', error);
     }
@@ -89,7 +150,7 @@ function EditProfilePage() {
               id="first_name"
               name="first_name"
               placeholder="Votre prénom"
-              value={formData.first_name}
+              value={formData?.first_name}
               onChange={handleChange}
               className="input"
             />
@@ -102,7 +163,7 @@ function EditProfilePage() {
               id="last_name"
               name="last_name"
               placeholder="Votre nom"
-              value={formData.last_name}
+              value={formData?.last_name}
               onChange={handleChange}
               className="input"
             />
@@ -115,7 +176,7 @@ function EditProfilePage() {
               id="address"
               name="address"
               placeholder="Votre adresse"
-              value={formData.address}
+              value={formData?.address}
               onChange={handleChange}
               className="input"
             />
@@ -128,7 +189,7 @@ function EditProfilePage() {
               id="zip_code"
               name="zip_code"
               placeholder="Votre code postal"
-              value={formData.zip_code}
+              value={formData?.zip_code}
               onChange={handleChange}
               className="input"
             />
@@ -141,7 +202,7 @@ function EditProfilePage() {
               id="city"
               name="city"
               placeholder="Votre ville"
-              value={formData.city}
+              value={formData?.city}
               onChange={handleChange}
               className="input"
             />
@@ -154,7 +215,7 @@ function EditProfilePage() {
               id="country"
               name="country"
               placeholder="Votre pays"
-              value={formData.country}
+              value={formData?.country}
               onChange={handleChange}
               className="input"
             />
@@ -167,7 +228,7 @@ function EditProfilePage() {
               id="phone_number"
               name="phone_number"
               placeholder="Votre téléphone"
-              value={formData.phone_number}
+              value={formData?.phone_number}
               onChange={handleChange}
               className="input"
             />
@@ -180,7 +241,7 @@ function EditProfilePage() {
               id="email"
               name="email"
               placeholder="Votre email"
-              value={formData.email}
+              value={formData?.email}
               onChange={handleChange}
               className="input"
             />
