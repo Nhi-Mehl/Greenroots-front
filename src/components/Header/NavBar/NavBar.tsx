@@ -7,18 +7,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CartContext } from '../../../context/CartContext/CartContext';
-// import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppSelector } from '../../../store/hooks';
-import { selectCurrentUser } from '../../../store/features/auth/authSlice';
+import { RootState } from '../../../store/store';
+// import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 
 interface ShowBannerProps {
   showBanner: boolean;
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
-  // const { data: user } = useGetProfileQuery();
-  const user = useAppSelector(selectCurrentUser);
-  console.log('User:', user);
+  // const user = useAppSelector(selectCurrentUser);
+  // console.log('User:', user);
+  const isAuthenticated = useAppSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
@@ -57,7 +59,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
         <Link to="/contact">Contact</Link>
       </div>
       <div className="flex gap-4 md:gap-2">
-        <Link to={user ? '/my-account' : '/login'} className="p-4">
+        <Link to={isAuthenticated ? '/my-account' : '/login'} className="p-4">
           <FontAwesomeIcon className="text-xl lg:text-2xl" icon={faUser} />
         </Link>
         <Link to="/cart" className="hidden p-4 md:inline">
