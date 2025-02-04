@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,8 @@ import { useRegisterMutation } from '../../../store/features/auth/authApiSlice';
 
 function RegisterPage() {
   const navigate = useNavigate();
-  // Etats des valeurs du formulaire
+
+  // États du formulaire pour gérer les entrées utilisateur
   const [formData, setFormData] = useState<SignUpRequest>({
     first_name: '',
     last_name: '',
@@ -25,63 +26,80 @@ function RegisterPage() {
     confirmation: '',
   });
 
-  // Etat de succès ou d'erreur
+  // État du message d'erreur pour affichage utilisateur
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  // Exécuter la mutation d'inscription
+  // Mutation pour l'inscription de l'utilisateur
   const [
     createUser,
     {
       isLoading: isLoadingRegister,
+      isSuccess: isSuccessRegister,
       isError: isErrorRegister,
-      // error: registerError,
+      error: registerError,
     },
   ] = useRegisterMutation();
 
-  // Gestion des changements dans les inputs
-  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  /** ===================== ✅ GESTION DES SUCCES ===================== */
 
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Gestion de l'inscription
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Vérification du mot de passe
-    if (formData?.password !== formData?.confirmation) {
-      setErrorMessage('Les mots de passe ne correspondent pas');
-    }
-    try {
-      // Exécuter la mutation d'inscription
-      await createUser(formData).unwrap();
-
-      // Affichage de l'alerte de succès
+  useEffect(() => {
+    if (isSuccessRegister) {
+      // Affichage du message de succès
       Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Inscription réussie',
         text: `Félicitations ${formData?.first_name} ! Vous êtes maintenant inscrit sur notre plateforme`,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
       });
+
       // Rediriger vers la page d'accueil après un court délai
       setTimeout(() => {
         navigate('/');
       }, 2000);
-    } catch (error) {
-      console.error("Erreur lors de l'inscription", error);
     }
+  }, [isSuccessRegister, formData, navigate]);
+
+  /** ===================== ❌ GESTION DES ERREURS ===================== */
+
+  useEffect(() => {
+    if (isErrorRegister) {
+      let errorRegisterMessage = 'Une erreur est survenue, veuillez réessayer.';
+      if (registerError && 'data' in registerError) {
+        errorRegisterMessage =
+          (registerError as { data?: { message?: string } })?.data?.message ||
+          errorRegisterMessage;
+      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: errorRegisterMessage,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Réessayer',
+      });
+    }
+  }, [isErrorRegister, registerError]);
+
+  /** ===================== 🟢 GESTION DES CHANGEMENTS ===================== */
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setFormData({ ...formData, [name]: value });
   };
 
-  if (isErrorRegister) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Une erreur est survenue lors de votre inscription.',
-    });
-  }
+  /** ===================== ✍️ GESTION DE LA SOUMISSION DU FORMULAIRE ===================== */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Vérifier si les mots de passe correspondent
+    if (formData?.password !== formData?.confirmation) {
+      setErrorMessage('Les mots de passe ne correspondent pas');
+    }
+
+    // Exécuter la mutation d'inscription
+    createUser(formData);
+  };
 
   // if (isSuccessRegister) {
   //   return (
@@ -99,6 +117,7 @@ function RegisterPage() {
 
   return (
     <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+      {/* Section d'introduction */}
       <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
         <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
           Inscrivez-vous
@@ -110,6 +129,8 @@ function RegisterPage() {
           notre communauté engagée dans la reforestation.
         </p>
       </section>
+
+      {/* Formulaire d'inscription */}
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
         <Form action="/register" onSubmit={handleSubmit}>
           <div className="md:grid md:grid-cols-2 md:gap-x-6">
@@ -118,109 +139,84 @@ function RegisterPage() {
               <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
             )}
 
-            <Input
-              htmlFor="first_name"
-              label="Prénom"
-              type="text"
-              name="first_name"
-              id="first_name"
-              placeholder="Votre prénom"
-              value={formData?.first_name}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="last_name"
-              label="Nom"
-              type="text"
-              name="last_name"
-              id="last_name"
-              placeholder="Votre nom"
-              value={formData?.last_name}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="address"
-              label="Adresse"
-              type="text"
-              name="address"
-              id="address"
-              placeholder="Votre adresse"
-              value={formData?.address}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="zip_code"
-              label="Code postal"
-              type="text"
-              name="zip_code"
-              id="zip_code"
-              placeholder="Votre code postal"
-              value={formData?.zip_code}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="city"
-              label="Ville"
-              type="text"
-              name="city"
-              id="city"
-              placeholder="Votre ville"
-              value={formData?.city}
-              onChange={handleChange}
-            />
-
-            <Input
-              htmlFor="country"
-              label="Pays"
-              type="text"
-              name="country"
-              id="country"
-              placeholder="Votre pays"
-              value={formData?.country}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="phone_number"
-              label="Téléphone"
-              type="text"
-              name="phone_number"
-              id="phone_number"
-              placeholder="Votre téléphone"
-              value={formData?.phone_number}
-              onChange={handleChange}
-            />
-
-            <Input
-              htmlFor="email"
-              label="Email"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Votre email"
-              value={formData?.email}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="password"
-              label="Mot de passe"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Votre mot de passe"
-              value={formData?.password}
-              onChange={handleChange}
-            />
-            <Input
-              htmlFor="confirmation"
-              label="Confirmation de mot de passe"
-              type="password"
-              name="confirmation"
-              id="confirmation"
-              placeholder="Confirmez votre mot de passe"
-              value={formData?.confirmation}
-              onChange={handleChange}
-            />
+            {/* Champs du formulaire */}
+            {[
+              {
+                label: 'Prénom',
+                name: 'first_name',
+                type: 'text',
+                placeholder: 'Votre prénom',
+              },
+              {
+                label: 'Nom',
+                name: 'last_name',
+                type: 'text',
+                placeholder: 'Votre nom',
+              },
+              {
+                label: 'Adresse',
+                name: 'address',
+                type: 'text',
+                placeholder: 'Votre adresse',
+              },
+              {
+                label: 'Code postal',
+                name: 'zip_code',
+                type: 'text',
+                placeholder: 'Votre code postal',
+              },
+              {
+                label: 'Ville',
+                name: 'city',
+                type: 'text',
+                placeholder: 'Votre ville',
+              },
+              {
+                label: 'Pays',
+                name: 'country',
+                type: 'text',
+                placeholder: 'Votre pays',
+              },
+              {
+                label: 'Téléphone',
+                name: 'phone_number',
+                type: 'text',
+                placeholder: 'Votre téléphone',
+              },
+              {
+                label: 'Email',
+                name: 'email',
+                type: 'email',
+                placeholder: 'Votre email',
+              },
+              {
+                label: 'Mot de passe',
+                name: 'password',
+                type: 'password',
+                placeholder: 'Votre mot de passe',
+              },
+              {
+                label: 'Confirmation de mot de passe',
+                name: 'confirmation',
+                type: 'password',
+                placeholder: 'Confirmez votre mot de passe',
+              },
+            ].map((input) => (
+              <Input
+                key={input.name}
+                htmlFor={input.name}
+                label={input.label}
+                type={input.type}
+                name={input.name}
+                id={input.name}
+                placeholder={input.placeholder}
+                value={formData[input.name as keyof SignUpRequest]}
+                onChange={handleChange}
+              />
+            ))}
           </div>
+
+          {/* Bouton de soumission */}
           <Button
             type="submit"
             variant="form"

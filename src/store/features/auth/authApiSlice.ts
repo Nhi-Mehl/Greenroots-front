@@ -17,6 +17,7 @@ const authApiSlice = apiSlice.injectEndpoints({
         data: { ...credentials },
       }),
     }),
+
     // Endpoint pour l'inscription
     register: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (credentials: SignUpRequest) => ({
@@ -25,6 +26,7 @@ const authApiSlice = apiSlice.injectEndpoints({
         data: { ...credentials },
       }),
     }),
+
     // Endpoint pour la deconnexion
     logout: builder.mutation<void, void>({
       query: () => ({
