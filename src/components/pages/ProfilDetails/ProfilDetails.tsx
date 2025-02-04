@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
+  clearAuth,
   selectCurrentUser,
   setUser,
 } from '../../../store/features/auth/authSlice';
@@ -54,24 +55,29 @@ function ProfilDetailsPage() {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Oui, supprimer!',
       cancelButtonText: 'Annuler',
-    }).then((result) => {
+    }).then(async (result) => {
       // Afficher un message de succès
       if (result.isConfirmed) {
-        deleteUser(user.id);
-        // Supprimer l'utilisateur du store Redux
-        dispatch(setUser(null));
-        console.log('🚀 Utilisateur supprimé:', user);
+        try {
+          await deleteUser(user.id).unwrap();
 
-        // Afficher un message de succès
-        Swal.fire({
-          title: 'Supprimé!',
-          text: 'Votre compte a été supprimé.',
-          icon: 'success',
-        });
-        // Rediriger vers la page d'accueil après un court délai
-        setTimeout(() => {
-          navigate('/');
-        }, 1500);
+          // Supprimer le token et déconnecter l'utilisateur
+          dispatch(clearAuth());
+
+          // Afficher un message de succès
+          Swal.fire({
+            title: 'Supprimé!',
+            text: 'Votre compte a été supprimé.',
+            icon: 'success',
+          });
+
+          // Rediriger vers la page d'accueil après un court délai
+          setTimeout(() => {
+            navigate('/');
+          }, 1500);
+        } catch (error) {
+          console.error('Erreur lors de la suppression du compte:', error);
+        }
       }
     });
   };
