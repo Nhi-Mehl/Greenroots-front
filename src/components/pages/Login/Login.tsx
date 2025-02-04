@@ -79,12 +79,14 @@ function LoginPage() {
   /** ===================== ❌ GESTION DES ERREURS ===================== */
   useEffect(() => {
     if (isErrorLogin) {
-      let errorMessage = 'Une erreur est survenue, veuillez réessayer.';
-      if (loginError && 'data' in loginError) {
-        errorMessage =
-          (loginError as { data?: { message?: string } })?.data?.message ||
-          errorMessage;
+      let errorMessage;
+      const { data } = loginError as { data: string };
+      if (data === 'Network Error') {
+        errorMessage = 'Veuillez vérifier votre connexion Internet.';
+      } else {
+        errorMessage = "Veuillez vérifier vos informations d'identification.";
       }
+
       // Afficher une alerte d'erreur
       Swal.fire({
         icon: 'error',
