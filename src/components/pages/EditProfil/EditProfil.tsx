@@ -9,6 +9,9 @@ import {
   useUpdateProfileMutation,
   useGetProfileQuery,
 } from '../../../store/features/user/userApiSlice';
+import Form from '../../Form/Form';
+import Input from '../../Form/Input/Input';
+import Button from '../../Form/Button/Button';
 
 function EditProfilePage() {
   const navigate = useNavigate();
@@ -41,6 +44,11 @@ function EditProfilePage() {
   /** ===================== ✅ GESTION DU SUCCÈS ===================== */
   useEffect(() => {
     if (isSuccessUpdate) {
+      console.log(
+        'Les informations ont été mises à jour avec succès !',
+        isSuccessUpdate
+      );
+
       // Afficher une alerte de succès si la connexion est réussie
       const Toast = Swal.mixin({
         toast: true,
@@ -53,54 +61,26 @@ function EditProfilePage() {
         icon: 'success',
         title: 'Vos informations ont été mises à jour avec succès.',
       });
-
-      // 🔹 Rediriger l'utilisateur vers la page de détails de profil
-      setTimeout(() => {
-        navigate('/userdetails');
-      }, 1000);
     }
   }, [isSuccessUpdate, navigate]);
 
-  /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
-  useEffect(() => {
-    if (isLoadingUpdate) {
-      // Afficher une alerte de chargement
-      Swal.fire({
-        title: 'Chargement des données...',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
-    } else {
-      Swal.close(); // Fermer le chargement dès qu'il y a une réponse
-    }
-  }, [isLoadingUpdate]);
-
   /** ===================== ❌ GESTION DES ERREURS ===================== */
   useEffect(() => {
-    if (isErrorUpdate || !formData) {
-      let errorMessage =
-        'Une erreur est survenue lors du chargement des données.';
-      if (
-        updateError &&
-        typeof updateError === 'object' &&
-        'data' in updateError
-      ) {
-        errorMessage = (updateError as { data: string }).data;
-      }
+    if (isErrorUpdate) {
+      const errorMessage =
+        updateError && typeof updateError === 'object' && 'data' in updateError
+          ? (updateError as { data: string }).data
+          : 'Une erreur est survenue lors de la mise à jour.';
 
-      // Afficher une alerte d'erreur
       Swal.fire({
         icon: 'error',
-        title: 'Erreur lors du chargement des données.',
+        title: 'Erreur',
         text: errorMessage,
         confirmButtonColor: '#d33',
         confirmButtonText: 'Réessayer',
       });
     }
-  }, [isErrorUpdate, updateError, formData]);
+  }, [isErrorUpdate, updateError]);
 
   /** ===================== 🟢 GESTION DES CHANGEMENTS DANS LES CHAMPS DU FORMULAIRE ===================== */
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +106,11 @@ function EditProfilePage() {
 
       // 🔹 Recharger les données de l'utilisateur
       await refetch();
+
+      // 🔹 Rediriger l'utilisateur vers la page de détails de profil
+      setTimeout(() => {
+        navigate('/userdetails');
+      }, 1000);
     } catch (error) {
       console.error('Erreur lors de la mise à jour du profil', error);
     }
@@ -136,122 +121,106 @@ function EditProfilePage() {
       <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
         Modifier mon profil
       </h1>
-
-      <form
-        className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto"
+      {/* Formulaire */}
+      <Form
         action="/register"
         onSubmit={handleSubmit}
+        className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto"
       >
         <div className="md:grid md:grid-cols-2 md:gap-x-6">
-          <label htmlFor="first_name">
-            Prénom
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              placeholder="Votre prénom"
-              value={formData?.first_name}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="first_name"
+            label="Prénom"
+            type="text"
+            name="first_name"
+            id="first_name"
+            placeholder="Votre prénom"
+            value={formData?.first_name}
+            onChange={handleChange}
+          />
 
-          <label>
-            Nom
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              placeholder="Votre nom"
-              value={formData?.last_name}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="last_name"
+            label="Nom"
+            type="text"
+            name="last_name"
+            id="last_name"
+            placeholder="Votre nom"
+            value={formData?.last_name}
+            onChange={handleChange}
+          />
 
-          <label className="mb-2" htmlFor="address">
-            Adresse
-            <input
-              type="text"
-              id="address"
-              name="address"
-              placeholder="Votre adresse"
-              value={formData?.address}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="address"
+            label="Adresse"
+            type="text"
+            name="address"
+            id="address"
+            placeholder="Votre adresse"
+            value={formData?.address}
+            onChange={handleChange}
+          />
 
-          <label className="mb-2" htmlFor="zip_code">
-            Code postal
-            <input
-              type="text"
-              id="zip_code"
-              name="zip_code"
-              placeholder="Votre code postal"
-              value={formData?.zip_code}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="zip_code"
+            label="Code postal"
+            type="text"
+            name="zip_code"
+            id="zip_code"
+            placeholder="Votre code postal"
+            value={formData?.zip_code}
+            onChange={handleChange}
+          />
 
-          <label htmlFor="city">
-            Ville
-            <input
-              type="text"
-              id="city"
-              name="city"
-              placeholder="Votre ville"
-              value={formData?.city}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="city"
+            label="Ville"
+            type="text"
+            name="city"
+            id="city"
+            placeholder="Votre ville"
+            value={formData?.city}
+            onChange={handleChange}
+          />
 
-          <label htmlFor="country">
-            Pays
-            <input
-              type="text"
-              id="country"
-              name="country"
-              placeholder="Votre pays"
-              value={formData?.country}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="country"
+            label="Pays"
+            type="text"
+            name="country"
+            id="country"
+            placeholder="Votre pays"
+            value={formData?.country}
+            onChange={handleChange}
+          />
 
-          <label htmlFor="phone_number">
-            Téléphone
-            <input
-              type="text"
-              id="phone_number"
-              name="phone_number"
-              placeholder="Votre téléphone"
-              value={formData?.phone_number}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="phone_number"
+            label="Téléphone"
+            type="text"
+            name="phone_number"
+            id="phone_number"
+            placeholder="Votre téléphone"
+            value={formData?.phone_number}
+            onChange={handleChange}
+          />
 
-          <label className="mb-2" htmlFor="email">
-            Email
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Votre email"
-              value={formData?.email}
-              onChange={handleChange}
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="email"
+            label="Email"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Votre email"
+            value={formData?.email}
+            onChange={handleChange}
+          />
         </div>
 
-        <button type="submit" className="btn-form" disabled={isLoadingUpdate}>
+        <Button type="submit" variant="form" disabled={isLoadingUpdate}>
           {isLoadingUpdate ? 'Mise à jour...' : 'Valider'}
-        </button>
-      </form>
+        </Button>
+      </Form>
     </main>
   );
 }
