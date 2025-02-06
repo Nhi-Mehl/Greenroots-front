@@ -12,7 +12,7 @@ import {
   useDeleteAccountMutation,
   useGetProfileQuery,
 } from '../../../store/features/user/userApiSlice';
-import apiSlice from '../../../store/api/apiSlice';
+// import apiSlice from '../../../store/api/apiSlice';
 import Button from '../../Form/Button/Button';
 
 function ProfilDetailsPage() {
@@ -33,18 +33,11 @@ function ProfilDetailsPage() {
   const [deleteUser] = useDeleteAccountMutation();
 
   useEffect(() => {
-    console.log('🔄 Profile query exécutée après suppression ?', profileData);
-  }, [profileData]);
-
-  useEffect(() => {
     // Mettre à jour Redux quand l'API répond
-    console.log('profileData:', profileData);
-    console.log('currentUser:', currentUser);
-
     if (profileData && !isUserDeleted) {
       dispatch(setUser(profileData));
     }
-  }, [profileData, currentUser, dispatch, isUserDeleted]);
+  }, [profileData, dispatch, isUserDeleted]);
 
   /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
   useEffect(() => {
@@ -97,15 +90,8 @@ function ProfilDetailsPage() {
 
           // Supprimer le token et déconnecter l'utilisateur
           dispatch(clearAuth());
-          console.log(
-            '🚀 Utilisateur déconnecté après suppression:',
-            currentUser
-          ); // ✅ Vérifie si `null`
 
           setIsUserDeleted(true);
-          // ⚠️ Invalider toutes les données mises en cache pour éviter un refetch automatique
-          dispatch(apiSlice.util.resetApiState());
-          console.log('🚀 Cache RTK Query réinitialisé !');
 
           // Afficher un message de succès
           Swal.fire({
@@ -171,7 +157,7 @@ function ProfilDetailsPage() {
         <Button variant="form" type="button" onClick={handleEditProfile}>
           Modifier
         </Button>
-        <Button variant="danger" type="button" onClick={handleDeleteUser}>
+        <Button variant="form-danger" type="button" onClick={handleDeleteUser}>
           Supprimer mon profil
         </Button>
       </div>
