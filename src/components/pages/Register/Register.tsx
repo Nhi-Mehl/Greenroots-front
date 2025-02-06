@@ -95,6 +95,7 @@ function RegisterPage() {
     // Vérifier si les mots de passe correspondent
     if (formData?.password !== formData?.confirmation) {
       setErrorMessage('Les mots de passe ne correspondent pas');
+      return;
     }
 
     // Exécuter la mutation d'inscription
