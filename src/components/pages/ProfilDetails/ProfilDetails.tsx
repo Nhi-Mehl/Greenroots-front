@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   clearAuth,
@@ -11,40 +12,73 @@ import {
   useDeleteAccountMutation,
   useGetProfileQuery,
 } from '../../../store/features/user/userApiSlice';
+import apiSlice from '../../../store/api/apiSlice';
+import Button from '../../Form/Button/Button';
 
 function ProfilDetailsPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isUserDeleted, setIsUserDeleted] = useState(false);
 
   // Récupérer l'utilisateur connecté de la store Redux
-  const user = useAppSelector(selectCurrentUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   // Récupérer les informations utilisateur via RTK Query
   const {
-    data,
+    data: profileData,
     isLoading: isLoadingProfile,
     isError: isErrorProfile,
-  } = useGetProfileQuery();
+  } = useGetProfileQuery(undefined, {
+    skip: isUserDeleted || !currentUser, // ⛔️ Évite la requête si l'utilisateur est déconnecté
+  });
   const [deleteUser] = useDeleteAccountMutation();
 
   useEffect(() => {
-    // Mettre à jour Redux quand l'API répond
-    if (data && data.id !== user?.id) {
-      dispatch(setUser(data));
-    }
-  });
+    console.log('🔄 Profile query exécutée après suppression ?', profileData);
+  }, [profileData]);
 
-  // Gestion du chargement et des erreurs
-  if (isLoadingProfile) return <p>Chargement...</p>;
-  if (isErrorProfile) return <p>Une erreur est survenue</p>;
+  useEffect(() => {
+    // Mettre à jour Redux quand l'API répond
+    console.log('profileData:', profileData);
+    console.log('currentUser:', currentUser);
+
+    if (profileData && !isUserDeleted) {
+      dispatch(setUser(profileData));
+    }
+  }, [profileData, currentUser, dispatch, isUserDeleted]);
+
+  /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
+  useEffect(() => {
+    if (isLoadingProfile) {
+      Swal.fire({
+        title: 'Chargement...',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+    } else {
+      Swal.close();
+    }
+  }, [isLoadingProfile]);
+
+  /** ===================== ❌ GESTION DES ERREURS ===================== */
+  useEffect(() => {
+    if (isErrorProfile) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Impossible de charger votre profil.',
+      });
+    }
+  }, [isErrorProfile]);
 
   // Gestion de la redirection vers la page de modification
-  const handleEditClick = () => {
-    navigate('/my-account/settings');
-  };
+  const handleEditProfile = () => navigate('/my-account/settings');
 
   // Gestion de la suppression de l'utilisateur
   const handleDeleteUser = () => {
-    if (!user) return;
+    if (!currentUser) return;
 
     Swal.fire({
       title: 'Êtes-vous sûr?',
@@ -59,10 +93,19 @@ function ProfilDetailsPage() {
       // Afficher un message de succès
       if (result.isConfirmed) {
         try {
-          await deleteUser(user.id).unwrap();
+          await deleteUser(currentUser.id).unwrap();
 
           // Supprimer le token et déconnecter l'utilisateur
           dispatch(clearAuth());
+          console.log(
+            '🚀 Utilisateur déconnecté après suppression:',
+            currentUser
+          ); // ✅ Vérifie si `null`
+
+          setIsUserDeleted(true);
+          // ⚠️ Invalider toutes les données mises en cache pour éviter un refetch automatique
+          dispatch(apiSlice.util.resetApiState());
+          console.log('🚀 Cache RTK Query réinitialisé !');
 
           // Afficher un message de succès
           Swal.fire({
@@ -86,51 +129,51 @@ function ProfilDetailsPage() {
     <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
       <h1 className="text-center h2-title mb-8">Details de mon profil</h1>
       <section className="text-lg flex flex-col justify-between gap-4 p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg md:flex-row lg:max-w-[900px] lg:mx-auto">
-        <div className="md:w-1/2 space-y-4">
-          <p>
+        <ul className="md:w-1/2 space-y-4" aria-labelledby="profile-details">
+          <li>
             <span className="font-bold text-greenRegular">Nom :</span>{' '}
-            {user?.last_name}
-          </p>
-          <p>
+            {currentUser?.last_name}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Prénom :</span>{' '}
-            {user?.first_name}
-          </p>
-          <p>
+            {currentUser?.first_name}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Email :</span>{' '}
-            {user?.email}
-          </p>
-          <p>
+            {currentUser?.email}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Téléphone :</span>{' '}
-            {user?.phone_number}
-          </p>
-        </div>
+            {currentUser?.phone_number}
+          </li>
+        </ul>
 
-        <div className="md:w-1/2 space-y-4">
-          <p>
+        <ul className="md:w-1/2 space-y-4" aria-labelledby="profile-details">
+          <li>
             <span className="font-bold text-greenRegular">Adresse :</span>{' '}
-            {user?.address}
-          </p>
-          <p>
+            {currentUser?.address}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Code postal :</span>{' '}
-            {user?.zip_code}
-          </p>
-          <p>
+            {currentUser?.zip_code}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Ville :</span>{' '}
-            {user?.city}
-          </p>
-          <p>
+            {currentUser?.city}
+          </li>
+          <li>
             <span className="font-bold text-greenRegular">Pays :</span>{' '}
-            {user?.country}
-          </p>
-        </div>
+            {currentUser?.country}
+          </li>
+        </ul>
       </section>
       <div className="lg:max-w-[900px] lg:mx-auto flex flex-row mt-8 gap-12">
-        <button className="btn-form" type="button" onClick={handleEditClick}>
+        <Button variant="form" type="button" onClick={handleEditProfile}>
           Modifier
-        </button>
-        <button type="button" className="btn-form" onClick={handleDeleteUser}>
+        </Button>
+        <Button variant="danger" type="button" onClick={handleDeleteUser}>
           Supprimer mon profil
-        </button>
+        </Button>
       </div>
     </main>
   );
