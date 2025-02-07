@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { TiTick, TiTimes } from 'react-icons/ti';
 
 import Form from '../../Form/Form';
 import Input from '../../Form/Input/Input';
@@ -9,8 +10,37 @@ import Button from '../../Form/Button/Button';
 import { SignUpRequest } from '../../../@types/Credentials';
 import { useRegisterMutation } from '../../../store/features/auth/authApiSlice';
 
+const requirePassword = [
+  { regex: /.{8,}/, label: 'Avoir au moins 8 caractères' },
+  { regex: /[0-9]/, label: 'Inclure au moins un chiffre' },
+  { regex: /[a-z]/, label: 'Inclure au moins une lettre minuscule' },
+  { regex: /[A-Z]/, label: 'Inclure au moins une lettre majuscule' },
+  {
+    regex: /[$&+,:;=?@#|'<>.^*()%!-]/,
+    label: 'Inclure au moins un caractère spécial',
+  },
+];
+
+function validatePassword(password: string) {
+  return requirePassword.map(({ regex, label }) => ({
+    label,
+    isValid: regex.test(password),
+  }));
+}
+
 function RegisterPage() {
   const navigate = useNavigate();
+
+  // Mutation pour l'inscription de l'utilisateur
+  const [
+    createUser,
+    {
+      isLoading: isLoadingRegister,
+      isSuccess: isSuccessRegister,
+      isError: isErrorRegister,
+      error: registerError,
+    },
+  ] = useRegisterMutation();
 
   // États du formulaire pour gérer les entrées utilisateur
   const [formData, setFormData] = useState<SignUpRequest>({
@@ -27,18 +57,20 @@ function RegisterPage() {
   });
 
   // État du message d'erreur pour affichage utilisateur
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [passewordError, setPassewordError] = useState<string>('');
+  const [passwordValidation, setPasswordValidation] = useState(
+    validatePassword('')
+  );
 
-  // Mutation pour l'inscription de l'utilisateur
-  const [
-    createUser,
-    {
-      isLoading: isLoadingRegister,
-      isSuccess: isSuccessRegister,
-      isError: isErrorRegister,
-      error: registerError,
-    },
-  ] = useRegisterMutation();
+  // Calcul du nombre de critères validés et du pourcentage de progression
+  const validCount = passwordValidation.filter(({ isValid }) => isValid).length;
+  const progressPercentage = (validCount / requirePassword.length) * 100;
+  let progressColor = 'bg-green-500';
+  if (progressPercentage < 40) {
+    progressColor = 'bg-red-500';
+  } else if (progressPercentage < 80) {
+    progressColor = 'bg-yellow-500';
+  }
 
   /** ===================== ✅ GESTION DES SUCCES ===================== */
 
@@ -86,6 +118,10 @@ function RegisterPage() {
     const { name, value } = event.target;
 
     setFormData({ ...formData, [name]: value });
+
+    if (name === 'password') {
+      setPasswordValidation(validatePassword(value));
+    }
   };
 
   /** ===================== ✍️ GESTION DE LA SOUMISSION DU FORMULAIRE ===================== */
@@ -94,27 +130,13 @@ function RegisterPage() {
 
     // Vérifier si les mots de passe correspondent
     if (formData?.password !== formData?.confirmation) {
-      setErrorMessage('Les mots de passe ne correspondent pas');
+      setPassewordError('Les mots de passe ne correspondent pas');
       return;
     }
 
     // Exécuter la mutation d'inscription
     createUser(formData);
   };
-
-  // if (isSuccessRegister) {
-  //   return (
-  //     <div className="p-20">
-  //       <div className="flex flex-col items-center border-2 border-solid border-green-950 bg-emerald-50 p-10">
-  //         <h1 className="text-3xl mb-4">Inscription réussie</h1>
-  //         <p className="text-lg">
-  //           Félicitations {formData?.first_name} ! Vous êtes maintenant inscrit
-  //           sur notre plateforme.
-  //         </p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
@@ -135,11 +157,6 @@ function RegisterPage() {
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
         <Form action="/register" onSubmit={handleSubmit}>
           <div className="md:grid md:grid-cols-2 md:gap-x-6">
-            {/* Message d'erreur si les mots de passe ne correspondent pas */}
-            {errorMessage && (
-              <div className="col-span-2 text-red-600 mb-4">{errorMessage}</div>
-            )}
-
             {/* Champs du formulaire */}
             {[
               {
@@ -200,7 +217,7 @@ function RegisterPage() {
                 label: 'Confirmation de mot de passe',
                 name: 'confirmation',
                 type: 'password',
-                placeholder: 'Confirmez votre mot de passe',
+                placeholder: 'Confirmer votre mot de passe',
               },
             ].map((input) => (
               <Input
@@ -215,7 +232,41 @@ function RegisterPage() {
                 onChange={handleChange}
               />
             ))}
+
+            {/* Message d'erreur si les mots de passe ne correspondent pas */}
+            {passewordError && (
+              <div className="col-span-2 text-red-600 text-center mb-4">
+                {passewordError}
+              </div>
+            )}
           </div>
+
+          {/* Barre de progression du mot de passe */}
+          <div className="w-2/3 mx-auto bg-gray-200 h-2 rounded-full mb-4">
+            <div
+              style={{ width: `${progressPercentage}%` }}
+              className={`${progressColor} h-full rounded-full transition-all duration-300`}
+            />
+          </div>
+
+          {/* Validation du mot de passe */}
+          <ul className="text-sm text-center mb-4">
+            {passwordValidation.map(({ label, isValid }) => (
+              <li
+                key={label}
+                className={
+                  isValid ? 'text-greenRegular font-bold' : 'text-gray-400'
+                }
+              >
+                {isValid ? (
+                  <TiTick className="inline lg:text-lg" />
+                ) : (
+                  <TiTimes className="inline lg:text-lg" />
+                )}{' '}
+                {label}
+              </li>
+            ))}
+          </ul>
 
           {/* Bouton de soumission */}
           <Button
