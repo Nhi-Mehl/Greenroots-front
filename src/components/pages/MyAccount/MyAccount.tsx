@@ -1,16 +1,20 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 import {
   selectCurrentUser,
   clearAuth,
 } from '../../../store/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useLogoutMutation } from '../../../store/features/auth/authApiSlice';
+import Button from '../../Form/Button/Button';
 
 function MyAccountPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
   const [logout] = useLogoutMutation();
+  const classLink =
+    'font-montserrat text-white font-semibold text-xs md:text-sm lg:text-base py-2 px-3 md:py-3 md:px-4 lg:py-3 lg:px-5 bg-greenRegular w-fit rounded-lg lg:rounded-xl';
 
   const handleLogout = async () => {
     try {
@@ -31,27 +35,16 @@ function MyAccountPage() {
       <h2 className="h2-title text-center">Mon Compte {user?.first_name}</h2>
       <h3 className="text-center text-2xl">Bonjour</h3>
       <div className="flex flex-col items-center gap-4 my-10 md:my-20 md:justify-center md:gap-10 md:flex-row">
-        <button
-          className="btn w-full"
-          type="button"
-          onClick={() => {
-            navigate('/userdetails');
-          }}
-        >
+        <Link to="/userdetails" className={classLink}>
           Mon profil
-        </button>
-        <button
-          className="btn w-full"
-          type="button"
-          onClick={() => {
-            navigate(`/orders`);
-          }}
-        >
+        </Link>
+
+        <Link to="/orders" className={classLink}>
           Mes commandes
-        </button>
-        <button className="btn w-full" type="button" onClick={handleLogout}>
+        </Link>
+        <Button type="button" variant="default" onClick={handleLogout}>
           Déconnexion
-        </button>
+        </Button>
       </div>
     </main>
   );
