@@ -36,16 +36,6 @@ function LoginPage() {
     }
   );
 
-  console.log(
-    '🚀 ~ file: Login.tsx ~ line 23 ~ LoginPage ~ accessToken',
-    accessToken
-  );
-
-  console.log(
-    '🚀 ~ file: Login.tsx ~ line 32 ~ LoginPage ~ userProfile',
-    userProfile
-  );
-
   /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
   useEffect(() => {
     if (isLoadingLogin) {
