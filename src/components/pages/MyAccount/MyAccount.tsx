@@ -39,7 +39,7 @@ function MyAccountPage() {
           Mon profil
         </Link>
 
-        <Link to="/orders" className={classLink}>
+        <Link to="/my-account/purchases" className={classLink}>
           Mes commandes
         </Link>
         <Button type="button" variant="default" onClick={handleLogout}>
