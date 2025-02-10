@@ -28,7 +28,6 @@ const authSlice = createSlice({
     // Action pour définir le token et l'état d'authentification lors de la connexion
     setToken: (state, action: PayloadAction<LoginResponse>) => {
       const { accessToken } = action.payload;
-
       state.accessToken = accessToken;
       state.isAuthenticated = true;
       localStorage.setItem('token', accessToken);
