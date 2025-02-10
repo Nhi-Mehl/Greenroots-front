@@ -29,9 +29,22 @@ function LoginPage() {
   ] = useLoginMutation();
 
   // Récupérer le profil utilisateur après connexion
-  const { data: userProfile } = useGetProfileQuery(undefined, {
-    skip: !accessToken, // Éviter de faire la requête si aucun token n'est disponible
-  });
+  const { data: userProfile, refetch: refetchProfile } = useGetProfileQuery(
+    undefined,
+    {
+      skip: !accessToken, // Éviter de faire la requête si aucun token n'est disponible
+    }
+  );
+
+  console.log(
+    '🚀 ~ file: Login.tsx ~ line 23 ~ LoginPage ~ accessToken',
+    accessToken
+  );
+
+  console.log(
+    '🚀 ~ file: Login.tsx ~ line 32 ~ LoginPage ~ userProfile',
+    userProfile
+  );
 
   /** ===================== 🟢 GESTION DU CHARGEMENT ===================== */
   useEffect(() => {
@@ -54,27 +67,38 @@ function LoginPage() {
   useEffect(() => {
     if (isSuccessLogin && accessToken) {
       dispatch(setToken(accessToken));
-      dispatch(setUser(userProfile as GetProfileResponse));
 
-      // Afficher une alerte de succès si la connexion est réussie
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      Toast.fire({
-        icon: 'success',
-        title: 'Connexion reussie',
-        text: `Bienvenue ${userProfile?.first_name}`,
-      });
+      refetchProfile();
 
-      setTimeout(() => {
-        navigate('/my-account');
-      }, 1000);
+      if (userProfile) {
+        dispatch(setUser(userProfile as GetProfileResponse));
+        // Afficher une alerte de succès si la connexion est réussie
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Connexion reussie',
+          text: `Bienvenue ${userProfile?.first_name}`,
+        });
+
+        setTimeout(() => {
+          navigate('/my-account');
+        }, 1000);
+      }
     }
-  }, [isSuccessLogin, accessToken, userProfile, dispatch, navigate]);
+  }, [
+    isSuccessLogin,
+    accessToken,
+    userProfile,
+    dispatch,
+    navigate,
+    refetchProfile,
+  ]);
 
   /** ===================== ❌ GESTION DES ERREURS ===================== */
   useEffect(() => {
@@ -110,7 +134,7 @@ function LoginPage() {
   // ❌ Moins réactif → Les valeurs ne sont lues qu'au moment de la soumission. Pas de mise à jour en temps réel.
   // ❌ Difficile à valider en direct → Impossible d'afficher un message d'erreur instantané si l'email est invalide avant l'envoi.
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // Eviter le rechargement de la page
     e.preventDefault();
     // Créer un objet FormData à partir du formulaire
