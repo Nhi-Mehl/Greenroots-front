@@ -1,45 +1,25 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useUser } from '../../../context/UserContext';
-import { IOrder } from '../../../@types';
-import api from '../../../store/api/index';
+import { Link } from 'react-router-dom';
+import { skipToken } from '@reduxjs/toolkit/query';
 
-interface IOrderWithDate extends IOrder {
-  createdAt: string;
-}
+import { useAppSelector } from '../../../store/hooks';
+import { selectCurrentUser } from '../../../store/features/auth/authSlice';
+import { useGetAllUserOrdersQuery } from '../../../store/features/order/orderApiSlice';
 
 function OrdersPage() {
-  const [orders, setOrders] = useState<IOrderWithDate[]>([]);
-  const navigate = useNavigate();
-  const { user } = useUser();
+  // Récupérer l'utilisateur connecté de la store Redux
+  const user = useAppSelector(selectCurrentUser);
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login', { replace: true });
-      return;
-    }
+  // Récupérer les commandes de l'utilisateur via RTK Query
+  const { data: orders } = useGetAllUserOrdersQuery(
+    user ? { userId: user?.id } : skipToken
+  );
 
-    const fetchOrders = async () => {
-      try {
-        const response = await api.get(`/orders/${user.id}`); // Requête à l'API pour récupérer les commandes de l'utilisateur
-
-        if (response.status === 200) {
-          setOrders(response.data); // Mise à jour de l'état avec les données reçues
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des commandes', error); // Gère les erreurs
-      }
-    };
-
-    if (user?.id) {
-      fetchOrders();
-    }
-  }, [user, navigate]); // Exécute le useEffect quand l'utilisateur change
+  console.log('🚀 ~ file: Orders.tsx ~ line 21 ~ OrdersPage ~ orders', orders);
 
   return (
     <main className="max-w-7xl mx-auto p-10">
       <h1 className="text-center h2-title">Mes commandes</h1>
-      {orders.length === 0 ? (
+      {orders && orders.length === 0 ? (
         <p>Aucune commande trouvée</p>
       ) : (
         <table className="table-auto w-full mt-10">
@@ -53,31 +33,34 @@ function OrdersPage() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="border-b border-gray-300 bg-beige">
-                <td className="py-4 px-6">Commande</td>
-                <td className="py-4 px-6">{order.id}</td>
-                <td className="py-4 px-6">
-                  {new Date(order.createdAt).toLocaleDateString('fr-FR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </td>
-                <td className="py-4 px-6">{order.amount} €</td>
-                <td className="py-4 px-6">
-                  <button
-                    className="btn text-white py-2 px-4 rounded"
-                    type="button"
-                    onClick={() => {
-                      navigate(`/order-details/${order.id}`);
-                    }}
-                  >
-                    Consulter
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {orders &&
+              orders.map((order) => (
+                <tr
+                  key={order.id}
+                  className="border-b border-gray-300 bg-beige"
+                >
+                  <td className="py-4 px-6">Commande</td>
+                  <td className="py-4 px-6">{order.id}</td>
+                  <td className="py-4 px-6">
+                    {order.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString('fr-FR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      : 'Date non disponible'}
+                  </td>
+                  <td className="py-4 px-6">{order.amount} €</td>
+                  <td className="py-4 px-6">
+                    <Link
+                      className="btn text-white py-2 px-4 rounded"
+                      to={`/order-details/${order.id}`}
+                    >
+                      Consulter
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}
