@@ -97,7 +97,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/order-details/:orderId',
+        path: '/my-account/purchases/order/:orderId',
         element: (
           <ProtectedRoute>
             <OrderDetailsPage />
