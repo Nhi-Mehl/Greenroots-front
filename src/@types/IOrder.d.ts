@@ -1,3 +1,5 @@
+import { IProjectTreeSpecies } from '.';
+
 export interface IOrder {
   id: number;
   amount: number;
@@ -23,3 +25,7 @@ export interface CreateOrderResponse {
   newOrder: IOrder;
   newOrderLines: IOrderLine[];
 }
+
+export type GetOrderLinesResponse = IOrderLine & {
+  project_tree: IProjectTreeSpecies;
+};

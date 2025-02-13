@@ -7,6 +7,8 @@ export interface IProject {
   city: string;
   country: string;
   continent: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IProjectTree {
@@ -15,11 +17,13 @@ export interface IProjectTree {
   current_quantity: number;
   project_id: number;
   species_id: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export interface IProjectTreeSpecies extends IProjectTree {
+export type IProjectTreeSpecies = IProjectTree & {
   species: ISpecies;
-}
+};
 
 export interface ISpecies {
   id: number;
@@ -29,6 +33,8 @@ export interface ISpecies {
   price: number;
   picture: string;
   co2_compensation: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 export interface IOrder {
   id: number;
