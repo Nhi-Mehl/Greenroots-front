@@ -1,171 +1,136 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+
+import { useAppSelector } from '../../../store/hooks';
+import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 import {
-  IOrder,
-  IOrderLine,
-  IProject,
-  IProjectTree,
-  ISpecies,
-} from '../../../@types';
-import { useUser } from '../../../context/UserContext';
-// import { useProject } from '../../context/ProjectContext';
-import api from '../../../store/api';
-
-interface IOrderWithDate extends IOrder {
-  createdAt: string;
-}
-interface IProjectTreesWithSpecies extends IProjectTree {
-  species: ISpecies;
-}
-
-interface MixOrderLinesProps extends IOrderLine {
-  project_tree: IProjectTreesWithSpecies;
-}
+  useGetAllUserOrdersQuery,
+  useGetOrderLinesQuery,
+} from '../../../store/features/order/orderApiSlice';
+import { useGetProjectsByIdsQuery } from '../../../store/features/project/projectApiSlice';
 
 function OrderDetailsPage() {
   const { orderId } = useParams();
   console.log('orderId', orderId);
 
-  const [orderLines, setOrderLines] = useState<MixOrderLinesProps[]>([]);
-  const [orders, setOrders] = useState<IOrderWithDate[]>([]);
-  const [projects, setProjects] = useState<IProject[]>([]);
-  console.log('projects', projects);
-
-  const { user } = useUser();
+  // Récupérer l'utilisateur connecté de la store Redux
+  const user = useAppSelector(selectCurrentUser);
   console.log('user', user);
 
-  useEffect(() => {
-    if (!user) {
-      return;
+  //  Récupéré la commande correspondant à l'id de la route de l'utilisateur connecté
+  const { data: orderData } = useGetAllUserOrdersQuery(
+    user ? user.id : skipToken,
+    {
+      selectFromResult: (result) => ({
+        data: result?.data?.find((order) => order.id === Number(orderId)),
+      }),
     }
-
-    const getOrderLines = async () => {
-      try {
-        const responseOrderLines = await api.get(`/order_line/${orderId}`);
-        console.log('responseOrderLines', responseOrderLines.data);
-
-        if (responseOrderLines.status === 200) {
-          setOrderLines(responseOrderLines.data);
-        }
-
-        const responseOrders = await api.get(`/orders/${user.id}`);
-        console.log('responseOrders', responseOrders.data);
-
-        if (responseOrders.status === 200) {
-          setOrders(responseOrders.data);
-        }
-      } catch (error: import('axios').AxiosError | unknown) {
-        if (axios.isAxiosError(error)) {
-          alert(error?.response?.data.message);
-        }
-      }
-    };
-
-    getOrderLines();
-  }, [user, orderId]);
-
-  useEffect(() => {
-    const GetProjects = async () => {
-      try {
-        const responseProjects = await Promise.all(
-          orderLines.map((line) =>
-            api.get(`/projects/${line.project_tree.project_id}`)
-          )
-        );
-
-        console.log('responseProjects', responseProjects);
-
-        const projectsData = responseProjects
-          .filter((project) => project.status === 200)
-          .map((project) => project.data);
-        console.log('projectsData', projectsData);
-
-        setProjects(projectsData);
-      } catch (error: import('axios').AxiosError | unknown) {
-        if (axios.isAxiosError(error)) {
-          console.error(
-            'Erreur lors de la récupération des données du projet:',
-            error?.response?.data.message
-          );
-        }
-      }
-    };
-
-    console.log('projects après le premier useEffect', projects);
-
-    if (orderLines.length > 0) {
-      GetProjects();
-    }
-  }, [orderLines]);
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  const matchingOrders = orders?.filter((order: IOrderWithDate) =>
-    orderLines.some((line) => line.order_id === order.id)
   );
 
-  console.log('matchingOrders', matchingOrders);
+  console.log('orderData', orderData);
+
+  const { data: orderLines } = useGetOrderLinesQuery(Number(orderId));
+
+  console.log('orderLines', orderLines);
+  // Récupération des projets associés à chaque ligne de commande
+  const projectIds = useMemo(
+    () =>
+      orderLines
+        ? [...new Set(orderLines.map((line) => line.project_tree.project_id))]
+        : [],
+    [orderLines]
+  );
+
+  console.log('projectIds', projectIds);
+
+  const { data: projects } = useGetProjectsByIdsQuery(projectIds);
+
+  console.log('projects', projects);
+
+  // const { data: projects } = useGetProjectsByIdsQuery(
+  //   orderLines
+  //     ? orderLines.map((line) => line.project_tree.project_id)[0]
+  //     : skipToken
+  // );
+
+  // const { data: projects } = useGetProjectByIdQuery(
+  //   orderLines && orderLines.length > 0
+  //     ? orderLines.map((line) => line.project_tree.project_id)
+  //     : skipToken
+  // );
+
+  // const projectIds = useMemo(
+  //   () =>
+  //     orderLines
+  //       ? [...new Set(orderLines.map((line) => line.project_tree.project_id))]
+  //       : [],
+  //   [orderLines]
+  // );
+
+  // // Récupérer les projets en cache
+  // const projects = projectIds.map(
+  //   (projectId) => useGetProjectByIdQuery(projectId, { skip: !projectId }).data
+  // );
+
+  // console.log('projects', projects);
 
   return (
     <div className="m-10">
-      {matchingOrders?.map((order) => (
-        <div key={order.id}>
-          <h1 className="text-center text-xl font-bold mb-4">
-            Commande numéro {order.id}
-          </h1>
-          <p className="text-center mb-8">
-            Date de la commande :{' '}
-            {new Date(order.createdAt).toLocaleDateString('fr-FR', {
+      <div>
+        <h1 className="text-center text-xl font-bold mb-4">
+          Commande numéro {orderData?.id}
+        </h1>
+        <p className="text-center mb-8">
+          Date de la commande :{' '}
+          {orderData &&
+            orderData.createdAt &&
+            new Date(orderData.createdAt).toLocaleDateString('fr-FR', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
             })}
-          </p>
-        </div>
-      ))}
-
-      <div className="space-y-8">
-        {orderLines.map((orderLine) => (
-          <div
-            key={orderLine.id}
-            className="bg-gray-200 p-4 rounded-md shadow-md"
-          >
-            <p className="mb-2">
-              <strong>Nom du projet :</strong>{' '}
-              {
-                projects.filter((project) => {
-                  return project.id === orderLine.project_tree.project_id;
-                })[0]?.name
-              }
-            </p>
-            <p className="mb-2">
-              <strong>Nom de l'arbre :</strong>{' '}
-              {orderLine.project_tree.species.name}
-            </p>
-            <p className="mb-2">
-              <strong>Montant Unitaire :</strong>{' '}
-              {orderLine.project_tree.species.price} €
-            </p>
-            <div className="flex justify-between">
-              <p>
-                <strong>Quantité :</strong> {orderLine.quantity}
-              </p>
-              <p>
-                <strong>Montant Total :</strong> {orderLine.amount} €
-              </p>
-            </div>
-          </div>
-        ))}
+        </p>
       </div>
 
-      {matchingOrders.map((order: IOrderWithDate) => (
-        <p key={order.id} className="text-right font-bold mt-8">
-          Montant Total de la commande : {order.amount}€
-        </p>
-      ))}
+      <div className="space-y-8">
+        {orderLines &&
+          orderLines.map((orderLine) => (
+            <div
+              key={orderLine.id}
+              className="shadow-md p-6 rounded-lg border border-gray-200"
+            >
+              <p className="mb-2">
+                <strong>Nom du projet :</strong>{' '}
+                {/* {
+                  projects.filter((project) => {
+                    return project.id === orderLine.project_tree.project_id;
+                  })[0]?.name
+                } */}
+              </p>
+              <p className="mb-2">
+                <strong>Nom de l&apos;arbre :</strong>{' '}
+                {orderLine.project_tree.species.name}
+              </p>
+              <p className="mb-2">
+                <strong>Montant Unitaire :</strong>{' '}
+                {orderLine.project_tree.species.price} €
+              </p>
+              <div className="flex justify-between">
+                <p>
+                  <strong>Quantité :</strong> {orderLine.quantity}
+                </p>
+                <p>
+                  <strong>Montant Total :</strong> {orderLine.amount} €
+                </p>
+              </div>
+            </div>
+          ))}
+      </div>
+
+      <p className="text-right font-bold mt-8">
+        Montant Total de la commande : {orderData?.amount}€
+      </p>
     </div>
   );
 }
