@@ -16,7 +16,7 @@ const projectApiSlice = apiSlice
       // }),
       getProjectsByIds: builder.query<IProject[], number[]>({
         query: (projectIds) => ({
-          url: `/orders`,
+          url: `/projects`,
           method: 'get',
           params: { ids: projectIds.join(',') }, // Ex: ?ids=1,2,3
         }),
