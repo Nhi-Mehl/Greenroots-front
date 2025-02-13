@@ -15,9 +15,10 @@ const userApiSlice = apiSlice
         query: () => ({
           url: '/users/profile',
           method: 'get',
-          providesTags: ['User'],
         }),
+        providesTags: ['User'],
       }),
+
       // Endpoint pour la mise à jour du profil
       updateProfile: builder.mutation<
         UpdateProfileResponse,
@@ -27,16 +28,17 @@ const userApiSlice = apiSlice
           url: `/users/${updateUserData.id}`,
           method: 'put',
           data: { ...updateUserData },
-          invalidatesTags: ['User'],
         }),
+        invalidatesTags: ['User'],
       }),
+
       // Endpoint pour la suppression du compte utilisateur
       deleteAccount: builder.mutation<DeleteUserResponse, number>({
         query: (userId) => ({
           url: `/users/${userId}`,
           method: 'delete',
-          invalidatesTags: ['User'],
         }),
+        invalidatesTags: ['User'],
       }),
     }),
   });
