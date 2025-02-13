@@ -48,33 +48,6 @@ function OrderDetailsPage() {
 
   console.log('projects', projects);
 
-  // const { data: projects } = useGetProjectsByIdsQuery(
-  //   orderLines
-  //     ? orderLines.map((line) => line.project_tree.project_id)[0]
-  //     : skipToken
-  // );
-
-  // const { data: projects } = useGetProjectByIdQuery(
-  //   orderLines && orderLines.length > 0
-  //     ? orderLines.map((line) => line.project_tree.project_id)
-  //     : skipToken
-  // );
-
-  // const projectIds = useMemo(
-  //   () =>
-  //     orderLines
-  //       ? [...new Set(orderLines.map((line) => line.project_tree.project_id))]
-  //       : [],
-  //   [orderLines]
-  // );
-
-  // // Récupérer les projets en cache
-  // const projects = projectIds.map(
-  //   (projectId) => useGetProjectByIdQuery(projectId, { skip: !projectId }).data
-  // );
-
-  // console.log('projects', projects);
-
   return (
     <div className="m-10">
       <div>
@@ -102,11 +75,11 @@ function OrderDetailsPage() {
             >
               <p className="mb-2">
                 <strong>Nom du projet :</strong>{' '}
-                {/* {
-                  projects.filter((project) => {
+                {
+                  projects?.filter((project) => {
                     return project.id === orderLine.project_tree.project_id;
                   })[0]?.name
-                } */}
+                }
               </p>
               <p className="mb-2">
                 <strong>Nom de l&apos;arbre :</strong>{' '}
