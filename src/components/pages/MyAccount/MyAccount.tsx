@@ -32,7 +32,9 @@ function MyAccountPage() {
 
   return (
     <main className="flex flex-col justify-center min-h-screen">
-      <h2 className="h2-title text-center">Mon Compte {user?.first_name}</h2>
+      <h2 className="h2-title text-center mt-10">
+        Mon Compte {user?.first_name}
+      </h2>
       <h3 className="text-center text-2xl">Bonjour</h3>
       <div className="flex flex-col items-center gap-4 my-10 md:my-20 md:justify-center md:gap-10 md:flex-row">
         <Link to="/userdetails" className={classLink}>
