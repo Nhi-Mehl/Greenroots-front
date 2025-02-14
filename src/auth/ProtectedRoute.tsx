@@ -1,21 +1,23 @@
 // This component will be used to protect routes that require authentication.
 // If the user is not authenticated, they will be redirected to the login page.
 import { Navigate, useLocation } from 'react-router-dom';
-
-// This hook is a custom hook that we created in the previous step.
-import { useUser } from '../context/UserContext';
+import { useGetProfileQuery } from '../store/features/user/userApiSlice';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  // The location might be useful to redirect the user back to the page they were trying to access before they were redirected to the login page.
   const location = useLocation();
-  const { user } = useUser();
+  const { data: user, isLoading, isError } = useGetProfileQuery();
 
-  // If the user is not authenticated, they will be redirected to the login page.
-  if (!user) {
-    return <Navigate to="/login" state={{ from: location }} />;
+  // wait for data before deciding
+  if (isLoading) {
+    return <p>Chargement...</p>;
   }
 
-  // Else, the children will be rendered normally.
+  // Redirect to /login if not authenticated or API error
+  if (isError || !user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Display the content if the user is authenticated
   return children;
 };
 
