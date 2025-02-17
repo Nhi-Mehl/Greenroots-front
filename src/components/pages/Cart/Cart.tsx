@@ -1,21 +1,40 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../../context/CartContext/CartContext';
-import OrderLine from './OrderLine/OrderLine';
-import { useUser } from '../../../context/UserContext';
+import Swal from 'sweetalert2';
 
+import Button from '../../Form/Button/Button';
+import OrderLine from './OrderLine/OrderLine';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectCurrentUser } from '../../../store/features/auth/authSlice';
+import {
+  selectCart,
+  removeFromCart,
+  updateQuantityCartItem,
+} from '../../../store/features/cart/cartSlice';
+
+/**
+ * Page du panier affichant les articles sélectionnés par l'utilisateur.
+ * Permet de modifier la quantité des articles, de les supprimer et de passer à la commande.
+ */
 function CartPage() {
-  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
-  const { user } = useUser();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  // Récupérer l'utilisateur connecté de la store Redux
+  const user = useAppSelector(selectCurrentUser);
+  // Récupérer les articles du panier de la store Redux
+  const cartItems = useAppSelector(selectCart);
+  console.log('cartItems:', cartItems);
+
+  // Calcul du montant total du panier
   const totalAmount = cartItems.reduce(
-    (acc, item) => acc + parseFloat(item.tree.species.price) * item.quantity,
+    (acc, item) => acc + item.tree.species.price * item.quantity,
     0
   );
 
-  console.log('cartItems', cartItems);
-  console.log('totalAmount', totalAmount);
-
+  /**
+   * Gestion du clic sur le bouton de paiement.
+   * Redirige vers la page de connexion si l'utilisateur n'est pas connecté,
+   * sinon passe à la page de paiement avec les détails de la commande.
+   */
   const handlePay = async () => {
     if (!user) {
       navigate('/login');
@@ -32,51 +51,87 @@ function CartPage() {
       navigate('/checkout', { state: { orderData } });
     }
   };
+
+  const onRemoveTree = (id: number) => {
+    // Afficher une boîte de dialogue de confirmation avant de supprimer l'article
+    Swal.fire({
+      title: 'Supprimer un article',
+      text: 'Voulez-vous vraiment supprimer cet article de votre panier ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Supprimer',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si l'utilisateur confirme la suppression, appel de la fonction removeFromCart
+        dispatch(removeFromCart(id));
+      }
+    });
+  };
+
   return (
-    <div>
-      <div className="w-full p-10 text-center text-4xl font-bold">
-        <h1>Votre Panier</h1>
-      </div>
-      <div>
+    <main className="min-h-screen">
+      <h1 className="w-full my-10 sm:my-20 text-center text-3xl sm:text-4xl font-bold">
+        Votre Panier
+      </h1>
+
+      {/* Liste des articles */}
+      <section className="w-3/4 mx-auto">
         {cartItems.length === 0 ? (
-          <p className="w-full p-10 text-center text-3xl">
+          <p className="w-full p-10 text-center text-3xl" role="alert">
             Votre panier est vide
           </p>
         ) : (
-          <div>
+          <ul aria-label="Liste des articles dans le panier">
             {cartItems.map((item) => (
               <OrderLine
                 key={item.tree.id}
                 item={item}
                 onIncrement={() =>
-                  updateQuantity(item.tree.id, item.quantity + 1)
+                  dispatch(
+                    updateQuantityCartItem({
+                      id: item.tree.id,
+                      quantity: item.quantity + 1,
+                    })
+                  )
                 }
                 onDecrement={() =>
                   item.quantity > 1
-                    ? updateQuantity(item.tree.id, item.quantity - 1)
-                    : removeFromCart(item.tree.id)
+                    ? dispatch(
+                        updateQuantityCartItem({
+                          id: item.tree.id,
+                          quantity: item.quantity - 1,
+                        })
+                      )
+                    : onRemoveTree(item.tree.id)
                 }
-                onRemove={() => removeFromCart(item.tree.id)}
+                // onRemove={() => onRemoveTree(item.tree.id)}
               />
             ))}
-          </div>
+          </ul>
         )}
-      </div>
+      </section>
+
       {cartItems.length > 0 && (
-        <div className="w-full p-6 text-end text-green-600 text-2xl font-bold">
-          <p>Total: {totalAmount.toFixed(2)} €</p>
-        </div>
+        <section className="w-3/4 my-12 sm:my-20 text-center mx-auto">
+          <p className="text-xl sm:text-2xl text-greenRegular font-bold mb-5 sm:mb-10">
+            Total de la commande:{' '}
+            <span className="block sm:inline">{totalAmount.toFixed(2)} €</span>
+          </p>
+          {/* Bouton de paiement */}
+          <Button
+            type="submit"
+            variant="form"
+            className="w-full sm:max-w-[400px]"
+            onClick={handlePay}
+          >
+            Payer
+          </Button>
+        </section>
       )}
-      <div className="m-auto text-center p-10">
-        <button
-          type="submit"
-          className="w-1/4 p-2 rounded-3xl text-white text-2xl bg-green-600"
-          onClick={handlePay}
-        >
-          Payer
-        </button>
-      </div>
-    </div>
+    </main>
   );
 }
 export default CartPage;

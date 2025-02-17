@@ -1,84 +1,89 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FaPlus, FaMinus } from 'react-icons/fa6';
+// import { FaTrash } from 'react-icons/fa';
+
+import { IProjectTreeSpecies } from '../../../../@types';
 
 interface OrderLineProps {
   item: {
+    tree: IProjectTreeSpecies;
     projectName: string;
-    tree: {
-      species: {
-        name: string;
-        price: string; // ou number, selon la structure de vos données
-      };
-    };
     quantity: number;
   };
   onIncrement: () => void;
   onDecrement: () => void;
-  onRemove: () => void;
+  // onRemove: () => void;
 }
 
 function OrderLine({
   item,
   onIncrement,
   onDecrement,
-  onRemove,
+  // onRemove,
 }: OrderLineProps) {
   return (
-    <div>
-      <div className="flex flex-col bg-white shadow-md p-6 mb-4 rounded-lg">
-        {/* Nom du projet */}
-        <div className="text-3xl font-semibold text-gray-800 mb-2">
-          {item.projectName}
-        </div>
+    <article
+      className="flex flex-col gap-4 items-center sm:items-stretch bg-white shadow-md p-6 mb-4 rounded-lg"
+      aria-label={`Article ${item.tree.species.name}`}
+    >
+      {/* Nom du projet */}
+      <h2 className="h2-title text-center sm:text-left font-semibold text-gray-800">
+        {item.projectName}
+      </h2>
 
-        {/* Nom de l'arbre */}
-        <div className="text-2xl text-gray-600 mb-4">
-          {item.tree.species.name}
-        </div>
+      {/* Nom de l'arbre */}
+      <p className="text-xl sm:text-2xl text-gray-600">
+        {item.tree.species.name}
+      </p>
 
-        {/* Ligne prix, quantité, total */}
-        <div className="flex justify-between items-center">
-          {/* Prix */}
-          <div className="text-gray-700 text-2xl font-medium">
-            {item.tree.species.price} €
-          </div>
-          {/* Boutons d'incrémentation et décrémentation */}
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={onDecrement}
-              className="px-3 py-1 bg-gray-200 text-xl"
-            >
-              -
-            </button>
-            <div className="text-gray-700 text-2xl font-medium">
-              x {item.quantity}
-            </div>
-            <button
-              type="button"
-              onClick={onIncrement}
-              className="px-3 py-1 bg-gray-200 text-xl"
-            >
-              +
-            </button>
-          </div>
+      {/* Ligne prix, quantité, total */}
+      <div
+        className="text-xl sm:text-2xl flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center"
+        role="group"
+        aria-labelledby="order-line-details"
+      >
+        {/* Prix */}
+        <p className="text-gray-600 font-medium">{item.tree.species.price} €</p>
 
-          {/* Total */}
-          <div className="text-green-600 text-2xl font-bold">
-            {(parseFloat(item.tree.species.price) * item.quantity).toFixed(2)} €
-          </div>
-        </div>
-        <div className="mt-4 text-right">
+        {/* Boutons d'incrémentation et décrémentation */}
+        <div className="flex items-center gap-4 border border-gray-300 text-gray-600 px-4 py-2">
           <button
             type="button"
-            onClick={onRemove}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg"
+            onClick={onDecrement}
+            aria-label="Diminuer la quantité"
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <FaMinus size={20} color="text-gray-600" />
+          </button>
+          <span className="font-medium" aria-live="polite">
+            {item.quantity}
+          </span>
+          <button
+            type="button"
+            onClick={onIncrement}
+            aria-label="Augmenter la quantité"
+          >
+            <FaPlus size={20} color="text-gray-600" />
           </button>
         </div>
+
+        {/* Total */}
+        <p
+          className="text-greenRegular font-bold"
+          aria-label={`Total : ${(item.tree.species.price * item.quantity).toFixed(2)} €`}
+        >
+          Total: {(item.tree.species.price * item.quantity).toFixed(2)} €
+        </p>
       </div>
-    </div>
+
+      {/* Bouton de suppression */}
+      {/* <button
+        type="button"
+        className="text-red-600 sm:self-end"
+        onClick={onRemove}
+        aria-label="Supprimer l'article"
+      >
+        <FaTrash size={20} />
+      </button> */}
+    </article>
   );
 }
 

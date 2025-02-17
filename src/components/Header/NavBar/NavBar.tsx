@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   faCartShopping,
@@ -6,9 +6,10 @@ import {
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CartContext } from '../../../context/CartContext/CartContext';
+
 import { useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
+import { selectCart } from '../../../store/features/cart/cartSlice';
 // import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 
 interface ShowBannerProps {
@@ -16,21 +17,20 @@ interface ShowBannerProps {
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
-  // const user = useAppSelector(selectCurrentUser);
-  // console.log('User:', user);
   const isAuthenticated = useAppSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cartItems } = useContext(CartContext);
+
+  // Récupérer les articles du panier de la store Redux
+  const cartItems = useAppSelector(selectCart);
 
   const cartItemCount = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
   const handleMenuClick = () => {
-    console.log('Menu button clicked');
     setIsMenuOpen(!isMenuOpen);
   };
 
