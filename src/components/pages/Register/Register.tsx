@@ -272,6 +272,7 @@ function RegisterPage() {
           <Button
             type="submit"
             variant="form"
+            className="w-full"
             isLoading={isLoadingRegister}
             disabled={isLoadingRegister}
           >

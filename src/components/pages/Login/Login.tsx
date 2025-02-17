@@ -170,7 +170,7 @@ function LoginPage() {
             placeholder="Votre mot de passe"
             required
           />
-          <Button type="submit" variant="form">
+          <Button type="submit" variant="form" className="w-full mt-4">
             Se connecter
           </Button>
         </Form>

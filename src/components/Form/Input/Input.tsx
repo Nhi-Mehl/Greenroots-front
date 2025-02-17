@@ -28,7 +28,10 @@ const Input = ({
   const inputType = isPasswordField && showPassword ? 'text' : type;
 
   return (
-    <label htmlFor={htmlFor}>
+    <label
+      htmlFor={htmlFor}
+      className={`${isPasswordField ? 'flex flex-col' : ''}`}
+    >
       {label}
       <input
         {...props}
@@ -37,14 +40,14 @@ const Input = ({
         onChange={onChange}
         // Ajout d'un padding droit si c'est un champ password pour laisser de l'espace à l'icône
         className={`w-full border border-gray-300 rounded-md mb-2 px-4 py-2 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-greenRegular md:mb-4 ${
-          isPasswordField ? 'pr-8' : ''
+          isPasswordField ? ' pr-8' : ''
         } `}
       />
       {isPasswordField && (
         <button
           type="button"
           onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute translate-y-3 -translate-x-7 focus:outline-none"
+          className="self-end -translate-y-10 mr-2 md:-translate-y-12 focus:outline-none"
         >
           {showPassword ? (
             <AiFillEyeInvisible className="h-5 w-5 text-gray-500" />
