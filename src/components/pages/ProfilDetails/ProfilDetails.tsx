@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -112,8 +113,12 @@ function ProfilDetailsPage() {
   };
 
   return (
-    <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
-      <h1 className="text-center h2-title mb-8">Details de mon profil</h1>
+    <main className="min-h-screen p-4">
+      {/* 🔹 Bouton de retour à la page précédente */}
+      <Button type="button" variant="default" onClick={() => navigate(-1)}>
+        <FaLongArrowAltLeft />
+      </Button>
+      <h1 className="text-center h2-title my-10">Details de mon profil</h1>
       <section className="text-lg flex flex-col justify-between gap-4 p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg md:flex-row lg:max-w-[900px] lg:mx-auto">
         <ul className="md:w-1/2 space-y-4" aria-labelledby="profile-details">
           <li>
@@ -153,7 +158,7 @@ function ProfilDetailsPage() {
           </li>
         </ul>
       </section>
-      <div className="lg:max-w-[900px] lg:mx-auto flex flex-row mt-8 gap-12">
+      <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center md:gap-4">
         <Button variant="form" type="button" onClick={handleEditProfile}>
           Modifier
         </Button>

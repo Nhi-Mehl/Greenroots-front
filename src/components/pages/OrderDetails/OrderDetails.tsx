@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { useAppSelector } from '../../../store/hooks';
 import { selectCurrentUser } from '../../../store/features/auth/authSlice';
@@ -13,6 +14,7 @@ import {
   useGetOrderLinesQuery,
 } from '../../../store/features/order/orderApiSlice';
 import { useGetProjectsByIdsQuery } from '../../../store/features/project/projectApiSlice';
+import Button from '../../Form/Button/Button';
 
 /**
  * Composant OrderDetailsPage :
@@ -21,6 +23,7 @@ import { useGetProjectsByIdsQuery } from '../../../store/features/project/projec
  * et les projets liés à ces lignes grâce à RTK Query.
  */
 function OrderDetailsPage() {
+  const navigate = useNavigate();
   // Récupération de l'ID de la commande depuis l'URL (défini dans react-router)
   const { orderId } = useParams();
   // Convertit l'ID en nombre pour éviter les erreurs
@@ -104,21 +107,25 @@ function OrderDetailsPage() {
   }
 
   return (
-    <main className="mt-20 min-h-screen">
+    <main className="p-4 min-h-screen">
+      {/* 🔹 Bouton de retour à la page précédente */}
+      <Button type="button" variant="default" onClick={() => navigate(-1)}>
+        <FaLongArrowAltLeft />
+      </Button>
       {/* Section Informations générales de la commande */}
-      <section aria-labelledby="order-details" className="text-center">
-        <h1 className="text-xl font-bold mb-4">
+      <section aria-labelledby="order-details" className="mt-10 text-center">
+        <h1 className="h1-title font-bold mb-4">
           {isLoading ? (
             <Skeleton width={200} height={30} />
           ) : (
             `Commande numéro ${orderData?.id}`
           )}
         </h1>
-        <p className=" text-center mb-8">
+        <h2 className="text-center mb-8">
           {isLoading ? (
             <Skeleton width={200} height={20} />
           ) : (
-            'Date de la commande'
+            'Date de la commande '
           )}
           <span className="block sm:inline">
             {isLoading ? (
@@ -132,7 +139,7 @@ function OrderDetailsPage() {
               })
             )}
           </span>
-        </p>
+        </h2>
       </section>
 
       {/* Liste des lignes de commande */}
@@ -165,7 +172,7 @@ function OrderDetailsPage() {
             >
               <h3
                 id={`project-${orderLine.id}`}
-                className="font-semibold text-lg"
+                className="font-semibold h3-title"
               >
                 {project?.name || 'Projet inconnu'}
               </h3>
@@ -195,7 +202,7 @@ function OrderDetailsPage() {
       {/* Section Montant Total */}
       <section
         aria-labelledby="total-amount-all-orders"
-        className="text-center lg:text-right font-bold mt-8 lg:mr-20"
+        className="text-center lg:text-right font-bold my-8 lg:mr-20"
       >
         {isLoading ? (
           <Skeleton width={150} height={25} />

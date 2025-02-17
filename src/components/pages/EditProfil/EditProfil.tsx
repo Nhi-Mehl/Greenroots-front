@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../../../store/features/auth/authSlice';
@@ -117,8 +118,14 @@ function EditProfilePage() {
   };
 
   return (
-    <main className="px-4 py-10 min-h-screen sm:px-8 md:pt-24 sm:py-12">
-      <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
+    <main className="min-h-screen p-4">
+      {/* 🔹 Bouton de retour à la page précédente */}
+      <Button type="button" variant="default" onClick={() => navigate(-1)}>
+        <FaLongArrowAltLeft />
+      </Button>
+
+      <h1 className="h1-title text-greenRegular text-center my-10">
+        {' '}
         Modifier mon profil
       </h1>
       {/* Formulaire */}
@@ -217,7 +224,12 @@ function EditProfilePage() {
           />
         </div>
 
-        <Button type="submit" variant="form" disabled={isLoadingUpdate}>
+        <Button
+          type="submit"
+          variant="form"
+          className="block m-auto"
+          disabled={isLoadingUpdate}
+        >
           {isLoadingUpdate ? 'Mise à jour...' : 'Valider'}
         </Button>
       </Form>
