@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IProject } from '../../../../@types';
+import { IProject } from '../../../../@types/ProjectTree';
 // import api from '../../../api';
 
 const createSlug = (name: string) => {

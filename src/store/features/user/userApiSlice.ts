@@ -3,7 +3,7 @@ import {
   GetProfileResponse,
   UpdateProfileRequest,
   UpdateProfileResponse,
-} from '../../../@types/IUser';
+} from '../../../@types/User';
 import { DeleteUserResponse } from '../../../@types/Credentials';
 
 const userApiSlice = apiSlice

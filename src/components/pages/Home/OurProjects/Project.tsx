@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { IProject } from '../../../../@types';
+import { IProject } from '../../../../@types/ProjectTree';
 
 const createSlug = (name: string) => {
   return name

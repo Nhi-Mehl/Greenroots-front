@@ -1,6 +1,6 @@
 // src/context/CartReducer.ts
 import { CartAction } from './CartAction';
-import { IProjectTreeSpecies } from '../../@types';
+import { IProjectTreeSpecies } from '../../@types/ProjectTree';
 
 // Définition de l'état initial
 export const initialState = {

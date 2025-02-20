@@ -10,7 +10,7 @@ import { useLoginMutation } from '../../../store/features/auth/authApiSlice';
 import { useGetProfileQuery } from '../../../store/features/user/userApiSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { setToken, setUser } from '../../../store/features/auth/authSlice';
-import { GetProfileResponse } from '../../../@types/IUser';
+import { GetProfileResponse } from '../../../@types/User';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -150,7 +150,7 @@ function LoginPage() {
           communauté et continuez à agir pour la reforestation.
         </p>
       </section>
-      <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
+      <section className="flex flex-col items-cente p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
         <Form action="/login" onSubmit={handleSubmit}>
           <Input
             htmlFor="email"
@@ -170,7 +170,7 @@ function LoginPage() {
             placeholder="Votre mot de passe"
             required
           />
-          <Button type="submit" variant="form" className="w-full mt-4">
+          <Button type="submit" variant="form">
             Se connecter
           </Button>
         </Form>

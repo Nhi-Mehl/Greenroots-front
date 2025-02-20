@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { CartReducer, initialState } from './CartReducer';
 import { addToCart, removeFromCart, updateQuantity } from './CartAction';
-import { IProjectTreeSpecies } from '../../@types';
+import { IProjectTreeSpecies } from '../../@types/ProjectTree';
 
 // Interface pour définir le type du contexte par défaut
 interface DefaultCartContextType {

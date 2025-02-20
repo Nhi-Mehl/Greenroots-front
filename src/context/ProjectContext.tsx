@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import { IProject } from '../@types';
+import { IProject } from '../@types/ProjectTree';
 
 interface ProjectContextType {
   project: IProject | null;

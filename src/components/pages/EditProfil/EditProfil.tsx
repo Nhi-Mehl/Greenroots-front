@@ -5,7 +5,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../../../store/features/auth/authSlice';
-import { UpdateProfileRequest } from '../../../@types/IUser';
+import { UpdateProfileRequest } from '../../../@types/User';
 import {
   useUpdateProfileMutation,
   useGetProfileQuery,

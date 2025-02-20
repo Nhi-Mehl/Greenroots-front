@@ -3,7 +3,7 @@ import {
   IOrder,
   CreateOrderResponse,
   GetOrderLinesResponse,
-} from '../../../@types/IOrder';
+} from '../../../@types/Order';
 
 const orderApiSlice = apiSlice
   .enhanceEndpoints({ addTagTypes: ['Order', 'OrderLine'] })

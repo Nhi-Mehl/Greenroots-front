@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Project from './Project';
-import { IProject } from '../../../../@types';
+import { IProject } from '../../../../@types/ProjectTree';
 import api from '../../../../store/api/index';
 
 function Projects() {

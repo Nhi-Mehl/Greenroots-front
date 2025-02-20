@@ -11,7 +11,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useLogoutMutation } from '../../../store/features/auth/authApiSlice';
 import Button from '../../Form/Button/Button';
-import ProfilDetailsPage from '../ProfilDetails/ProfilDetails';
 
 function MyAccountPage() {
   const navigate = useNavigate();
@@ -88,7 +87,12 @@ function MyAccountPage() {
             <p className="flex-1">Mes commandes</p>
           </div>
         </Link>
-        <Button type="button" variant="form-danger" onClick={handleLogout}>
+        <Button
+          type="button"
+          variant="form-danger"
+          className="max-w-[400px]"
+          onClick={handleLogout}
+        >
           Déconnexion
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { IOrder } from '../../../@types/IOrder';
+import { IOrder } from '../../../@types/Order';
 
 /**
  * 🔹 Composant `OrderItem`

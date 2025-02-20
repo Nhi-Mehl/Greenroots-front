@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetProfileResponse } from '../../../@types/IUser';
+import { GetProfileResponse } from '../../../@types/User';
 import { LoginResponse } from '../../../@types/Credentials';
 
 import type { RootState } from '../../store';

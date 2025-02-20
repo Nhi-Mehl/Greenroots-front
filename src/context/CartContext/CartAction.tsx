@@ -1,4 +1,4 @@
-import { IProjectTreeSpecies } from '../../@types';
+import { IProjectTreeSpecies } from '../../@types/ProjectTree';
 
 // Définition des types d'actions
 export type CartAction =
