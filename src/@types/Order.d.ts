@@ -1,4 +1,4 @@
-import { IProjectTreeSpecies } from '.';
+import { IProjectTreeSpecies } from './ProjectTree';
 
 export interface IOrder {
   id: number;
