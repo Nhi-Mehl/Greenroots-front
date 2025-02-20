@@ -22,13 +22,11 @@ const Button = ({
     <button
       type={type}
       className={clsx(
-        'font-montserrat text-white font-semibold text-base md:text-lg lg:text-xl py-3 px-3 md:py-3 md:px-4 lg:px-5',
+        'font-montserrat text-white font-semibold text-base md:text-lg py-3 px-3 md:py-3 md:px-4 lg:px-5',
         {
-          'bg-greenRegular w-full max-w-[400px] mt-4 rounded-full':
-            variant === 'form',
-          'bg-black w-full max-w-[400px] mt-4 rounded-full':
-            variant === 'form-danger',
-          'bg-greenRegular w-fit rounded-lg lg:rounded-xl':
+          'bg-greenRegular w-full rounded-full': variant === 'form',
+          'bg-black w-full rounded-full': variant === 'form-danger',
+          'bg-greenRegular w-full max-w-[300px] rounded-xl lg:rounded-2xl':
             variant === 'default',
         },
         className
