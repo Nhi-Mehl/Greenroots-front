@@ -13,7 +13,7 @@ import {
   useGetAllUserOrdersQuery,
   useGetOrderLinesQuery,
 } from '../../../store/features/order/orderApiSlice';
-import { useGetProjectsByIdsQuery } from '../../../store/features/project/projectApiSlice';
+import { useGetProjectsByArrayIdsQuery } from '../../../store/features/project/projectApiSlice';
 import Button from '../../Form/Button/Button';
 
 /**
@@ -82,7 +82,9 @@ function OrderDetailsPage() {
     data: projects,
     isLoading: isLoadingProjects,
     error: projectsError,
-  } = useGetProjectsByIdsQuery(projectIds, { skip: projectIds.length === 0 });
+  } = useGetProjectsByArrayIdsQuery(projectIds, {
+    skip: projectIds.length === 0,
+  });
 
   // Gestion des erreurs avec SweetAlert2
   if (orderError || orderLinesError || projectsError) {

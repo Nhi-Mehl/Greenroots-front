@@ -1,7 +1,7 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 // import { FaTrash } from 'react-icons/fa';
 
-import { IProjectTreeSpecies } from '../../../../@types';
+import { IProjectTreeSpecies } from '../../../../@types/ProjectTree';
 
 interface OrderLineProps {
   item: {
