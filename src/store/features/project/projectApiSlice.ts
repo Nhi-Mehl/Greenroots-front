@@ -1,4 +1,4 @@
-import { IProject } from '../../../@types';
+import { IProject } from '../../../@types/ProjectTree';
 import apiSlice from '../../api/apiSlice';
 
 const projectApiSlice = apiSlice
@@ -6,25 +6,17 @@ const projectApiSlice = apiSlice
   .injectEndpoints({
     // Endpoint pour récupérer le profil utilisateur
     endpoints: (builder) => ({
-      // Endpoint pour récupérer les commandes d'un utilisateur via son id
-      // getProjectById: builder.query<IProject, number>({
-      //   query: (projectId) => ({
-      //     url: `/orders/${projectId}`,
-      //     method: 'get',
-      //   }),
-      //   providesTags: ['Project'],
-      // }),
+      // Endpoint pour récupérer le projet via son id
+      getProjectById: builder.query<IProject, number>({
+        query: (projectId) => ({
+          url: `/projects/${projectId}`,
+          method: 'get',
+        }),
+        providesTags: ['Project'],
+      }),
 
-      // getProjectsByIds: builder.query<IProject[], number[]>({
-      //   query: (projectIds) => ({
-      //     url: `/projects`,
-      //     method: 'get',
-      //     params: { ids: projectIds.join(',') }, // Ex: ?ids=1,2,3
-      //   }),
-      //   providesTags: ['Project'],
-      // }),
-
-      getProjectsByIds: builder.query<IProject[], number[]>({
+      // Endpoint pour récupérer les projets via un tableau d'ids
+      getProjectsByArrayIds: builder.query<IProject[], number[]>({
         queryFn: async (projectIds, _queryApi, _extraOptions, baseQuery) => {
           try {
             const responses = await Promise.all(
@@ -57,5 +49,8 @@ const projectApiSlice = apiSlice
     }),
   });
 
-export const { useGetProjectsByIdsQuery, useGetThreeRandomProjectsQuery } =
-  projectApiSlice;
+export const {
+  useGetProjectByIdQuery,
+  useGetProjectsByArrayIdsQuery,
+  useGetThreeRandomProjectsQuery,
+} = projectApiSlice;
