@@ -16,4 +16,5 @@ export type ProjectTreesResponse = {
   progress: number;
   trees: IProjectTreeSpecies[];
   totalBasicQuantity: number;
+  totalCurrentQuantity: number;
 };
