@@ -9,18 +9,7 @@ import Button from '../../Form/Button/Button';
 import { useGetProjectByIdQuery } from '../../../store/features/project/projectApiSlice';
 import { useGetProjectTreesByProjectIdQuery } from '../../../store/features/projectTree/projectTreeApiSlice';
 import { IProjectTreeSpecies } from '../../../@types/ProjectTree';
-
-/**
- * Génère un slug à partir d'un nom donné.
- * @param name Nom à convertir en slug.
- * @returns Slug formaté.
- */
-const createSlug = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-};
+import createSlug from '../../../utils/slug';
 
 function ProjectDetailsPage() {
   const dispatch = useAppDispatch();
@@ -52,12 +41,19 @@ function ProjectDetailsPage() {
 
   // Vérifie s'il y a une erreur lors de la récupération des données
   if (projectError || isProjectError || isTreesError || treesError) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Erreur',
-      text: 'Impossible de charger les données.',
-    });
-    return null;
+    return (
+      <p className="text-red-500">
+        Une erreur s&apos;est produite lors du chargement des données.
+      </p>
+    );
+  }
+  // Vérifie si le projet ou les arbres n'existent pas
+  if (!project || !projectTrees) {
+    return (
+      <p className="text-red-500">
+        Le projet ou les arbres n&apos;existent pas.
+      </p>
+    );
   }
 
   // Fonction pour ajouter un arbre au panier
@@ -78,16 +74,6 @@ function ProjectDetailsPage() {
       timer: 2000,
     });
   };
-
-  // Vérifie si le projet ou les arbres n'existent pas
-  if (!project || !projectTrees) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Projet introuvable',
-      text: "Le projet que vous cherchez n'existe pas.",
-    });
-    return null;
-  }
 
   return (
     <main>
@@ -116,7 +102,7 @@ function ProjectDetailsPage() {
       <section className="mx-auto mt-10 mb-16 flex flex-col items-center gap-8 lg:gap-12 2xl:gap-24 lg:flex-row lg:justify-center lg:flex-wrap">
         {projectTrees.trees.map((tree) =>
           isDataLoading ? (
-            <Skeleton key={tree?.id} width={400} height={500} />
+            <Skeleton key={tree.id} width={400} height={500} />
           ) : (
             <article
               key={tree?.id}
