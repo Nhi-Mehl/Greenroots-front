@@ -26,6 +26,33 @@ const projectTreeApiSlice = apiSlice
       //     providesTags: ['ProjectTree'],
       //   }),
 
+      getprojectTreesByArrayProjectId: builder.query<
+        ProjectTreesResponse[],
+        number[]
+      >({
+        queryFn: async (projectIds, _queryApi, _extraOptions, baseQuery) => {
+          try {
+            const responses = await Promise.all(
+              projectIds.map((projectId) =>
+                baseQuery({ url: `/project_trees/project/${projectId}` })
+              )
+            );
+
+            const projectTrees = responses.map((response) => {
+              if ('data' in response) {
+                return response.data as ProjectTreesResponse;
+              }
+              throw new Error('Failed to fetch project data');
+            });
+
+            return { data: projectTrees };
+          } catch (error) {
+            return { error: { status: 500, data: (error as Error).message } };
+          }
+        },
+        providesTags: ['ProjectTree'],
+      }),
+
       getProjectTreesByProjectId: builder.query<ProjectTreesResponse, number>({
         query: (projectId) => ({
           url: `/project_trees/project/${projectId}`,
@@ -38,5 +65,6 @@ const projectTreeApiSlice = apiSlice
 
 export const {
   useGetProjectTreeByIdQuery,
+  useGetprojectTreesByArrayProjectIdQuery,
   useGetProjectTreesByProjectIdQuery,
 } = projectTreeApiSlice;

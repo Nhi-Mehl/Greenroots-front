@@ -1,4 +1,4 @@
-import { IProject } from '../../../@types/ProjectTree';
+import { IProject } from '../../../@types/Project';
 import apiSlice from '../../api/apiSlice';
 
 const projectApiSlice = apiSlice
@@ -6,6 +6,15 @@ const projectApiSlice = apiSlice
   .injectEndpoints({
     // Endpoint pour récupérer le profil utilisateur
     endpoints: (builder) => ({
+      // Endpoint pour récupérer tous les projets
+      getAllProjects: builder.query<IProject[], void>({
+        query: () => ({
+          url: '/projects',
+          method: 'get',
+        }),
+        providesTags: ['Project'],
+      }),
+
       // Endpoint pour récupérer le projet via son id
       getProjectById: builder.query<IProject, number>({
         query: (projectId) => ({
@@ -50,6 +59,7 @@ const projectApiSlice = apiSlice
   });
 
 export const {
+  useGetAllProjectsQuery,
   useGetProjectByIdQuery,
   useGetProjectsByArrayIdsQuery,
   useGetThreeRandomProjectsQuery,
