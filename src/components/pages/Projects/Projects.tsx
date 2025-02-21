@@ -2,9 +2,9 @@ import ProjectList from './ProjectList/ProjectList';
 
 function ProjectsPage() {
   return (
-    <div className="projectPage">
+    <main className="projectPage">
       <ProjectList />
-    </div>
+    </main>
   );
 }
 
