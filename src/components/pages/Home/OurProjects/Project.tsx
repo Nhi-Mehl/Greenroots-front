@@ -1,12 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { IProject } from '../../../../@types/ProjectTree';
-
-const createSlug = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-};
+import { IProject } from '../../../../@types/Project';
+import createSlug from '../../../../utils/slug';
 
 interface ProjectProps {
   project: IProject;
