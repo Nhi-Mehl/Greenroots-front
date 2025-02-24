@@ -1,3 +1,8 @@
+import Button from '../../Form/Button/Button';
+import Form from '../../Form/Form';
+import Input from '../../Form/Input/Input';
+import TextArea from '../../Form/TextArea/TextArea';
+
 function ContactPage() {
   return (
     <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
@@ -15,56 +20,47 @@ function ContactPage() {
         </p>
       </section>
       <section className="p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg lg:max-w-[600px] lg:mx-auto">
-        <form action="/contact">
-          <label htmlFor="prenom">
-            Votre prénom
-            <input
-              type="text"
-              id="prenom"
-              name="prenom"
-              placeholder="Votre prénom"
-              className="input"
-            />
-          </label>
+        <Form action="/contact" onSubmit={(e) => e.preventDefault()}>
+          <Input
+            htmlFor="nom"
+            label="Votre nom"
+            type="text"
+            id="nom"
+            name="nom"
+            placeholder="Votre nom"
+          />
+          <Input
+            htmlFor="prenom"
+            label="Votre prénom"
+            type="text"
+            id="prenom"
+            name="prenom"
+            placeholder="Votre prénom"
+          />
 
-          <label htmlFor="prenom">
-            Votre nom
-            <input
-              type="text"
-              id="nom"
-              name="nom"
-              placeholder="Votre nom"
-              className="input"
-            />
-          </label>
+          <Input
+            htmlFor="email"
+            label="Votre email"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Votre email"
+          />
 
-          <label htmlFor="email">
-            Votre email
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Votre email"
-              className="input"
-            />
-          </label>
+          <TextArea
+            htmlFor="message"
+            label="Votre message"
+            rows={4}
+            cols={50}
+            id="message"
+            name="message"
+            placeholder="Votre message"
+          />
 
-          <label htmlFor="message">
-            Votre message
-            <textarea
-              rows={4}
-              cols={50}
-              id="message"
-              name="message"
-              placeholder="Votre message"
-              className="input "
-            />
-          </label>
-
-          <button className="btn-form mt-4" type="submit">
+          <Button variant="form" className="btn-form mt-4" type="submit">
             Envoyer
-          </button>
-        </form>
+          </Button>
+        </Form>
       </section>
     </main>
   );

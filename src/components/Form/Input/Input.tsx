@@ -34,7 +34,6 @@ const Input = ({
     >
       {label}
       <input
-        {...props}
         type={inputType}
         value={value}
         onChange={onChange}
@@ -42,6 +41,7 @@ const Input = ({
         className={`w-full border border-gray-300 rounded-md mb-2 px-4 py-2 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-greenRegular md:mb-4 ${
           isPasswordField ? ' pr-8' : ''
         } `}
+        {...props}
       />
       {isPasswordField && (
         <button
