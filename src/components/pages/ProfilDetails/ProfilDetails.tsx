@@ -158,7 +158,7 @@ function ProfilDetailsPage() {
           </li>
         </ul>
       </section>
-      <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center md:gap-4">
+      <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center md:gap-4 lg:max-w-[900px] lg:mx-auto">
         <Button variant="form" type="button" onClick={handleEditProfile}>
           Modifier
         </Button>
