@@ -1,17 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useProject } from '../../../context/ProjectContext';
-import BannerContent from './BannerContent';
 
-const createSlug = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-};
+import BannerContent from './BannerContent';
+import createSlug from '../../../utils/slug';
+import { useAppSelector } from '../../../store/hooks';
+import { RootState } from '../../../store/store';
 
 function Banner() {
   const navigate = useNavigate();
-  const { project } = useProject();
+  // Récupération du projet actuel de la store Redux
+  const { project } = useAppSelector((state: RootState) => state.project);
   const { pathname } = useLocation();
 
   let slug = '';
