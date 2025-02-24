@@ -10,6 +10,7 @@ import { useGetProjectByIdQuery } from '../../../store/features/project/projectA
 import { useGetProjectTreesByProjectIdQuery } from '../../../store/features/projectTree/projectTreeApiSlice';
 import { IProjectTreeSpecies } from '../../../@types/ProjectTree';
 import createSlug from '../../../utils/slug';
+import { setProject } from '../../../store/features/project/projectSlice';
 
 function ProjectDetailsPage() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,11 @@ function ProjectDetailsPage() {
     error: projectError,
     isLoading: projectLoading,
   } = useGetProjectByIdQuery(numderProjectId, { skip: !numderProjectId });
+
+  // Définir le projet dans le store Redux si le projet existe
+  if (project) {
+    dispatch(setProject(project));
+  }
 
   // Récupérer les arbres, totalBasicQuantity et progress  d'un projet selon son id avec RTK Query
   const {
