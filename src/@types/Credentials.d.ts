@@ -14,3 +14,10 @@ export type LoginResponse = { accessToken: string };
 
 // Types données de la réponse de la suppression profil utilisateur
 export type DeleteUserResponse = { success: boolean; message: string };
+
+// Types données de l'état initial de l'utilisateur connecté utilisé dans authSlice.ts
+export type InitialAuthState = {
+  user: GetProfileResponse | null;
+  accessToken: string | null;
+  isAuthenticated: boolean; // Ajout pour indiquer si l'utilisateur est connecté
+};

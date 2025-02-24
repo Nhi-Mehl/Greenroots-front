@@ -10,3 +10,7 @@ export interface IProject {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export type InitialProjectState = {
+  project: IProject;
+};

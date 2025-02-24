@@ -1,15 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetProfileResponse } from '../../../@types/User';
-import { LoginResponse } from '../../../@types/Credentials';
-
 import type { RootState } from '../../store';
+import { GetProfileResponse } from '../../../@types/User';
+import { LoginResponse, InitialAuthState } from '../../../@types/Credentials';
 
-// Définir les types TypeScript pour l'état utilisateur
-type InitialAuthState = {
-  user: GetProfileResponse | null;
-  accessToken: string | null;
-  isAuthenticated: boolean; // Ajout pour indiquer si l'utilisateur est connecté
-};
 // Chargement initial du token depuis le localStorage
 const tokenFromStorage = localStorage.getItem('token');
 
