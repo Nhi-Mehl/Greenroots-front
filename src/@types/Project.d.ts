@@ -12,5 +12,5 @@ export interface IProject {
 }
 
 export type InitialProjectState = {
-  project: IProject;
+  project: IProject | null;
 };

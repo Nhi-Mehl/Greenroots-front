@@ -1,48 +1,44 @@
 import { useEffect, useRef } from 'react';
 
+/**
+ * Composant Video
+ *
+ * Lecture automatique et mise en pause en fonction de la visibilité.
+ * Optimisation avec Intersection Observer.
+ * Accessibilité améliorée avec des sous-titres.
+ */
 function Video() {
   // Utilisation de la référence avec un type HTMLVideoElement
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // Utilisation de useEffect pour observer la visibilité de la vidéo
   useEffect(() => {
     const videoElement = videoRef.current;
+    if (!videoElement) return;
 
-    // Vérifier que l'élément vidéo existe avant de l'utiliser
-    if (!videoElement) {
-      return; // On s'assure que rien n'est renvoyé ici
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoElement.play().catch(() => {});
+        } else {
+          videoElement.pause();
+        }
+      },
+      { root: null, threshold: 0.5 }
+    );
 
-    const handlePlayVideo: IntersectionObserverCallback = (entries) => {
-      const [entry] = entries;
-
-      // Lancer la vidéo si elle est visible
-      if (entry.isIntersecting) {
-        return videoElement.play(); // Jouer la vidéo quand elle est visible
-      }
-      return videoElement.pause(); // Pause quand elle n'est plus visible
-    };
-
-    const observer = new IntersectionObserver(handlePlayVideo, {
-      root: null, // Utilise le viewport comme conteneur de défilement
-      threshold: 0.5, // 50% de la vidéo doit être visible pour jouer
-    });
-
-    observer.observe(videoElement); // Observer l'élément vidéo
-
-    // Nettoyage pour désenregistrer l'observateur
-    return () => {
-      observer.unobserve(videoElement);
-    };
+    observer.observe(videoElement);
+    return () => observer.unobserve(videoElement);
   }, []);
 
   return (
-    <div>
+    <section aria-labelledby="Vidéo présentaion de GreenRoots">
       <video
         ref={videoRef}
         controls
         autoPlay
         muted
-        className="lg:mt-20 lg:mx-auto"
+        className="rounded-lg shadow-lg lg:mt-20 lg:mx-auto "
       >
         <source src="/videos/greenroots-mission.mp4" type="video/mp4" />
         {/* Sous-titres pour l'accessibilité */}
@@ -66,7 +62,7 @@ function Video() {
         {/* Message de secours si la vidéo n'est pas prise en charge */}
         Votre navigateur ne prend pas en charge la lecture de vidéos.
       </video>
-    </div>
+    </section>
   );
 }
 

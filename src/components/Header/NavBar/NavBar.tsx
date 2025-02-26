@@ -10,21 +10,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
 import { selectCart } from '../../../store/features/cart/cartSlice';
-// import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 
 interface ShowBannerProps {
   showBanner: boolean;
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
+  // Récupérer les articles du panier de la store Redux
+  const cartItems = useAppSelector(selectCart);
+
+  // Récupérer le statut d'authentification de la store Redux
   const isAuthenticated = useAppSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Récupérer les articles du panier de la store Redux
-  const cartItems = useAppSelector(selectCart);
 
   const cartItemCount = cartItems.reduce(
     (total, item) => total + item.quantity,

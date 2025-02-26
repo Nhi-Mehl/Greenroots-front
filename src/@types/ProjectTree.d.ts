@@ -18,3 +18,17 @@ export type ProjectTreesResponse = {
   totalBasicQuantity: number;
   totalCurrentQuantity: number;
 };
+
+export type ThreeMostBoughtTreesResponse = {
+  id: number;
+  bascic_quantity: number;
+  co2_compensation: number;
+  current_quantity: number;
+  description: string;
+  name: string;
+  picture: string;
+  price: number;
+  project_id: number;
+  sold_quantity: number;
+  tree_name: string;
+};

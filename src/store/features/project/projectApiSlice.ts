@@ -4,7 +4,6 @@ import apiSlice from '../../api/apiSlice';
 const projectApiSlice = apiSlice
   .enhanceEndpoints({ addTagTypes: ['Project'] })
   .injectEndpoints({
-    // Endpoint pour récupérer le profil utilisateur
     endpoints: (builder) => ({
       // Endpoint pour récupérer tous les projets
       getAllProjects: builder.query<IProject[], void>({
@@ -48,10 +47,18 @@ const projectApiSlice = apiSlice
         },
         providesTags: ['Project'],
       }),
+
       // Endpoint pour récupérer 3 projets random de la page accueil
       getThreeRandomProjects: builder.query<IProject[], void>({
         query: () => ({
           url: '/projects/highlights',
+          method: 'get',
+        }),
+      }),
+      // Endpoint pour récupérer les projets réalisés
+      getCompletedProjects: builder.query<number, void>({
+        query: () => ({
+          url: 'projects/completed',
           method: 'get',
         }),
       }),
@@ -63,4 +70,5 @@ export const {
   useGetProjectByIdQuery,
   useGetProjectsByArrayIdsQuery,
   useGetThreeRandomProjectsQuery,
+  useGetCompletedProjectsQuery,
 } = projectApiSlice;

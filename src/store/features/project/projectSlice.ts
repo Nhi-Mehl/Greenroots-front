@@ -2,16 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProject, InitialProjectState } from '../../../@types/Project';
 
 const initialState: InitialProjectState = {
-  project: {
-    id: 0,
-    name: '',
-    description: '',
-    status: '',
-    picture: '',
-    city: '',
-    country: '',
-    continent: '',
-  },
+  project: null,
 };
 
 const projectSlice = createSlice({

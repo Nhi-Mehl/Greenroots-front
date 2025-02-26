@@ -1,15 +1,24 @@
-import './OurProjects.css';
-
+/**
+ * Composant OurProjects
+ * ---------------------------
+ * Ce composant affiche une description les projets de reforestation de GreenRoots.
+ */
 function OurProjects() {
   return (
-    <section className="relative h-[350px] sm:h-[250px] md:h-[320px] lg:h-[500px]">
+    <section
+      aria-labelledby="Section présentaion des projets de GreenRoots"
+      className="relative h-[350px] sm:h-[250px] md:h-[320px] lg:h-[500px]"
+    >
       <img
         className="h-full w-full object-cover"
         src="/images/bg-our-projetcs-home.jpg"
-        alt="backgroud plantation"
+        alt="Illustration d'une plantation d'arbres en cours"
       />
-      <div className="absolute top-0 flex flex-col justify-center text-white pt-10 lg:pt-16">
-        <h2 className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4xl lg:text-5xl">
+      <div className="absolute top-0 flex flex-col justify-center text-white pt-10 lg:pt-20">
+        <h2
+          aria-labelledby="Title de la section"
+          className="mb-4 lg:mb-14 text-center h2-title font-semibold text-white md:text-4xl lg:text-5xl"
+        >
           NOS PROJETS
         </h2>
         <p className="text-sm text-justify text-white shadow-sm px-4 md:px-8 lg:px-20 md:text-xl lg:text-2xl">
@@ -22,7 +31,6 @@ function OurProjects() {
           nous faisons grandir des forêts qui feront la différence pour les
           générations à venir.
         </p>
-        {/* <img src={bgOurProjects} alt="background nos projects section" /> */}
       </div>
     </section>
   );
