@@ -61,7 +61,7 @@ function Banner() {
         <>
           {/* Afficher l'image */}
           <img
-            className="w-full lg:max-h-[800px] object-cover object-top"
+            className="w-full h-[300px] sm:h-fit lg:max-h-[800px] object-cover object-top filter brightness-75"
             src={routeData.image}
             alt="banner"
           />

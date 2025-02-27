@@ -23,12 +23,12 @@ html {
 
 /* Titre Section */
 .h2-title {
-  @apply font-montserrat text-2xl sm:text-3xl font-bold;
+  @apply font-montserrat text-xl sm:text-3xl md:text-4xl font-bold;
 }
 
 /* Titre Article */
 .h3-title {
-  @apply font-montserrat text-h3 font-bold;
+  @apply font-montserrat text-lg sm:text-2xl md:text-3xl font-bold;
 }
 
 /* Text Section */

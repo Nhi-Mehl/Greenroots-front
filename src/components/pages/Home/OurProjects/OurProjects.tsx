@@ -10,7 +10,7 @@ function OurProjects() {
       className="relative h-[350px] sm:h-[250px] md:h-[320px] lg:h-[500px]"
     >
       <img
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover filter brightness-75"
         src="/images/bg-our-projetcs-home.jpg"
         alt="Illustration d'une plantation d'arbres en cours"
       />

@@ -22,7 +22,6 @@ function CartPage() {
   const user = useAppSelector(selectCurrentUser);
   // Récupérer les articles du panier de la store Redux
   const cartItems = useAppSelector(selectCart);
-  console.log('cartItems:', cartItems);
 
   // Calcul du montant total du panier
   const totalAmount = cartItems.reduce(
@@ -47,7 +46,7 @@ function CartPage() {
           amount: Number(item.tree.species.price) * item.quantity,
         })),
       };
-      console.log('orderData', orderData);
+
       navigate('/checkout', { state: { orderData } });
     }
   };

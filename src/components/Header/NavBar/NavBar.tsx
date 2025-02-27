@@ -40,7 +40,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
 
   // Si showBanner est vrai, on enlève la classe 'bg-green-900'
   const navClassName = `
-    w-full z-20 flex items-center justify-between p-4 sm:p-6 lg:p-8 text-white
+    w-full z-20 flex items-center justify-between p-4 sm:p-6 lg:p-10 text-white
     ${showBanner ? 'absolute top-0 left-0' : 'bg-greenDark relative'}
   `;
 
