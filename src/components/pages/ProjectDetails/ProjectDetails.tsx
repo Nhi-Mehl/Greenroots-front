@@ -1,16 +1,14 @@
-import Swal from 'sweetalert2';
 import { Link, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { addToCart } from '../../../store/features/cart/cartSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import Button from '../../Form/Button/Button';
 import { useGetProjectByIdQuery } from '../../../store/features/project/projectApiSlice';
 import { useGetProjectTreesByProjectIdQuery } from '../../../store/features/projectTree/projectTreeApiSlice';
-import { IProjectTreeSpecies } from '../../../@types/ProjectTree';
 import createSlug from '../../../utils/slug';
 import { setProject } from '../../../store/features/project/projectSlice';
+import handleAddToCart from '../../../utils/addToCart';
 
 function ProjectDetailsPage() {
   const dispatch = useAppDispatch();
@@ -61,25 +59,6 @@ function ProjectDetailsPage() {
       </p>
     );
   }
-
-  // Fonction pour ajouter un arbre au panier
-  const handleAddToCart = (tree: IProjectTreeSpecies) => {
-    if (!addToCart) return;
-
-    // Récupère le nom du projet
-    const projectName = project.name;
-    // Ajoute l'arbre au panier
-    dispatch(addToCart({ tree, projectName }));
-
-    // Affiche une notification de succès
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Ajouter au panier',
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  };
 
   return (
     <main>
@@ -138,7 +117,7 @@ function ProjectDetailsPage() {
                   className="my-8 mx-auto block"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAddToCart(tree);
+                    handleAddToCart(tree, project.name, dispatch);
                   }}
                 >
                   Ajouter au panier
