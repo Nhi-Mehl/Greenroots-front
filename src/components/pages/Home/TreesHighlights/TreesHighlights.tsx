@@ -24,7 +24,9 @@ function TreesHighlights() {
   const handleDetailTree = (tree: ThreeMostBoughtTreesResponse) => {
     const projectName = tree.name;
     const slug = createSlug(projectName);
-    navigate(`/projects/${tree.project_id}/${slug}`);
+    navigate(`/projects/${tree.project_id}/${slug}`, {
+      state: { tree, projectName },
+    });
   };
 
   return (
