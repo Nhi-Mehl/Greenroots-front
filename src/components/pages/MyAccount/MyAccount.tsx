@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { BiShoppingBag } from 'react-icons/bi';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import Swal from 'sweetalert2';
 
 import {
   selectCurrentUser,
@@ -35,7 +36,11 @@ function MyAccountPage() {
       // On redirige l'utilisateur vers la page de connexion
       navigate('/login');
     } catch (error) {
-      console.error('Logout failed:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Une erreur est survenue, veuillez réessayer',
+      });
     }
   };
 

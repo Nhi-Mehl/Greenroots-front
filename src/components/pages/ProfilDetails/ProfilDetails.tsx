@@ -106,7 +106,11 @@ function ProfilDetailsPage() {
             navigate('/');
           }, 1500);
         } catch (error) {
-          console.error('Erreur lors de la suppression du compte:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: `Erreur lors de la suppression du compte: ${(error as { message: string }).message}`,
+          });
         }
       }
     });

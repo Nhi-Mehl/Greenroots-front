@@ -45,11 +45,6 @@ function EditProfilePage() {
   /** ===================== ✅ GESTION DU SUCCÈS ===================== */
   useEffect(() => {
     if (isSuccessUpdate) {
-      console.log(
-        'Les informations ont été mises à jour avec succès !',
-        isSuccessUpdate
-      );
-
       // Afficher une alerte de succès si la connexion est réussie
       const Toast = Swal.mixin({
         toast: true,
@@ -113,7 +108,13 @@ function EditProfilePage() {
         navigate('/userdetails');
       }, 1000);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour du profil', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Erreur lors de la mise à jour du profil',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Réessayer',
+      });
     }
   };
 
