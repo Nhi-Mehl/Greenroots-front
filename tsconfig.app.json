@@ -27,6 +27,7 @@
     "vite.config.ts",
     ".eslintrc.cjs",
     "src",
+    "tests",
     "vitest.config.ts",
     "postcss.config.js"
   ]
