@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -8,7 +8,6 @@ import OrderItem from './OrderItem';
 import { useAppSelector } from '../../../store/hooks';
 import { selectCurrentUser } from '../../../store/features/auth/authSlice';
 import { useGetAllUserOrdersQuery } from '../../../store/features/order/orderApiSlice';
-import Button from '../../Form/Button/Button';
 
 /**
  * 🔹 Page `OrdersPage`
