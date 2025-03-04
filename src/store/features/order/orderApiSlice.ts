@@ -3,6 +3,7 @@ import {
   IOrder,
   CreateOrderResponse,
   GetOrderLinesResponse,
+  CreateOrderRequest,
 } from '../../../@types/Order';
 
 const orderApiSlice = apiSlice
@@ -27,7 +28,7 @@ const orderApiSlice = apiSlice
       // Endpoint pour créer une commande à finaliser avec creaOrderRequest
       createOrder: builder.mutation<CreateOrderResponse, CreateOrderRequest>({
         query: (orderData) => ({
-          url: '/orders',
+          url: '/orders/create_order',
           method: 'post',
           data: { ...orderData },
         }),

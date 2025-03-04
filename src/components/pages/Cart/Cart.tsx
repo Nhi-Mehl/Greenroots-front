@@ -37,20 +37,28 @@ function CartPage() {
   const handlePay = async () => {
     if (!user) {
       navigate('/login');
-    } else {
-      const orderData = {
-        amount: totalAmount,
-        orderLine: cartItems.map((item) => ({
-          project_tree_id: item.tree.id,
-          quantity: item.quantity,
-          amount: Number(item.tree.species.price) * item.quantity,
-        })),
-      };
-
-      navigate('/checkout', { state: { orderData } });
+      return;
     }
+
+    const orderData = {
+      totalAmountOrder: totalAmount,
+      orderLine: cartItems.map((item) => ({
+        project_tree_id: item.tree.id,
+        project_tree_name: item.tree.species.name,
+        project_tree_picture: item.tree.species.picture,
+        projet_name: item.projectName,
+        quantity: item.quantity,
+        amount: Number(item.tree.species.price) * item.quantity,
+      })),
+    };
+
+    navigate('/checkout', { state: { orderData } });
   };
 
+  /**
+   * Gestion du clic sur le bouton de suppression d'un article.
+   * Affiche une boîte de dialogue de confirmation avant de supprimer l'article.
+   */
   const onRemoveTree = (id: number) => {
     // Afficher une boîte de dialogue de confirmation avant de supprimer l'article
     Swal.fire({
@@ -72,9 +80,7 @@ function CartPage() {
 
   return (
     <main className="min-h-screen">
-      <h1 className="w-full my-10 sm:my-20 text-center text-3xl sm:text-4xl font-bold">
-        Votre Panier
-      </h1>
+      <h1 className="h1-title text-center my-10 sm:my-20">Votre Panier</h1>
 
       {/* Liste des articles */}
       <section className="w-3/4 mx-auto">

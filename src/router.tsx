@@ -18,6 +18,7 @@ import ConfirmPaymentPage from './components/pages/ConfirmPayment/ConfirmPayment
 import EditProfilePage from './components/pages/EditProfil/EditProfil';
 import CheckoutPage from './components/pages/Checkout/Checkout';
 import ProfilDetailsPage from './components/pages/ProfilDetails/ProfilDetails';
+import CheckoutForm from './components/pages/Checkout/CheckoutForm';
 
 const router = createBrowserRouter([
   {
@@ -108,7 +109,7 @@ const router = createBrowserRouter([
         path: '/checkout',
         element: (
           <ProtectedRoute>
-            <CheckoutPage />
+            <CheckoutForm />
           </ProtectedRoute>
         ),
       },

@@ -29,3 +29,11 @@ export interface CreateOrderResponse {
 export type GetOrderLinesResponse = IOrderLine & {
   project_tree: IProjectTreeSpecies;
 };
+export interface CreateOrderRequest {
+  totalAmountOrder: number;
+  orderLine: {
+    project_tree_id: number;
+    quantity: number;
+    amount: number;
+  }[];
+}

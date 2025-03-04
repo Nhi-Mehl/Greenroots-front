@@ -75,11 +75,19 @@ const cartSlice = createSlice({
       }
       localStorage.setItem('cart', JSON.stringify(state.cartItems));
     },
+
+    /**
+     * Vide le panier.
+     */
+    clearCart(state) {
+      state.cartItems = [];
+      localStorage.removeItem('cart');
+    },
   },
 });
 
 // Export des actions
-export const { addToCart, removeFromCart, updateQuantityCartItem } =
+export const { addToCart, removeFromCart, updateQuantityCartItem, clearCart } =
   cartSlice.actions;
 
 // Sélecteur pour récupérer le panier depuis le state global

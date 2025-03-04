@@ -1,3 +1,5 @@
+import { ISpecies } from './Species';
+
 export interface IProjectTree {
   id: number;
   basic_quantity: number;
