@@ -1,30 +1,58 @@
-# React + TypeScript + Vite
+# Greenroots - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Green Roots est une initiative visant à développer une plateforme e-commerce
+intuitive dédiée à la reforestation. Face à l’urgence climatique et à la
+déforestation, cette plateforme permet aux utilisateurs d’acheter des arbres pour
+soutenir des projets de reforestation menés par Green Roots et ses partenaires.
 
-Currently, two official plugins are available:
+La partie back-end est disponible ici : https://github.com/Nhi-Mehl/Greenroots-back
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Technologies utilisées
 
-## Expanding the ESLint configuration
+- React + TypeScript : Interface utilisateur dynamique et typage strict.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Redux Toolkit (RTK Query) : Gestion optimisée de l'état et des requêtes API.
 
-- Configure the top-level `parserOptions` property like this:
+- Axios : Requêtes HTTP simplifiées.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- Tailwind CSS : Stylisation rapide et flexible.
+
+- Stripe : Gestion des paiements sécurisée.
+
+## 🔥 Fonctionnalités principales
+
+- ✅ Authentification sécurisée (Login, Signup, JWT).
+- ✅ Gestion de compte utilisateur (modification, suppression)
+- ✅ Gestion du panier avec Redux (ajout, suppression, mise à jour).
+- ✅ Paiement sécurisé via Stripe (PaymentIntents).
+- ✅ Gestion des commandes (historique des achats).
+
+## 📦 Installation
+
+Cloner le projet
+
+```
+git clone https://github.com/Nhi-Mehl/Greenroots-front.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Installer les dépendances (avec npm, yarn ou pnpm) :
+
+```
+npm install
+```
+
+Configurer les variables d'environnement.
+Crée un fichier .env à la racine et ajoute :
+
+```
+VITE_API_BASE_URL=your_backend_api_url
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+```
+
+Lancer le projet
+
+```
+npm run dev
+```
+
+✨ \_Développé avec passion par Nhi Mehl ✨
