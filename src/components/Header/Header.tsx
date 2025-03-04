@@ -1,17 +1,15 @@
 import { useLocation } from 'react-router-dom';
+
 import NavBar from './NavBar/NavBar';
 import Banner from './Banner/Banner';
-import { useProject } from '../../context/ProjectContext';
-
-const createSlug = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-}; // Renommé en IProjec
+import createSlug from '../../utils/slug';
+import { useAppSelector } from '../../store/hooks';
+import { RootState } from '../../store/store';
 
 function Header() {
-  const { project } = useProject();
+  // Récupération du projet actuel de la store Redux
+  const { project } = useAppSelector((state: RootState) => state.project);
+  // const { project } = useProject();
   const { pathname } = useLocation(); // Récupération de la route actuelle
 
   let slug = '';

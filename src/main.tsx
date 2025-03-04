@@ -1,19 +1,18 @@
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import router from './router';
+import { Provider } from 'react-redux';
+
 import './styles/index.css';
-import { UserProvider } from './context/UserContext';
-import { ProjectProvider } from './context/ProjectContext';
-import { CartProvider } from './context/CartContext/CartContext';
+import router from './router';
+import { store } from './store/store';
+import StripeProvider from './components/pages/Checkout/StripeProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
-  <UserProvider>
-    <CartProvider>
-      <ProjectProvider>
-        <RouterProvider router={router} />
-      </ProjectProvider>
-    </CartProvider>
-  </UserProvider>
+  <Provider store={store}>
+    <StripeProvider>
+      <RouterProvider router={router} />
+    </StripeProvider>
+  </Provider>
   // </React.StrictMode>
 );

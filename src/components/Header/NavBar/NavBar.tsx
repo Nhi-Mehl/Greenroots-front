@@ -1,29 +1,36 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   faCartShopping,
   faUser,
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { CartContext } from '../../../context/CartContext/CartContext';
-import { useUser } from '../../../context/UserContext';
+
+import { useAppSelector } from '../../../store/hooks';
+import { RootState } from '../../../store/store';
+import { selectCart } from '../../../store/features/cart/cartSlice';
 
 interface ShowBannerProps {
   showBanner: boolean;
 }
 
 function NavBar({ showBanner }: ShowBannerProps) {
-  const { user } = useUser();
+  // Récupérer les articles du panier de la store Redux
+  const cartItems = useAppSelector(selectCart);
+
+  // Récupérer le statut d'authentification de la store Redux
+  const isAuthenticated = useAppSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cartItems } = useContext(CartContext);
 
   const cartItemCount = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
   const handleMenuClick = () => {
-    console.log('Menu button clicked');
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -33,7 +40,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
 
   // Si showBanner est vrai, on enlève la classe 'bg-green-900'
   const navClassName = `
-    w-full z-20 flex items-center justify-between p-4 sm:p-6 lg:p-8 text-white
+    w-full z-20 flex items-center justify-between p-4 sm:p-6 lg:p-10 text-white
     ${showBanner ? 'absolute top-0 left-0' : 'bg-greenDark relative'}
   `;
 
@@ -46,13 +53,13 @@ function NavBar({ showBanner }: ShowBannerProps) {
           className="h-12 sm:h-14 md:h-16 lg:h-20"
         />
       </Link>
-      <div className="text-shadow font-semibold hidden space-x-16 text-xl md:flex md:text-xl lg:text-2xl">
+      <div className="text-shadow font-semibold hidden md:space-x-10 lg:space-x-14 xl:space-x-20 text-xl md:flex md:text-xl lg:text-2xl">
         <Link to="/projects">Nos projets</Link>
         <Link to="/about-us">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
       </div>
       <div className="flex gap-4 md:gap-2">
-        <Link to={user ? '/my-account' : '/login'} className="p-4">
+        <Link to={isAuthenticated ? '/my-account' : '/login'} className="p-4">
           <FontAwesomeIcon className="text-xl lg:text-2xl" icon={faUser} />
         </Link>
         <Link to="/cart" className="hidden p-4 md:inline">

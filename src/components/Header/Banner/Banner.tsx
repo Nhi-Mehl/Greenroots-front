@@ -1,17 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useProject } from '../../../context/ProjectContext';
-import BannerContent from './BannerContent';
 
-const createSlug = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-};
+import BannerContent from './BannerContent';
+import createSlug from '../../../utils/slug';
+import { useAppSelector } from '../../../store/hooks';
+import { RootState } from '../../../store/store';
 
 function Banner() {
   const navigate = useNavigate();
-  const { project } = useProject();
+  // Récupération du projet actuel de la store Redux
+  const { project } = useAppSelector((state: RootState) => state.project);
   const { pathname } = useLocation();
 
   let slug = '';
@@ -64,7 +61,7 @@ function Banner() {
         <>
           {/* Afficher l'image */}
           <img
-            className="w-full lg:max-h-[800px] object-cover object-top"
+            className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-[800px] xl:h-[900px] object-cover object-top filter brightness-75"
             src={routeData.image}
             alt="banner"
           />

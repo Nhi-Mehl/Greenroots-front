@@ -1,23 +1,24 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
-import App from './App';
-import RegisterPage from './pages/Register/Register';
-import HomePage from './pages/Home/Home';
-import LoginPage from './pages/Login/Login';
-import TreeDetailsPage from './pages/TreeDetails/TreeDetails';
-import ProjectDetailsPage from './pages/ProjectDetails/ProjectDetails';
-import ProjectsPage from './pages/Projects/Projects';
-import ContactPage from './pages/Contact/Contact';
-import AboutUsPage from './pages/AboutUs/AboutUs';
-import LegalNoticesPage from './pages/LegalNotices/LegalNotices';
-import CartPage from './pages/Cart/Cart';
-import OrdersPage from './pages/Orders/Orders';
-import OrderDetailsPage from './pages/OrderDetails/OrderDetails';
-import MyAccountPage from './pages/MyAccount/MyAccount';
-import ConfirmPaymentPage from './pages/ConfirmPayment/ConfirmPayment';
-import EditProfilePage from './pages/EditProfil/EditProfil';
-import CheckoutPage from './pages/Checkout/Checkout';
-import ProfilDetailsPage from './pages/ProfilDetails/ProfilDetails';
+import App from './components/App/App';
+import RegisterPage from './components/pages/Register/Register';
+import HomePage from './components/pages/Home/Home';
+import LoginPage from './components/pages/Login/Login';
+import TreeDetailsPage from './components/pages/TreeDetails/TreeDetails';
+import ProjectDetailsPage from './components/pages/ProjectDetails/ProjectDetails';
+import ProjectsPage from './components/pages/Projects/Projects';
+import ContactPage from './components/pages/Contact/Contact';
+import AboutUsPage from './components/pages/AboutUs/AboutUs';
+import LegalNoticesPage from './components/pages/LegalNotices/LegalNotices';
+import CartPage from './components/pages/Cart/Cart';
+import OrdersPage from './components/pages/Orders/Orders';
+import OrderDetailsPage from './components/pages/OrderDetails/OrderDetails';
+import MyAccountPage from './components/pages/MyAccount/MyAccount';
+import ConfirmPaymentPage from './components/pages/ConfirmPayment/ConfirmPayment';
+import EditProfilePage from './components/pages/EditProfil/EditProfil';
+import CheckoutPage from './components/pages/Checkout/Checkout';
+import ProfilDetailsPage from './components/pages/ProfilDetails/ProfilDetails';
+import CheckoutForm from './components/pages/Checkout/CheckoutForm';
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
         element: <ProjectsPage />,
       },
       {
-        path: '/projects/:id/:slug',
+        path: '/projects/:projectId/:slug',
         element: <ProjectDetailsPage />,
       },
       {
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/orders/:id',
+        path: '/my-account/purchases',
         element: (
           <ProtectedRoute>
             <OrdersPage />
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/order-details/:orderId',
+        path: '/my-account/purchases/order/:orderId',
         element: (
           <ProtectedRoute>
             <OrderDetailsPage />
@@ -108,7 +109,7 @@ const router = createBrowserRouter([
         path: '/checkout',
         element: (
           <ProtectedRoute>
-            <CheckoutPage />
+            <CheckoutForm />
           </ProtectedRoute>
         ),
       },
