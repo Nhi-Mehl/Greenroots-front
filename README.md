@@ -55,4 +55,4 @@ Lancer le projet
 npm run dev
 ```
 
-✨ \_Développé avec passion par Nhi Mehl ✨
+✨ Projet de fin de formation réalisé en équipe. Reprise et refonte complète du projet avec l'intégration de Redux pour une gestion optimisée de l'état et RTK Query pour les requêtes API. Amélioration de l'accessibilité et du HTML sémantique. Développé avec passion par Nhi Mehl. ✨
