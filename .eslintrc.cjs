@@ -48,6 +48,9 @@ module.exports = {
     'linebreak-style': 0,
     'no-restricted-imports': 0,
     'react/require-default-props': 0,
+    // Cette ligne permet de ne pas avoir d'erreur dans Button.tsx
+    // "The button type attribute must be specified by a static string or a trivial ternary expressioneslintreact/button-has-type"
+    'react/button-has-type': 'off',
   },
   // Ces deux lignes permettent de ne pas avoir d'erreur de type multation dans dossier features car on utilise immer de react toolkit
   overrides: [
