@@ -53,7 +53,7 @@ function NavBar({ showBanner }: ShowBannerProps) {
           className="h-12 sm:h-14 md:h-16 lg:h-20"
         />
       </Link>
-      <div className="text-shadow font-semibold hidden space-x-16 text-xl md:flex md:text-xl lg:text-2xl">
+      <div className="text-shadow font-semibold hidden md:space-x-10 lg:space-x-14 xl:space-x-20 text-xl md:flex md:text-xl lg:text-2xl">
         <Link to="/projects">Nos projets</Link>
         <Link to="/about-us">Qui sommes nous</Link>
         <Link to="/contact">Contact</Link>
