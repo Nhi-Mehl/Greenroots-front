@@ -1,12 +1,11 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
-import LoginPage from '../src/pages/LoginPage/LoginPage';
-import { UserProvider } from '../src/context/UserContext';
-import { ProjectProvider } from '../src/context/ProjectContext';
-import { CartProvider } from '../src/pages/Cart/CartContext/CartContext';
+import { Provider } from 'react-redux';
+
+import LoginPage from '../src/components/pages/Login/Login';
+import { store } from '../src/store/store';
 
 // Mock the navigate function from react-router-dom
 vi.mock('react-router-dom', async () => {
@@ -19,14 +18,6 @@ vi.mock('react-router-dom', async () => {
     }),
   };
 });
-
-// Mock de l'instance axios
-// vi.mock('../src/api/index', () => ({
-//   default: {
-//     post: vi.fn(),
-//     get: vi.fn(),
-//   },
-// }));
 
 // Création d'un routeur mémoire pour les tests
 const router = createMemoryRouter(
@@ -42,34 +33,28 @@ const router = createMemoryRouter(
 );
 
 // Fonction utilitaire pour envelopper le rendu avec les providers
-const renderWithProviders = (ui: React.ReactElement) => {
+const renderWithProviders = () => {
   return render(
-    <UserProvider>
-      <ProjectProvider>
-        <CartProvider>
-          <RouterProvider router={router} />
-        </CartProvider>
-      </ProjectProvider>
-    </UserProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 };
 
-const setUserMock = vi.fn();
-
 describe('Login component security tests', () => {
   it('devrait afficher le formulaire de connexion', () => {
-    renderWithProviders(<LoginPage />); // Utilisation du wrapper personnalisé
+    renderWithProviders(); // Utilisation du wrapper personnalisé
 
     // Vérifier que les éléments du formulaire sont bien rendus
     expect(screen.getByPlaceholderText('Votre email')).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText('Votre mot de passe')
     ).toBeInTheDocument();
-    expect(screen.getByText('Connexion')).toBeInTheDocument();
+    expect(screen.getByText('Se connecter')).toBeInTheDocument();
   });
 
   it('devrait permettre la saisie des champs email et mot de passe', () => {
-    renderWithProviders(<LoginPage />); // Utilisation du wrapper personnalisé
+    renderWithProviders(); // Utilisation du wrapper personnalisé
 
     const emailInput = screen.getByPlaceholderText('Votre email');
     const passwordInput = screen.getByPlaceholderText('Votre mot de passe');
@@ -83,11 +68,11 @@ describe('Login component security tests', () => {
 
   // Test de prévention des attaques XSS
   it('prevents XSS attack in email input', async () => {
-    renderWithProviders(<LoginPage />); // Utilisation du wrapper personnalisé
+    renderWithProviders(); // Utilisation du wrapper personnalisé
 
     const emailInput = screen.getByLabelText(/Email/i);
     const passwordInput = screen.getByLabelText(/Mot de passe/i);
-    const submitButton = screen.getByRole('button', { name: /Connexion/i });
+    const submitButton = screen.getByRole('button', { name: /Se connecter/i });
 
     // Simulate XSS attack by entering a script in the email input
     const xssPayload = '<script>alert("XSS")</script>';
@@ -102,11 +87,11 @@ describe('Login component security tests', () => {
 
   // Test de prévention des injections SQL
   it('prevents SQL injection attempt in email input', async () => {
-    renderWithProviders(<LoginPage />); // Utilisation du wrapper personnalisé
+    renderWithProviders(); // Utilisation du wrapper personnalisé
 
     const emailInput = screen.getByLabelText(/Email/i);
     const passwordInput = screen.getByLabelText(/Mot de passe/i);
-    const submitButton = screen.getByRole('button', { name: /Connexion/i });
+    const submitButton = screen.getByRole('button', { name: /Se connecter/i });
 
     // Simulate SQL injection attack in the email input
     const sqlInjectionPayload = "' OR 1=1;--";
