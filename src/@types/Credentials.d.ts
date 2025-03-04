@@ -1,4 +1,4 @@
-import { IUser } from './User';
+import { IUser, GetProfileResponse } from './User';
 
 // Types données utilisateurs au mont de l'inscription
 export type SignUpRequest = Omit<IUser, 'id' | 'role'>;
