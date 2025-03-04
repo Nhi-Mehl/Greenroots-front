@@ -45,10 +45,10 @@ function Footer() {
         <Link className="mb-2" to="/projects">
           Nos projets
         </Link>
-        <Link className="mb-2" to="/qui-sommes-nous">
+        <Link className="mb-2" to="/about-us">
           A propos de nous
         </Link>
-        <Link className="mb-2" to="/mentions-legales">
+        <Link className="mb-2" to="/legal-notices">
           Mentions légales
         </Link>
         <Link className="mb-2" to="/contact">

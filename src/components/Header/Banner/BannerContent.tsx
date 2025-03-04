@@ -1,3 +1,5 @@
+import Button from '../../Form/Button/Button';
+
 interface BannerContentProps {
   title: string;
   subtitle?: string;
@@ -26,13 +28,9 @@ function BannerContent({
         </p>
       )}
       {buttonText && (
-        <button
-          className="btn lg:text-lg"
-          type="button"
-          onClick={onButtonClick}
-        >
+        <Button variant="default" type="button" onClick={onButtonClick}>
           {buttonText}
-        </button>
+        </Button>
       )}
     </section>
   );
