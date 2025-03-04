@@ -28,6 +28,8 @@ function Video() {
     );
 
     observer.observe(videoElement);
+    /* eslint-disable consistent-return */
+    // Arrow function expected no return value.eslintconsistent-return
     return () => observer.unobserve(videoElement);
   }, []);
 
