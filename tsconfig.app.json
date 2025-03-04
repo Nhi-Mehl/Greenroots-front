@@ -23,5 +23,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "src"]
+  "include": [
+    "vite.config.ts",
+    ".eslintrc.cjs",
+    "src",
+    "vitest.config.ts",
+    "postcss.config.js"
+  ]
 }
