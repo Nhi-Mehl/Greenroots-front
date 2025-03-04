@@ -40,7 +40,7 @@ function MyAccountPage() {
   };
 
   return (
-    <main className="flex flex-col mt-10 min-h-screen">
+    <main className="max-w-7xl mx-auto flex flex-col mt-10 min-h-screen">
       <h1 className="h1-title text-center mt-10">
         Bonjour, {user?.first_name} !
       </h1>

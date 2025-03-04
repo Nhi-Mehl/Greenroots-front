@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -113,11 +113,16 @@ function ProfilDetailsPage() {
   };
 
   return (
-    <main className="min-h-screen p-4">
-      {/* 🔹 Bouton de retour à la page précédente */}
-      <Button type="button" variant="default" onClick={() => navigate(-1)}>
-        <FaLongArrowAltLeft />
-      </Button>
+    <main className="max-w-7xl mx-auto min-h-screen p-4">
+      {/* 🔹 Link retour à la page mon compte */}
+      <Link
+        to="/my-account"
+        className="flex gap-2 mb-10 items-center hover:underline"
+      >
+        <IoArrowBackOutline className="text-2xl" />
+        <p className="text-lg hidden lg:block">Retour à mon compte</p>
+      </Link>
+
       <h1 className="text-center h2-title my-10">Details de mon profil</h1>
       <section className="text-lg flex flex-col justify-between gap-4 p-6 bg-white shadow-md border-2 border-greenRegular rounded-lg md:flex-row lg:max-w-[900px] lg:mx-auto">
         <ul className="md:w-1/2 space-y-4" aria-labelledby="profile-details">
@@ -158,7 +163,7 @@ function ProfilDetailsPage() {
           </li>
         </ul>
       </section>
-      <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center md:gap-4 lg:max-w-[900px] lg:mx-auto">
+      <div className="flex flex-col gap-4 items-center mt-4 md:flex-row md:justify-center md:gap-4 lg:max-w-[900px] lg:mx-auto">
         <Button variant="form" type="button" onClick={handleEditProfile}>
           Modifier
         </Button>

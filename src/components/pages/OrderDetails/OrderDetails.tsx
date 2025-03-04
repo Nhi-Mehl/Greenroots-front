@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 import { useAppSelector } from '../../../store/hooks';
 import { selectCurrentUser } from '../../../store/features/auth/authSlice';
@@ -14,7 +14,6 @@ import {
   useGetOrderLinesQuery,
 } from '../../../store/features/order/orderApiSlice';
 import { useGetProjectsByArrayIdsQuery } from '../../../store/features/project/projectApiSlice';
-import Button from '../../Form/Button/Button';
 
 /**
  * Composant OrderDetailsPage :
@@ -23,7 +22,6 @@ import Button from '../../Form/Button/Button';
  * et les projets liés à ces lignes grâce à RTK Query.
  */
 function OrderDetailsPage() {
-  const navigate = useNavigate();
   // Récupération de l'ID de la commande depuis l'URL (défini dans react-router)
   const { orderId } = useParams();
   // Convertit l'ID en nombre pour éviter les erreurs
@@ -109,11 +107,15 @@ function OrderDetailsPage() {
   }
 
   return (
-    <main className="p-4 min-h-screen">
-      {/* 🔹 Bouton de retour à la page précédente */}
-      <Button type="button" variant="default" onClick={() => navigate(-1)}>
-        <FaLongArrowAltLeft />
-      </Button>
+    <main className="max-w-7xl mx-auto p-4 min-h-screen">
+      {/* 🔹 Link retour à la page my orders */}
+      <Link
+        to="/my-account/purchases"
+        className="flex gap-2 mb-10 items-center hover:underline"
+      >
+        <IoArrowBackOutline className="text-2xl" />
+        <p className="text-lg hidden lg:block">Retour à mes commandes</p>
+      </Link>
       {/* Section Informations générales de la commande */}
       <section aria-labelledby="order-details" className="mt-10 text-center">
         <h1 className="h1-title font-bold mb-4">

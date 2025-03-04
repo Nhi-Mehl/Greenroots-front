@@ -91,7 +91,7 @@ function ProjectDetailsPage() {
           ) : (
             <article
               key={tree?.id}
-              className="w-4/5 lg:w-1/4 h-full flex flex-col justify-between  bg-orange-50 shadow-lg "
+              className="w-4/5 lg:w-1/4 lg:h-[520px] flex flex-col justify-between bg-orange-50 shadow-lg "
             >
               <Link
                 to={`/tree/${tree.id}/${createSlug(tree.species.name)}`}

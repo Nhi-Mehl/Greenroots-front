@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 import OrderItem from './OrderItem';
 import { useAppSelector } from '../../../store/hooks';
@@ -19,7 +19,6 @@ import Button from '../../Form/Button/Button';
  * - Si des commandes existent, elles sont listées via `OrderItem`
  */
 function OrdersPage() {
-  const navigate = useNavigate();
   // Récupérer l'utilisateur connecté de la store Redux
   const user = useAppSelector(selectCurrentUser);
 
@@ -30,10 +29,14 @@ function OrdersPage() {
 
   return (
     <main className="max-w-7xl mx-auto p-4 min-h-screen">
-      {/* 🔹 Bouton de retour à la page précédente */}
-      <Button type="button" variant="default" onClick={() => navigate(-1)}>
-        <FaLongArrowAltLeft />
-      </Button>
+      {/* 🔹 Link retour à la page mon compte */}
+      <Link
+        to="/my-account"
+        className="flex gap-2 mb-10 items-center hover:underline"
+      >
+        <IoArrowBackOutline className="text-2xl" />
+        <p className="text-lg hidden lg:block">Retour à mon compte</p>
+      </Link>
 
       {/* 🔹 Titre principal de la page */}
       <h1 className="text-center h1-title mt-10">

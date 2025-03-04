@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 import { useAppDispatch } from '../../../store/hooks';
 import { setUser } from '../../../store/features/auth/authSlice';
@@ -118,11 +118,15 @@ function EditProfilePage() {
   };
 
   return (
-    <main className="min-h-screen p-4">
-      {/* 🔹 Bouton de retour à la page précédente */}
-      <Button type="button" variant="default" onClick={() => navigate(-1)}>
-        <FaLongArrowAltLeft />
-      </Button>
+    <main className="max-w-7xl mx-auto min-h-screen p-4">
+      {/* 🔹 Link retour à la page mon compte */}
+      <Link
+        to="/my-account"
+        className="flex gap-2 mb-10 items-center hover:underline"
+      >
+        <IoArrowBackOutline className="text-2xl" />
+        <p className="text-lg hidden lg:block">Retour à mon compte</p>
+      </Link>
 
       <h1 className="h1-title text-greenRegular text-center my-10">
         {' '}

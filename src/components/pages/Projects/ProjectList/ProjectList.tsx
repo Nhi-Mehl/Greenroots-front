@@ -46,6 +46,7 @@ function ProjectList() {
         (tree: IProjectTreeSpecies) => tree.project_id === projectId
       )
     );
+
     return projectTree
       ? {
           progress: projectTree.progress,
@@ -83,7 +84,7 @@ function ProjectList() {
 
   return (
     <section
-      className="p-8 flex gap-16 flex-wrap justify-center lg:p-16 lg:flex-row md:flex-col"
+      className="p-8 flex flex-col gap-16 justify-center lg:p-16 lg:flex-row lg:flex-wrap md:flex-col"
       aria-labelledby="project-list-title"
     >
       <h1 id="project-list-title" className="sr-only">
@@ -97,7 +98,7 @@ function ProjectList() {
         ) : (
           <article
             key={project.id}
-            className="lg:max-w-[520px] bg-beige shadow-lg"
+            className="lg:max-w-[402px] bg-beige shadow-lg"
             aria-labelledby={`project-title-${project.id}`}
           >
             <figure>
