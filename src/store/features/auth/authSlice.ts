@@ -6,9 +6,11 @@ import { LoginResponse, InitialAuthState } from '../../../@types/Credentials';
 // Chargement initial du token depuis le localStorage
 const tokenFromStorage = localStorage.getItem('token');
 
+const userFromStorage = localStorage.getItem('user');
+
 // Définir l'état initial
 const initialState: InitialAuthState = {
-  user: null,
+  user: userFromStorage ? JSON.parse(userFromStorage) : null,
   accessToken: null,
   isAuthenticated: Boolean(tokenFromStorage),
 };
@@ -32,13 +34,17 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
       localStorage.removeItem('token');
-      console.log('🚀 Utilisateur déconnecté user:', state.user);
+      localStorage.removeItem('user');
     },
 
     // Action pour mettre à jour les informations utilisateur
     setUser: (state, action: PayloadAction<GetProfileResponse | null>) => {
       state.user = action.payload;
-      console.log('🚀 Utilisateur mis à jour:', action.payload);
+      if (action.payload) {
+        localStorage.setItem('user', JSON.stringify(action.payload));
+      } else {
+        localStorage.removeItem('user');
+      }
     },
   },
 });
