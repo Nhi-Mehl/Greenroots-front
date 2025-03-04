@@ -16,7 +16,6 @@ import OrderDetailsPage from './components/pages/OrderDetails/OrderDetails';
 import MyAccountPage from './components/pages/MyAccount/MyAccount';
 import ConfirmPaymentPage from './components/pages/ConfirmPayment/ConfirmPayment';
 import EditProfilePage from './components/pages/EditProfil/EditProfil';
-import CheckoutPage from './components/pages/Checkout/Checkout';
 import ProfilDetailsPage from './components/pages/ProfilDetails/ProfilDetails';
 import CheckoutForm from './components/pages/Checkout/CheckoutForm';
 
