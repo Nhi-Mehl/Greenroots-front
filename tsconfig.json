@@ -9,6 +9,10 @@
     }
   ]
   // "compilerOptions": {
+  //   "baseUrl": "./",
+  //   "paths": {
+  //     "@components/*": ["src/components/*"]
+  // }
   //   "jsx": "react-jsx" // or "react" for React 16 or older
   // }
 }
