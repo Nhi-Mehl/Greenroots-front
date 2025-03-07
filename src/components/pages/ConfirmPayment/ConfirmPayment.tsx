@@ -32,7 +32,7 @@ function ConfirmPaymentPage() {
             alt="groot"
           />
           <h1 className="h1-title text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            {user.first_name}, Merci pour votre commande !
+            {user?.first_name}, Merci pour votre commande !
           </h1>
         </figure>
       </section>
