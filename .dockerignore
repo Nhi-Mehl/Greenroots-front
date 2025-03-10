@@ -1,10 +1,9 @@
 # Ignorer les dépendances et fichiers inutiles
 node_modules/
-build/
 dist/
 .git
 .idea
-src/
+
 
 
 # Ignorer les fichiers spécifiques à Docker et aux logs
