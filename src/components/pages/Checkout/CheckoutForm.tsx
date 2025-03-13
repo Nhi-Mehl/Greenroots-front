@@ -117,6 +117,14 @@ const CheckoutForm = () => {
         <p className="text-xl hidden lg:block">Retour au panier</p>
       </Link>
       <h1 className="h1-title text-center mb-10">Confirmer la commande</h1>
+      <p
+        className="text-center font-bold text-lg
+             text-red-500 bg-red-100 border border-red-200 rounded-lg p-6 mb-10"
+      >
+        Ceci est un projet de démonstration, il ne s&apos;agit pas du site
+        e-commerce définitif. Veuillez ne pas effectuer de paiement avec votre
+        bancaire.
+      </p>
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Section de résumé de la commande */}
         <section
