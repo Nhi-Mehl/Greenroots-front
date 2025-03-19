@@ -2,7 +2,7 @@ import ProjectList from './ProjectList/ProjectList';
 
 function ProjectsPage() {
   return (
-    <main className="projectPage">
+    <main className="min-h-screen">
       <ProjectList />
     </main>
   );

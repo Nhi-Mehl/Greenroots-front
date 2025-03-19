@@ -5,7 +5,7 @@ import TextArea from '../../Form/TextArea/TextArea';
 
 function ContactPage() {
   return (
-    <main className="px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
+    <main className="min-h-screen px-4 py-10 sm:px-8 md:px-12 sm:py-12 md:py-28">
       <section className="p-8 mb-10 border-2 border-solid border-greenRegular rounded-lg bg-white shadow-md lg:max-w-[900px] lg:mx-auto">
         <h1 className="h2-title text-3xl text-greenRegular text-center mb-6 lg:text-5xl">
           Contact
