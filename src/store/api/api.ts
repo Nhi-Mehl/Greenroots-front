@@ -20,9 +20,6 @@ const api: AxiosInstance = axios.create({
 api.interceptors.request.use(
   function addAuthToken(originalConfig) {
     const config = { ...originalConfig };
-    // const state: RootState = store.getState();
-    // const { token } = state.auth;
-    // const { token } = store.getState().auth;
     const token = localStorage.getItem('token');
 
     if (token) {
