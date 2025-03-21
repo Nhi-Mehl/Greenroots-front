@@ -1,7 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 
-// Vérifie si l'URL de base API est définie
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+// Vérifie si c'est en mode production ou en mode développement
+const API_BASE_URL =
+  import.meta.env.MODE === 'production'
+    ? import.meta.env.VITE_API_BASE_URL_PROD
+    : import.meta.env.VITE_API_BASE_URL_DEV;
 
 // Création d'une instance Axios avec l'URL de base définie
 const api: AxiosInstance = axios.create({
