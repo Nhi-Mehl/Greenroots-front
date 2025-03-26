@@ -27,7 +27,7 @@ function Stats() {
       {/* Titre principal de la section, caché pour les lecteurs d'écran */}
       <h2
         aria-labelledby="stats-title"
-        className="h2-title text-center md:text-4xl lg:text-5xl"
+        className="h2-title text-center md:text-4xl lg:text-5xl text-red-500"
       >
         Quelques chiffres
       </h2>
