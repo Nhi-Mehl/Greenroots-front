@@ -12,9 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy cert files
-        run: |
-          cp -r./certbot/conf/live/planttreeswith.me./certbot/conf/live/planttreeswith.me
+      # - name: Copy cert files
+      #   run: |
+      #     cp -r./certbot/conf/live/planttreeswith.me./certbot/conf/live/planttreeswith.me
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
