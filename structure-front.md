@@ -1,0 +1,68 @@
+```
+└── 📁Greenroots-front
+    └── 📁.github
+        └── 📁workflows
+            └── deploy.yml
+    └── 📁certbot
+        └── 📁conf
+            └── 📁accounts
+                └── 📁acme-v02.api.letsencrypt.org
+                    └── 📁directory
+                        └── 📁f1d5f3e26d29ec9b89561c8413726276
+                            └── meta.json
+                            └── private_key.json
+                            └── regr.json
+            └── 📁archive
+                └── 📁planttreeswith.me
+                    └── cert1.pem
+                    └── chain1.pem
+                    └── fullchain1.pem
+                    └── privkey1.pem
+            └── 📁live
+                └── 📁planttreeswith.me
+                    └── cert.pem
+                    └── chain.pem
+                    └── fullchain.pem
+                    └── privkey.pem
+                    └── README
+                └── README
+            └── 📁renewal
+            └── 📁renewal-hooks
+                └── 📁deploy
+                └── 📁post
+                └── 📁pre
+                └── planttreeswith.me.conf
+        └── 📁www
+    └── 📁public
+    └── 📁src
+    └── 📁tests
+    └── .dockerignore
+    └── .env
+    └── .env.example
+    └── .eslintrc.cjs
+    └── .gitignore
+    └── .prettierignore
+    └── .prettierrc.cjs
+    └── Dockerfile.cli
+    └── index.html
+    └── nginx.conf
+    └── package-lock.json
+    └── package.json
+    └── pnpm-lock.yaml
+    └── postcss.config.js
+    └── README.md
+    └── tailwind.config.js
+    └── tsconfig.app.json
+    └── tsconfig.json
+    └── tsconfig.node.json
+    └── vite.config.ts
+    └── vitest.config.ts
+```
+
+└── 📁Greenroots
+└── 📁Greenroots-front
+└── 📁Greenroots-back
+└── .env
+└── docker-compose.yml
+└── docker-compose.override.yml
+└── docker-compose.prod.yml
