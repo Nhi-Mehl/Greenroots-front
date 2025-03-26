@@ -34,6 +34,13 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/greenroots-front:$GITHUB_SHA -f ./Dockerfile.cli .
           docker push ${{ secrets.DOCKER_USERNAME }}/greenroots-front:$GITHUB_SHA
 
+      - name: Setup SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
+
       - name: Deploy to DigitalOcean
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} deploy@${{ secrets.DIGITALOCEAN_IP }} << 'EOF'
