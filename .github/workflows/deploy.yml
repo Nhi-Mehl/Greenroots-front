@@ -49,7 +49,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} deploy@${{ secrets.DIGITALOCEAN_IP }} << 'EOF'
             cd /home/deploy/greenroots
-            docker pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
-            docker-compose down
-            docker-compose up -d
+            sudo docker image pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
+            sudo docker-compose down
+            sudo docker-compose up -d
           EOF
