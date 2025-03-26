@@ -34,7 +34,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}"  # Debug
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/greenroots-front:$GITHUB_SHA -f ./Dockerfile.cli .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA -f ./Dockerfile.cli .
           docker push ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
 
       - name: Setup SSH Key
