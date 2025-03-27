@@ -41,22 +41,21 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -n 10
 
-      # - name: Setup SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-      #     chmod 600 ~/.ssh/id_ed25519
-      #     ssh-keyscan -H ${{ secrets.DIGITALOCEAN_IP }} >> ~/.ssh/known_hosts
-      #     eval "$(ssh-agent -s)"
-      #     ssh-add ~/.ssh/id_ed25519
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 22 ${{ secrets.DIGITALOCEAN_IP }} >> ~/.ssh/known_hosts
+          sudo apt-get install sshpass
 
       - name: Test SSH Connection
         run: |
-          sshpass -p ${{ secrets.SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} -p ${{ secrets.SSH_PORT }} " "echo 'SSH connection successful!'"
+          sshpass -p '${{ secrets.SERVER_PASSWORD }}' ssh -v -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} " "echo 'SSH connection successful!'"
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} << EOF
+          sshpass -p '${{ secrets.SERVER_PASSWORD }}' ssh -v -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} <<'ENDSSH'
 
             cd /home/deploy/greenroots
             sudo docker image pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
