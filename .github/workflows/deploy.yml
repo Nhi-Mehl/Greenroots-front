@@ -59,6 +59,7 @@ jobs:
 
             cd /home/deploy/greenroots
             sudo docker image pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
-            sudo docker compose down
-            sudo docker compose up -d
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S rm -rf /etc/update-motd.d/99-one-click
+            sudo -S docker-compose down
+            sudo -S docker-compose up -d
           EOF
