@@ -47,7 +47,7 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} deploy@${{ secrets.DIGITALOCEAN_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} deploy@138.197.183.176 << 'EOF'
             cd /home/deploy/greenroots
             sudo docker image pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
             sudo docker-compose down
