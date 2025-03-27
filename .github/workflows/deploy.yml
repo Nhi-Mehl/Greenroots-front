@@ -51,7 +51,7 @@ jobs:
 
       - name: Test SSH Connection
         run: |
-          sshpass -p '${{ secrets.SERVER_PASSWORD }}' ssh -v -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} " "echo 'SSH connection successful!'"
+          sshpass -p '${{ secrets.SERVER_PASSWORD }}' ssh -v -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} "echo 'SSH connection successful!'"
 
       - name: Deploy to DigitalOcean
         run: |
