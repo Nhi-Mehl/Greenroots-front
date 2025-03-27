@@ -46,7 +46,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no user@host
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no deploy@${{ secrets.DIGITALOCEAN_IP }} "echo 'SSH connection successful!'"
 
       - name: Set up SSH key
         run: |
