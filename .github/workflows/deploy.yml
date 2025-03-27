@@ -37,20 +37,17 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA -f ./Dockerfile.cli .
           docker push ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
 
-      # - name: Setup SSH Key
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
-      #     chmod 600 ~/.ssh/id_ed25519
-      #     eval "$(ssh-agent -s)"
-      #     ssh-add ~/.ssh/id_ed25519
-
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
 
       - name: Deploy to DigitalOcean
         run: |
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} << EOF
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.DIGITALOCEAN_IP }} << EOF
 
             cd /home/deploy/greenroots
             sudo docker image pull ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
