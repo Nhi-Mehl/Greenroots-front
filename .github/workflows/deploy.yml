@@ -37,6 +37,10 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA -f ./Dockerfile.cli .
           docker push ${{ secrets.DOCKER_USERNAME }}/greenroots-client:$GITHUB_SHA
 
+      - name: Debug private key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -n 10
+
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
